@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		5B72C15A26AB341F008A4B6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B72C15826AB341F008A4B6A /* Main.storyboard */; };
 		5B72C15C26AB3422008A4B6A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B72C15B26AB3422008A4B6A /* Assets.xcassets */; };
 		5B72C15F26AB3422008A4B6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B72C15D26AB3422008A4B6A /* LaunchScreen.storyboard */; };
+		5B72C17226AB371F008A4B6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B72C17126AB371F008A4B6A /* SnapKit */; };
+		5B72C17626AB372A008A4B6A /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 5B72C17526AB372A008A4B6A /* Then */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B72C17226AB371F008A4B6A /* SnapKit in Frameworks */,
+				5B72C17626AB372A008A4B6A /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +60,79 @@
 		5B72C15126AB341F008A4B6A /* Moother iOS */ = {
 			isa = PBXGroup;
 			children = (
-				5B72C15226AB341F008A4B6A /* AppDelegate.swift */,
-				5B72C15426AB341F008A4B6A /* SceneDelegate.swift */,
-				5B72C15626AB341F008A4B6A /* ViewController.swift */,
-				5B72C15826AB341F008A4B6A /* Main.storyboard */,
-				5B72C15B26AB3422008A4B6A /* Assets.xcassets */,
-				5B72C15D26AB3422008A4B6A /* LaunchScreen.storyboard */,
-				5B72C16026AB3422008A4B6A /* Info.plist */,
+				5B72C16726AB3507008A4B6A /* Source */,
+				5B72C16826AB3559008A4B6A /* Resource */,
 			);
 			path = "Moother iOS";
+			sourceTree = "<group>";
+		};
+		5B72C16726AB3507008A4B6A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5B72C16E26AB35D8008A4B6A /* Components */,
+				5B72C16D26AB35D2008A4B6A /* Cells */,
+				5B72C16C26AB35B5008A4B6A /* ViewControllers */,
+				5B72C16B26AB35AE008A4B6A /* Extensions */,
+				5B72C16A26AB359D008A4B6A /* Supports */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		5B72C16826AB3559008A4B6A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				5B72C15B26AB3422008A4B6A /* Assets.xcassets */,
+				5B72C16026AB3422008A4B6A /* Info.plist */,
+				5B72C16926AB3579008A4B6A /* Storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		5B72C16926AB3579008A4B6A /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				5B72C15826AB341F008A4B6A /* Main.storyboard */,
+				5B72C15D26AB3422008A4B6A /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		5B72C16A26AB359D008A4B6A /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				5B72C15226AB341F008A4B6A /* AppDelegate.swift */,
+				5B72C15426AB341F008A4B6A /* SceneDelegate.swift */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		5B72C16B26AB35AE008A4B6A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5B72C16C26AB35B5008A4B6A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5B72C15626AB341F008A4B6A /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5B72C16D26AB35D2008A4B6A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5B72C16E26AB35D8008A4B6A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +151,10 @@
 			dependencies = (
 			);
 			name = "Moother iOS";
+			packageProductDependencies = (
+				5B72C17126AB371F008A4B6A /* SnapKit */,
+				5B72C17526AB372A008A4B6A /* Then */,
+			);
 			productName = "Moother iOS";
 			productReference = 5B72C14F26AB341F008A4B6A /* Moother iOS.app */;
 			productType = "com.apple.product-type.application";
@@ -110,6 +182,11 @@
 				Base,
 			);
 			mainGroup = 5B72C14626AB341E008A4B6A;
+			packageReferences = (
+				5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				5B72C17426AB372A008A4B6A /* XCRemoteSwiftPackageReference "Then" */,
+				5B72C17826AB3844008A4B6A /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = 5B72C15026AB341F008A4B6A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -341,6 +418,46 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
+		5B72C17426AB372A008A4B6A /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.0;
+			};
+		};
+		5B72C17826AB3844008A4B6A /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 14.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5B72C17126AB371F008A4B6A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		5B72C17526AB372A008A4B6A /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B72C17426AB372A008A4B6A /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5B72C14726AB341E008A4B6A /* Project object */;
 }

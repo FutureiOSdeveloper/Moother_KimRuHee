@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */; };
+		5B212C1926AE142200603649 /* MainCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1826AE142200603649 /* MainCVC.swift */; };
+		5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1B26AE17E500603649 /* WeatherListViewController.swift */; };
 		5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15226AB341F008A4B6A /* AppDelegate.swift */; };
 		5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15426AB341F008A4B6A /* SceneDelegate.swift */; };
 		5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15626AB341F008A4B6A /* ViewController.swift */; };
@@ -20,6 +22,8 @@
 
 /* Begin PBXFileReference section */
 		5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extenison.swift"; sourceTree = "<group>"; };
+		5B212C1826AE142200603649 /* MainCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCVC.swift; sourceTree = "<group>"; };
+		5B212C1B26AE17E500603649 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
 		5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWeather_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B72C15226AB341F008A4B6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B72C15426AB341F008A4B6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				5B72C15626AB341F008A4B6A /* ViewController.swift */,
+				5B212C1B26AE17E500603649 /* WeatherListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 		5B72C16D26AB35D2008A4B6A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5B212C1826AE142200603649 /* MainCVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -220,6 +226,8 @@
 				5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */,
 				5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */,
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
+				5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */,
+				5B212C1926AE142200603649 /* MainCVC.swift in Sources */,
 				5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

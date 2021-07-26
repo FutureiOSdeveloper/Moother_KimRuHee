@@ -12,9 +12,9 @@ import SnapKit
 
 class ViewController: UIViewController {
     // MARK: - Properties
-    private let backColor: [UIColor] = [.green, .yellow, .systemPink, .darkGray]
+    private let backColor: [UIColor] = [.black, .blue, .gray, .darkGray]
     
-    let mainCV : UICollectionView = {
+    let mainCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let topLocationView = TopLocationView()
+    let topLocationView = FirstHeaderView()
     
     let bottomBarView = UIView().then {
         $0.backgroundColor = .darkGray

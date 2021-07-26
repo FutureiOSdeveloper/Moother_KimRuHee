@@ -10,11 +10,12 @@
 		5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */; };
 		5B212C1926AE142200603649 /* MainCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1826AE142200603649 /* MainCVC.swift */; };
 		5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1B26AE17E500603649 /* WeatherListViewController.swift */; };
-		5B212C1F26AE88AC00603649 /* TopLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1E26AE88AC00603649 /* TopLocationView.swift */; };
+		5B212C1F26AE88AC00603649 /* FirstHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1E26AE88AC00603649 /* FirstHeaderView.swift */; };
 		5B212C2226AEA0F900603649 /* SecondHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2126AEA0F900603649 /* SecondHeaderView.swift */; };
 		5B212C2826AEA2DE00603649 /* TodayTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2726AEA2DE00603649 /* TodayTVC.swift */; };
 		5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2B26AEA31600603649 /* DailyTVC.swift */; };
 		5B212C2F26AEA34200603649 /* DetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2E26AEA34200603649 /* DetailTVC.swift */; };
+		5B212C3626AEB3DC00603649 /* TimeTempCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C3526AEB3DC00603649 /* TimeTempCVC.swift */; };
 		5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15226AB341F008A4B6A /* AppDelegate.swift */; };
 		5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15426AB341F008A4B6A /* SceneDelegate.swift */; };
 		5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15626AB341F008A4B6A /* ViewController.swift */; };
@@ -29,11 +30,12 @@
 		5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extenison.swift"; sourceTree = "<group>"; };
 		5B212C1826AE142200603649 /* MainCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCVC.swift; sourceTree = "<group>"; };
 		5B212C1B26AE17E500603649 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
-		5B212C1E26AE88AC00603649 /* TopLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLocationView.swift; sourceTree = "<group>"; };
+		5B212C1E26AE88AC00603649 /* FirstHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstHeaderView.swift; sourceTree = "<group>"; };
 		5B212C2126AEA0F900603649 /* SecondHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondHeaderView.swift; sourceTree = "<group>"; };
 		5B212C2726AEA2DE00603649 /* TodayTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTVC.swift; sourceTree = "<group>"; };
 		5B212C2B26AEA31600603649 /* DailyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTVC.swift; sourceTree = "<group>"; };
 		5B212C2E26AEA34200603649 /* DetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTVC.swift; sourceTree = "<group>"; };
+		5B212C3526AEB3DC00603649 /* TimeTempCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTempCVC.swift; sourceTree = "<group>"; };
 		5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWeather_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B72C15226AB341F008A4B6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B72C15426AB341F008A4B6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				5B212C1826AE142200603649 /* MainCVC.swift */,
+				5B212C3526AEB3DC00603649 /* TimeTempCVC.swift */,
 				5B212C2B26AEA31600603649 /* DailyTVC.swift */,
 				5B212C2726AEA2DE00603649 /* TodayTVC.swift */,
 				5B212C2E26AEA34200603649 /* DetailTVC.swift */,
@@ -153,7 +156,7 @@
 		5B72C16E26AB35D8008A4B6A /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				5B212C1E26AE88AC00603649 /* TopLocationView.swift */,
+				5B212C1E26AE88AC00603649 /* FirstHeaderView.swift */,
 				5B212C2126AEA0F900603649 /* SecondHeaderView.swift */,
 			);
 			path = Components;
@@ -239,8 +242,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */,
+				5B212C3626AEB3DC00603649 /* TimeTempCVC.swift in Sources */,
 				5B212C2226AEA0F900603649 /* SecondHeaderView.swift in Sources */,
-				5B212C1F26AE88AC00603649 /* TopLocationView.swift in Sources */,
+				5B212C1F26AE88AC00603649 /* FirstHeaderView.swift in Sources */,
 				5B212C2F26AEA34200603649 /* DetailTVC.swift in Sources */,
 				5B212C2826AEA2DE00603649 /* TodayTVC.swift in Sources */,
 				5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */,

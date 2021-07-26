@@ -27,7 +27,8 @@ class MainCVC: UICollectionViewCell {
     
     // MARK: - Custom Method
     func configUI() {
-        
+        mainTV.backgroundColor = .clear
+        mainTV.separatorStyle = .none
     }
     
     func setupAutoLayout() {
@@ -58,12 +59,12 @@ extension MainCVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:
-            let headerView = TopLocationView()
-            return headerView
+            let firstHeaderView = FirstHeaderView()
+            return firstHeaderView
             
         case 1:
-            let headerView = SecondHeaderView()
-            return headerView
+            let secondHeaderView = SecondHeaderView()
+            return secondHeaderView
             
         default:
             return UIView()
@@ -105,7 +106,7 @@ extension MainCVC: UITableViewDataSource {
             } else if indexPath.row == 2 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
-                detailCell.backgroundColor = .green
+                detailCell.backgroundColor = .brown
                 return detailCell
             }
         default:
@@ -113,6 +114,4 @@ extension MainCVC: UITableViewDataSource {
         }
         return UITableViewCell()
     }
-    
-    
 }

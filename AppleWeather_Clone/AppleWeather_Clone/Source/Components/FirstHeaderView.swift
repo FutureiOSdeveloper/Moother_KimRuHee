@@ -1,5 +1,5 @@
 //
-//  TopLocationView.swift
+//  FirstHeaderView.swift
 //  AppleWeather_Clone
 //
 //  Created by Thisisme Hi on 2021/07/26.
@@ -10,9 +10,8 @@ import UIKit
 import Then
 import SnapKit
 
-class TopLocationView: UIView {
-    
-    static let identifier = "TopLocationView"
+class FirstHeaderView: UIView {
+    static let identifier = "FirstHeaderView"
     
     // MARK: - Properties
     let highTemp: String = ""
@@ -54,6 +53,10 @@ class TopLocationView: UIView {
         $0.textColor = .white
     }
     
+    let lineView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,16 +70,17 @@ class TopLocationView: UIView {
     
     // MARK: - Custom Method
     func configUI() {
-        backgroundColor = .black
+        backgroundColor = .clear
     }
     
     func setupAutoLayout() {
-        addSubviews([locationLabel, conditionLabel, tempLabel, highLowStackView])
+        addSubviews([locationLabel, conditionLabel, tempLabel,
+                     highLowStackView, lineView])
         highLowStackView.addArrangedSubview(highLabel)
         highLowStackView.addArrangedSubview(lowLabel)
         
         locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(100)
+            make.top.equalTo(self.snp.top).inset(80)
             make.centerX.equalToSuperview()
         }
         
@@ -94,6 +98,11 @@ class TopLocationView: UIView {
             make.top.equalTo(tempLabel.snp.bottom).offset(-7)
             make.bottom.equalToSuperview().inset(80)
             make.centerX.equalToSuperview()
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
         }
     }
 }

@@ -23,8 +23,9 @@ class ViewController: UIViewController {
         return cv
     }()
     
+    let topLocationView = TopLocationView()
+    
     let bottomBarView = UIView().then {
-        $0.alpha = 0.5
         $0.backgroundColor = .darkGray
     }
     
@@ -47,7 +48,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
-        setupMainCV()
+        setupCollectionView()
         setupAutoLayout()
         setupPageControl()
     }
@@ -86,10 +87,9 @@ class ViewController: UIViewController {
         }
     }
     
-    func setupMainCV() {
+    func setupCollectionView() {
         mainCV.delegate = self
         mainCV.dataSource = self
-        
         mainCV.register(MainCVC.self, forCellWithReuseIdentifier: "MainCVC")
     }
     
@@ -103,6 +103,9 @@ class ViewController: UIViewController {
     }
     
     @objc func touchupRightBarButton(_ sender: UIButton) {
+        let nextVC = WeatherListViewController()
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true, completion: nil)
         
     }
 }

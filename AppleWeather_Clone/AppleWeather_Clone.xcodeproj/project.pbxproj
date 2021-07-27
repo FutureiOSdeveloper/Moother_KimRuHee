@@ -16,6 +16,7 @@
 		5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2B26AEA31600603649 /* DailyTVC.swift */; };
 		5B212C2F26AEA34200603649 /* DetailTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2E26AEA34200603649 /* DetailTVC.swift */; };
 		5B212C3626AEB3DC00603649 /* TimeTempCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C3526AEB3DC00603649 /* TimeTempCVC.swift */; };
+		5B212C4026AFE1ED00603649 /* MapTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C3F26AFE1ED00603649 /* MapTVC.swift */; };
 		5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15226AB341F008A4B6A /* AppDelegate.swift */; };
 		5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15426AB341F008A4B6A /* SceneDelegate.swift */; };
 		5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15626AB341F008A4B6A /* ViewController.swift */; };
@@ -36,6 +37,7 @@
 		5B212C2B26AEA31600603649 /* DailyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTVC.swift; sourceTree = "<group>"; };
 		5B212C2E26AEA34200603649 /* DetailTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTVC.swift; sourceTree = "<group>"; };
 		5B212C3526AEB3DC00603649 /* TimeTempCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTempCVC.swift; sourceTree = "<group>"; };
+		5B212C3F26AFE1ED00603649 /* MapTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTVC.swift; sourceTree = "<group>"; };
 		5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWeather_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B72C15226AB341F008A4B6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B72C15426AB341F008A4B6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				5B212C2B26AEA31600603649 /* DailyTVC.swift */,
 				5B212C2726AEA2DE00603649 /* TodayTVC.swift */,
 				5B212C2E26AEA34200603649 /* DetailTVC.swift */,
+				5B212C3F26AFE1ED00603649 /* MapTVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				5B212C2826AEA2DE00603649 /* TodayTVC.swift in Sources */,
 				5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */,
 				5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */,
+				5B212C4026AFE1ED00603649 /* MapTVC.swift in Sources */,
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
 				5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */,
 				5B212C1926AE142200603649 /* MainCVC.swift in Sources */,

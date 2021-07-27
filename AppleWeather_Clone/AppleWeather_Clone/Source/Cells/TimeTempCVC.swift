@@ -21,7 +21,7 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     let timeLabel = UILabel().then {
-        $0.text = "오후 7:45"
+        $0.text = "지금"
         $0.font = .systemFont(ofSize: 15, weight: .medium)
         $0.textColor = .white
     }
@@ -64,8 +64,8 @@ class TimeTempCVC: UICollectionViewCell {
         }
         
         weatherImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(40)
-        }
+            make.width.height.equalTo(33)
+        }        
     }
     
     func setData(time: String, image: String, temp: String) {

@@ -11,15 +11,27 @@ class DetailTVC: UITableViewCell {
     // 일출, 일몰 등등 부분 - 5개 반복
     static let identifier = "DetailTVC"
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    // MARK: - Lifecycle
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configUI()
+        setupAutoLayout()
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-
+    
+    // MARK: - Custom Method
+    func configUI() {
+        
+    }
+    
+    func setupAutoLayout() {
+        
+    }
 }

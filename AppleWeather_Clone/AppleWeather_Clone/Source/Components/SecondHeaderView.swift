@@ -18,6 +18,10 @@ class SecondHeaderView: UIView {
         return cv
     }()
     
+    let lineView = UIView().then {
+        $0.backgroundColor = .white
+    }
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,11 +40,16 @@ class SecondHeaderView: UIView {
     }
     
     func setupAutoLayout() {
-        addSubview(timeTempCV)
+        addSubviews([timeTempCV, lineView])
         
         timeTempCV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(120)
+            make.height.equalTo(100)
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
         }
     }
     
@@ -65,6 +74,7 @@ extension SecondHeaderView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC else { return UICollectionViewCell() }
+        cell.backgroundColor = .blue
         return cell
     }
 }
@@ -72,7 +82,7 @@ extension SecondHeaderView: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension SecondHeaderView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: collectionView.frame.size.height)
+        return CGSize(width: 70, height: collectionView.frame.size.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

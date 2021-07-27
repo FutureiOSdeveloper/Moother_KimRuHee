@@ -60,7 +60,8 @@ class TimeTempCVC: UICollectionViewCell {
         stackView.addArrangedSubview(tempLabel)
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview().inset(8)
+            make.leading.trailing.equalToSuperview()
         }
         
         weatherImageView.snp.makeConstraints { make in

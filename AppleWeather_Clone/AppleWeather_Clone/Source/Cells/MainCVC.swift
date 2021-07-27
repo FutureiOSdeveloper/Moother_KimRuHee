@@ -10,10 +10,26 @@ import UIKit
 class MainCVC: UICollectionViewCell {
     static let identifier = "MainCVC"
     
+    // MARK: - Dummy Data
+    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
+    
+    var detailList: [DetailModel] = [DetailModel(leftTitle: "일출", leftDetail: "오전 5:18", rightTitle: "일몰", rightDetail: "오후8:55"),
+                                     DetailModel(leftTitle: "비 올 확률", leftDetail: "30%", rightTitle: "습도", rightDetail: "82%"),
+                                     DetailModel(leftTitle: "바람", leftDetail: "남 3m/s", rightTitle: "체감", rightDetail: "18"),
+                                     DetailModel(leftTitle: "강수량", leftDetail: "0.2cm", rightTitle: "기압", rightDetail: "1008hPa"),
+                                     DetailModel(leftTitle: "가시거리", leftDetail: "11.3km", rightTitle: "자외선 지수", rightDetail: "5")]
+    
     // MARK: - Properties
-    let localView = UIView().then{
-        $0.backgroundColor = .systemRed
-    }
+    let localView = UIView()
     
     let locationLabel = UILabel().then {
         $0.text = "마포구"
@@ -129,8 +145,8 @@ extension MainCVC: UITableViewDelegate {
 //            self.mainTV.transform = CGAffineTransform(translationX: 0, y: -scrollView.contentOffset.y)
 //        } else if scrollView.contentOffset.y < 0 {
 //            print("스크롤 내리는 중")
-//            self.localView.transform = .identity
-//            scrollView.contentInset = UIEdgeInsets(top: -headerViewHeight, left: 0, bottom: 0, right: 0)
+////            self.localView.transform = .identity
+////            scrollView.contentInset = UIEdgeInsets(top: mainTV.sectionHeaderHeight, left: 0, bottom: 0, right: 0)
 //        }
     }
 }
@@ -141,10 +157,8 @@ extension MainCVC: UITableViewDataSource {
         switch section {
         case 0:
             return 0
-        case 1:
-            return mainTV.sectionHeaderHeight
         default:
-            return 0
+            return mainTV.sectionHeaderHeight
         }
     }
     
@@ -152,11 +166,9 @@ extension MainCVC: UITableViewDataSource {
         switch section {
         case 0:
             return UIView()
-        case 1:
-            let secondHeaderView = SecondHeaderView()
-            return secondHeaderView
         default:
-            return UIView()
+            let secondHeaderView = TimeTempHeaderView()
+            return secondHeaderView
         }
     }
     
@@ -168,10 +180,8 @@ extension MainCVC: UITableViewDataSource {
         switch section {
         case 0:
             return 0
-        case 1:
-            return 10 + 1 + 5 + 1
         default:
-            return Int()
+            return dailyList.count + 1 + detailList.count + 1
         }
     }
     
@@ -179,32 +189,34 @@ extension MainCVC: UITableViewDataSource {
         switch indexPath.section {
         case 0:
             return UITableViewCell()
-        case 1:
-            if indexPath.row == 0 {
+        default:
+            if indexPath.row < 10 {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
+                dailyCell.setData(week: dailyList[indexPath.row].week, image: dailyList[indexPath.row].image,
+                                  rain: dailyList[indexPath.row].rain, high: dailyList[indexPath.row].high,
+                                  low: dailyList[indexPath.row].low)
                 return dailyCell
                 
-            } else if indexPath.row == 1 {
+            } else if indexPath.row < 11 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
                 return todayCell
                 
-            } else if indexPath.row == 2 {
+            } else if indexPath.row < 16 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
-                detailCell.backgroundColor = .brown
+                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
+                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
+                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
+                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
                 return detailCell
                 
-            } else if indexPath.row == 3 {
+            } else {
                 guard let mapCell = tableView.dequeueReusableCell(withIdentifier: MapTVC.identifier, for: indexPath) as? MapTVC else { return UITableViewCell() }
                 mapCell.selectionStyle = .none
                 return mapCell
             }
-            
-        default:
-            return UITableViewCell()
         }
-        return UITableViewCell()
     }
 }

@@ -11,7 +11,7 @@ class MapTVC: UITableViewCell {
     static let identifier = "MapTVC"
     
     // MARK: - Properties
-    let topLineView = UIView().then {
+    let lineView = UIView().then {
         $0.backgroundColor = .white
     }
     
@@ -30,10 +30,6 @@ class MapTVC: UITableViewCell {
         let attributedString = NSMutableAttributedString(string: ($0.titleLabel?.text)!)
         attributedString.addAttribute(.underlineStyle, value: 1, range: NSMakeRange(0, ($0.titleLabel?.text!.count)!))
         $0.setAttributedTitle(attributedString, for: .normal)
-    }
-    
-    let bottomLineView = UIView().then {
-        $0.backgroundColor = .white
     }
     
     // MARK: - Lifecycle
@@ -57,9 +53,9 @@ class MapTVC: UITableViewCell {
     }
     
     func setupAutoLayout() {
-        addSubviews([topLineView, localLabel, mapButton, bottomLineView])
+        addSubviews([lineView, localLabel, mapButton])
         
-        topLineView.snp.makeConstraints { make in
+        lineView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(0.5)
         }
@@ -70,14 +66,9 @@ class MapTVC: UITableViewCell {
         }
         
         mapButton.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
+            make.top.bottom.equalToSuperview().inset(7)
             make.leading.equalTo(localLabel.snp.trailing).offset(5)
         }
-        
-//        bottomLineView.snp.makeConstraints { make in
-//            make.leading.bottom.trailing.equalToSuperview()
-//            make.height.equalTo(0.5)
-//        }
     }
     
     // MARK: - @objc

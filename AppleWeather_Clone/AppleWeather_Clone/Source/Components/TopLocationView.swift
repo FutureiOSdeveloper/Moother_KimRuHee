@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-class FirstHeaderView: UIView {
+class TopLocationView: UIView {
     static let identifier = "FirstHeaderView"
     
     // MARK: - Properties

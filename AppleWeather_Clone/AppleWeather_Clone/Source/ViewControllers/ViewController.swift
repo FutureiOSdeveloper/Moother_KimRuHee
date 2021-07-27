@@ -23,14 +23,20 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let topLocationView = FirstHeaderView()
+    let topLocationView = TopLocationView()
+    
+    let lineView = UIView().then {
+        $0.backgroundColor = .white
+    }
     
     let bottomBarView = UIView().then {
-        $0.backgroundColor = .darkGray
+        $0.backgroundColor = .clear
     }
     
     let leftBarButton = UIButton().then {
-        $0.backgroundColor = .systemPink
+        $0.setImage(UIImage(systemName: "die.face.4.fill"), for: .normal)
+        $0.tintColor = .white
+        $0.alpha = 0.5
         $0.addTarget(self, action: #selector(touchupLeftBarButton(_:)), for: .touchUpInside)
     }
     
@@ -40,7 +46,9 @@ class ViewController: UIViewController {
     }
     
     let rightBarButton = UIButton().then {
-        $0.backgroundColor = .systemPink
+        $0.setImage(UIImage(systemName: "list.dash"), for: .normal)
+        $0.tintColor = .white
+        $0.alpha = 0.5
         $0.addTarget(self, action: #selector(touchupRightBarButton(_:)), for: .touchUpInside)
     }
     
@@ -55,16 +63,22 @@ class ViewController: UIViewController {
     
     // MARK: - Custom Method
     func configUI() {
-        
+        view.backgroundColor = .clear
     }
     
     func setupAutoLayout() {
-        view.addSubviews([mainCV, bottomBarView])
+        view.addSubviews([mainCV, lineView, bottomBarView])
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
         mainCV.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.height.equalTo(770)
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.bottom.equalTo(bottomBarView.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
         }
         
         bottomBarView.snp.makeConstraints { make in
@@ -73,8 +87,7 @@ class ViewController: UIViewController {
         }
         
         leftBarButton.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview()
-            make.width.height.equalTo(50)
+            make.top.leading.equalToSuperview().inset(15)
         }
         
         pageControl.snp.makeConstraints { make in
@@ -82,8 +95,7 @@ class ViewController: UIViewController {
         }
         
         rightBarButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
-            make.width.height.equalTo(50)
+            make.top.trailing.equalToSuperview().inset(15)
         }
     }
     
@@ -95,6 +107,7 @@ class ViewController: UIViewController {
     
     func setupPageControl() {
         pageControl.numberOfPages = backColor.count
+        pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
     
     // MARK: - @objc
@@ -106,14 +119,13 @@ class ViewController: UIViewController {
         let nextVC = WeatherListViewController()
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true, completion: nil)
-        
     }
 }
 
 // MARK: - UICollectionViewDelegate
 extension ViewController: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        //// page control selected page 바꾸는 코드
+        /// page control selected page 바꾸는 코드
         let page = round(scrollView.contentOffset.x / scrollView.frame.width)
         pageControl.currentPage = Int(page)
     }

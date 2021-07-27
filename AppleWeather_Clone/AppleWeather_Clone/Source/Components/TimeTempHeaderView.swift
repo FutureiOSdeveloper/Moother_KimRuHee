@@ -53,7 +53,7 @@ class TimeTempHeaderView: UIView {
         
         timeTempCV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(117)
         }
         
         bottomLineView.snp.makeConstraints { make in
@@ -65,7 +65,6 @@ class TimeTempHeaderView: UIView {
     func setupCollectionView() {
         timeTempCV.delegate = self
         timeTempCV.dataSource = self
-        
         timeTempCV.register(TimeTempCVC.self, forCellWithReuseIdentifier: "TimeTempCVC")
     }
 }
@@ -82,7 +81,8 @@ extension TimeTempHeaderView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC
+        else { return UICollectionViewCell() }
         return cell
     }
 }
@@ -102,6 +102,6 @@ extension TimeTempHeaderView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets.zero
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
 }

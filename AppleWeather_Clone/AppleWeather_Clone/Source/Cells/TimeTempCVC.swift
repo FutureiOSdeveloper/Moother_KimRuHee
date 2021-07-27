@@ -14,21 +14,20 @@ class TimeTempCVC: UICollectionViewCell {
     static let identifier = "TimeTempCVC"
     
     // MARK: - Properties
-    let stackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.alignment = .center
-        $0.distribution = .fillEqually
-    }
-    
     let timeLabel = UILabel().then {
-        $0.text = "지금"
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.text = "오후 8:45"
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     
+    let rainPercentLabel = UILabel().then {
+        $0.text = "30%"
+        $0.font = .systemFont(ofSize: 11, weight: .black)
+        $0.textColor = .cyan
+    }
+    
     let weatherImageView = UIImageView().then {
-        $0.backgroundColor = .white
-//        $0.image = UIImage(named: <#T##String#>)
+        $0.image = UIImage(named: "img_example")
     }
     
     let tempLabel = UILabel().then {
@@ -54,23 +53,33 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     func setupAutoLayout() {
-        addSubview(stackView)
-        stackView.addArrangedSubview(timeLabel)
-        stackView.addArrangedSubview(weatherImageView)
-        stackView.addArrangedSubview(tempLabel)
+        addSubviews([timeLabel, rainPercentLabel, weatherImageView, tempLabel])
         
-        stackView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(8)
-            make.leading.trailing.equalToSuperview()
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(8)
+            make.centerX.equalToSuperview()
+        }
+        
+        rainPercentLabel.snp.makeConstraints { make in
+            make.top.equalTo(timeLabel.snp.bottom)
+            make.centerX.equalToSuperview()
         }
         
         weatherImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(33)
-        }        
+            make.top.equalTo(rainPercentLabel.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(20)
+        }
+        
+        tempLabel.snp.makeConstraints { make in
+            make.top.equalTo(weatherImageView.snp.bottom).offset(18)
+            make.centerX.equalToSuperview()
+        }
     }
     
-    func setData(time: String, image: String, temp: String) {
+    func setData(time: String, rain: String, image: String, temp: String) {
         timeLabel.text = time
+        rainPercentLabel.text = rain
         tempLabel.text = temp
         
         if let image = UIImage(named: image) {

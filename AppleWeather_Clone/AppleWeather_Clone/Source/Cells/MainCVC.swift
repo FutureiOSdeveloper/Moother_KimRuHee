@@ -191,7 +191,8 @@ extension MainCVC: UITableViewDataSource {
             return UITableViewCell()
         default:
             if indexPath.row < 10 {
-                guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC else { return UITableViewCell() }
+                guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
+                else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
                 dailyCell.setData(week: dailyList[indexPath.row].week, image: dailyList[indexPath.row].image,
                                   rain: dailyList[indexPath.row].rain, high: dailyList[indexPath.row].high,
@@ -199,12 +200,14 @@ extension MainCVC: UITableViewDataSource {
                 return dailyCell
                 
             } else if indexPath.row < 11 {
-                guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC else { return UITableViewCell() }
+                guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
+                else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
                 return todayCell
                 
             } else if indexPath.row < 16 {
-                guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC else { return UITableViewCell() }
+                guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC
+                else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
                 detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
                                    leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
@@ -213,7 +216,8 @@ extension MainCVC: UITableViewDataSource {
                 return detailCell
                 
             } else {
-                guard let mapCell = tableView.dequeueReusableCell(withIdentifier: MapTVC.identifier, for: indexPath) as? MapTVC else { return UITableViewCell() }
+                guard let mapCell = tableView.dequeueReusableCell(withIdentifier: MapTVC.identifier, for: indexPath) as? MapTVC
+                else { return UITableViewCell() }
                 mapCell.selectionStyle = .none
                 return mapCell
             }

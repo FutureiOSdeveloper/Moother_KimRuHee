@@ -18,10 +18,7 @@ class DailyTVC: UITableViewCell {
         $0.textColor = .white
     }
     
-    let weatherImageView = UIImageView().then {
-        $0.backgroundColor = .white
-//        $0.image = UIImage(named: <#T##String#>)
-    }
+    let weatherImageView = UIImageView()
     
     let rainPercentLabel = UILabel().then {
         $0.text = "40%"

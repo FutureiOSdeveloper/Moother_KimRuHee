@@ -53,6 +53,7 @@ class MainCVC: UICollectionViewCell {
         $0.axis = .horizontal
         $0.spacing = 4
         $0.alignment = .center
+        $0.backgroundColor = .clear
     }
     
     let highLabel = UILabel().then {
@@ -85,21 +86,17 @@ class MainCVC: UICollectionViewCell {
     func configUI() {
         mainTV.backgroundColor = .clear
         mainTV.separatorStyle = .none
+        mainTV.showsVerticalScrollIndicator = false
     }
     
     func setupAutoLayout() {
-        addSubviews([localView, mainTV])
-        localView.addSubviews([locationLabel, conditionLabel, tempLabel,
-                     highLowStackView])
+        addSubviews([locationLabel, conditionLabel, tempLabel,
+                     highLowStackView, mainTV])
         highLowStackView.addArrangedSubview(highLabel)
         highLowStackView.addArrangedSubview(lowLabel)
-
-        localView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-        }
         
         locationLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.snp.top).inset(100)
+            make.top.equalTo(100)
             make.centerX.equalToSuperview()
         }
         
@@ -115,13 +112,12 @@ class MainCVC: UICollectionViewCell {
         
         highLowStackView.snp.makeConstraints { make in
             make.top.equalTo(tempLabel.snp.bottom).offset(-7)
-            make.bottom.equalToSuperview().inset(80)
+//            make.bottom.equalToSuperview().inset(80)
             make.centerX.equalToSuperview()
         }
         
         mainTV.snp.makeConstraints { make in
-            make.top.equalTo(localView.snp.bottom)
-            make.leading.bottom.trailing.equalToSuperview()
+            make.top.leading.bottom.trailing.equalToSuperview()
         }
     }
     
@@ -139,15 +135,53 @@ class MainCVC: UICollectionViewCell {
 // MARK: - UITableViewDelegate
 extension MainCVC: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y > 0 {
-//            print("스크롤 올리는 중")
-//            self.localView.transform = CGAffineTransform(translationX: 0, y: -scrollView.contentOffset.y)
+        print(mainTV.contentOffset.y)
+        print("알파", self.highLowStackView.alpha)
+
+        if mainTV.contentOffset.y > 0 {
+            print("스크롤 올리는 중")
+            
+            
+            
+            if mainTV.contentOffset.y < 50 {
+//                self.locationLabel.transform = CGAffineTransform(translationX: 0, y: -scrollView.contentOffset.y)
+//                locationLabel.snp.updateConstraints { make in
+//                    make.top.equalTo(100-mainTV.contentOffset.y)
+//                }
+                
+//                highLowStackView.snp.updateConstraints { make in
+//                    make.bottom.equalToSuperview().inset(-mainTV.contentOffset.y)
+//
+//                }
+                
+                
+//                if 100-mainTV.contentOffset.y < 50 {
+//                    mainTV.contentOffset.y = 50
+//                }
+                
+                
+                
+//                self.locationLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+            } else if mainTV.contentOffset.y < 180 {
+//                tempLabel.alpha = (-mainTV.contentOffset.y - 20)/100
+//                highLowStackView.alpha = (-mainTV.contentOffset.y - 20)/100
+
+//                mainTV.snp.updateConstraints { make in
+//                    make.top.equalTo(conditionLabel.snp.bottom).offset(180-mainTV.contentOffset.y)
+//                }
+            }
+            
+
+            
 //            self.mainTV.transform = CGAffineTransform(translationX: 0, y: -scrollView.contentOffset.y)
-//        } else if scrollView.contentOffset.y < 0 {
-//            print("스크롤 내리는 중")
+        } else if mainTV.contentOffset.y < 0 {
+//            self.highLowStackView.alpha = (-mainTV.contentOffset.y - 20)/100
+
+            print("스크롤 내리는 중")
 ////            self.localView.transform = .identity
 ////            scrollView.contentInset = UIEdgeInsets(top: mainTV.sectionHeaderHeight, left: 0, bottom: 0, right: 0)
-//        }
+            
+        }
     }
 }
 
@@ -156,7 +190,7 @@ extension MainCVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return 0
+            return 300
         default:
             return mainTV.sectionHeaderHeight
         }
@@ -165,9 +199,13 @@ extension MainCVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:
-            return UIView()
+            let firstHeaderView = UIView()
+            firstHeaderView.backgroundColor = .brown
+            firstHeaderView.alpha = 0.5
+            return firstHeaderView
         default:
             let secondHeaderView = TimeTempHeaderView()
+            secondHeaderView.backgroundColor = .systemPink
             return secondHeaderView
         }
     }
@@ -187,6 +225,7 @@ extension MainCVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
+        // if 문으로 걍 section 1일 때만 주는 것.
         case 0:
             return UITableViewCell()
         default:

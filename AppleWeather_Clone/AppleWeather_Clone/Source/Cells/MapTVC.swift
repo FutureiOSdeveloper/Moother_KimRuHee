@@ -61,12 +61,12 @@ class MapTVC: UITableViewCell {
         }
         
         localLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(10)
             make.leading.equalToSuperview().inset(20)
         }
         
         mapButton.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(7)
+            make.centerY.equalTo(localLabel.snp.centerY)
             make.leading.equalTo(localLabel.snp.trailing).offset(5)
         }
     }

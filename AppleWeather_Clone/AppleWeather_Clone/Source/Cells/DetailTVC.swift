@@ -7,6 +7,9 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 class DetailTVC: UITableViewCell {
     // 일출, 일몰 등등 부분 - 5개 반복
     static let identifier = "DetailTVC"

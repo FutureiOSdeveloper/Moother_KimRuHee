@@ -7,6 +7,9 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 class TodayTVC: UITableViewCell {
     // 1개만 써주면 됨 오늘~ 웅앵부분
     static let identifier = "TodayTVC"

@@ -7,6 +7,9 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 class MainCVC: UICollectionViewCell {
     static let identifier = "MainCVC"
     

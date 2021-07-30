@@ -13,7 +13,7 @@ import SnapKit
 
 class ViewController: UIViewController {
     // MARK: - Properties
-    private let backColor: [UIColor] = [.black, .blue, .gray, .darkGray]
+    private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
     
     let mainCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,10 +21,13 @@ class ViewController: UIViewController {
         layout.scrollDirection = .horizontal
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
         return cv
     }()
     
-    let topLocationView = TopLocationView()
+    let backgroundView = UIView().then {
+        $0.backgroundColor = .orange
+    }
     
     let lineView = UIView().then {
         $0.backgroundColor = .white
@@ -68,8 +71,12 @@ class ViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-        view.addSubviews([mainCV, lineView, bottomBarView])
+        view.addSubviews([backgroundView, mainCV, lineView, bottomBarView])
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
+        
+        backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         mainCV.snp.makeConstraints { make in
             make.top.equalTo(view.snp.top)
@@ -84,7 +91,6 @@ class ViewController: UIViewController {
         }
         
         bottomBarView.snp.makeConstraints { make in
-//            make.top.equalTo(mainCV.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
             make.height.equalTo(70)
         }

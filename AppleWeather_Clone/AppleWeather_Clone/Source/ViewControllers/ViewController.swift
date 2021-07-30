@@ -71,7 +71,8 @@ class ViewController: UIViewController {
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
         mainCV.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalTo(view.snp.top)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomBarView.snp.top)
         }
         

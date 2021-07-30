@@ -30,7 +30,6 @@ class MapTVC: UITableViewCell {
         $0.titleLabel?.text = "지도에서 열기"
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.setTitleColor(.white, for: .normal)
-//        $0.addTarget(self, action: #selector(touchupMapButton), for: .touchUpInside)
         
         let attributedString = NSMutableAttributedString(string: ($0.titleLabel?.text)!)
         attributedString.addAttribute(.underlineStyle, value: 1, range: NSMakeRange(0, ($0.titleLabel?.text!.count)!))

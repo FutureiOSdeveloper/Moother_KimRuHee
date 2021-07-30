@@ -8,6 +8,7 @@
 import UIKit
 
 import Then
+import SafariServices
 import SnapKit
 
 class ViewController: UIViewController {
@@ -114,7 +115,12 @@ class ViewController: UIViewController {
     
     // MARK: - @objc
     @objc func touchupLeftBarButton(_ sender: UIButton) {
+        let application = UIApplication.shared
+        let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!
         
+        if application.canOpenURL(weatherURL) {
+            application.open(weatherURL, options: [:], completionHandler: nil)
+        }
     }
     
     @objc func touchupRightBarButton(_ sender: UIButton) {

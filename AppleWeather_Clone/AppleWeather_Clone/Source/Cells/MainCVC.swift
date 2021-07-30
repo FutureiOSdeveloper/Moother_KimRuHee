@@ -88,6 +88,12 @@ class MainCVC: UICollectionViewCell {
         mainTV.backgroundColor = .clear
         mainTV.separatorStyle = .none
         mainTV.showsVerticalScrollIndicator = false
+        
+        locationLabel.getShadow()
+        conditionLabel.getShadow()
+        tempLabel.getShadow()
+        highLabel.getShadow()
+        lowLabel.getShadow()
     }
     
     func setupAutoLayout() {

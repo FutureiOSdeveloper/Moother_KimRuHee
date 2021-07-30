@@ -29,12 +29,6 @@ class MainCVC: UICollectionViewCell {
                                      DetailModel(leftTitle: "가시거리", leftDetail: "11.3km", rightTitle: "자외선 지수", rightDetail: "5")]
     
     // MARK: - Properties
-    var tableViewTopConstraint: NSLayoutConstraint!
-    var tableViewTopLength: CGFloat = 0
-    var tableViewTopInset: CGFloat = 300
-    
-    let localView = UIView()
-    
     let locationLabel = UILabel().then {
         $0.text = "마포구"
         $0.font = .systemFont(ofSize: 30, weight: .semibold)
@@ -96,7 +90,7 @@ class MainCVC: UICollectionViewCell {
     
     func setupAutoLayout() {
         addSubviews([locationLabel, conditionLabel, tempLabel,
-                     highLowStackView, localView, mainTV])
+                     highLowStackView, mainTV])
         highLowStackView.addArrangedSubview(highLabel)
         highLowStackView.addArrangedSubview(lowLabel)
         
@@ -121,18 +115,13 @@ class MainCVC: UICollectionViewCell {
             make.centerX.equalToSuperview()
         }
         
-        //        localView.snp.makeConstraints { make in
-        //            make.top.leading.trailing.equalToSuperview()
-        //            make.height.equalTo(320)
-        //        }
-        
         mainTV.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.bottom.trailing.equalToSuperview()
         }
         
-        mainTV.contentInset = UIEdgeInsets(top: tableViewTopInset, left: 0, bottom: 0, right: 0)
-        mainTV.contentOffset.y = -300
+        mainTV.contentInset = UIEdgeInsets(top: 320, left: 0, bottom: 0, right: 0)
+        mainTV.contentOffset.y = -320
     }
     
     func setupTableView() {
@@ -149,64 +138,37 @@ class MainCVC: UICollectionViewCell {
 // MARK: - UITableViewDelegate
 extension MainCVC: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("yOffset",round(mainTV.contentOffset.y+47))
-        print("topConstraint",tableViewTopLength)
-        print("tableViewTopInset", tableViewTopInset)
-        //        print("inset",tableViewTopInset)
-        let yOffset = (mainTV.contentOffset.y+47)
-        //        print("알파", self.highLowStackView.alpha)
-        let yPlusOffset = yOffset+300
-        
-        if yOffset > -300 && yOffset < -75 {
-            mainTV.contentInset = UIEdgeInsets(top: -yOffset, left: 0, bottom: 0, right: 0)
-            if yPlusOffset > 0 && yPlusOffset <= 60 {
+        /// mainTV.contentOffset.y 이 있는데 굳이 300을 더해서 yPlusOffset을 만들어 준 이유는
+        /// mainTV의 contentInset에서 top을 300만큼 내려줬기 때문에 mainTV.contentOffset.y의 default값이 현재 -300이라서
+        /// 아래 locationLabel의 top Constraint를 쉽게 계산해주기 위함
+        let tvContentOffsetY = (mainTV.contentOffset.y+47)
+        let yPlusOffset = tvContentOffsetY+320
+            
+        if tvContentOffsetY >= -320 && tvContentOffsetY < -75 {
+            mainTV.contentInset = UIEdgeInsets(top: -tvContentOffsetY, left: 0, bottom: 0, right: 0)
+            if yPlusOffset >= 0 && yPlusOffset <= 60 {
                 locationLabel.snp.updateConstraints { make in
                     make.top.equalTo(110-yPlusOffset)
                 }
-
+                tempLabel.alpha = (60-yPlusOffset)/60
+                highLowStackView.alpha = (60-yPlusOffset)/60
             } else {
                 locationLabel.snp.updateConstraints { make in
                     make.top.equalTo(50)
                 }
-            
             }
             
-            //            mainTV.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        } else if yOffset > -75 {
+        } else if tvContentOffsetY >= -75 {
             mainTV.contentInset = UIEdgeInsets(top: 75, left: 0, bottom: 0, right: 0)
-//            locationLabel.snp.updateConstraints { make in
-//                make.top.equalTo(50)
-//            }
+            
+        } else {
+            locationLabel.snp.updateConstraints { make in
+                make.top.equalTo(110)
+            }
+            tempLabel.alpha = 1.0
+            highLowStackView.alpha = 1.0
         }
-        
-        
-        
-        
-        //        if yOffset > 0 && yOffset < 60 {
-        //            locationLabel.snp.updateConstraints { make in
-        //                make.top.equalTo(110-yOffset)
-        //            }
-        //
-        //            mainTV.contentInset = UIEdgeInsets(top: tableViewTopInset+yOffset, left: 0, bottom: 0, right: 0)
-        //        } else if yOffset > 205 {
-        ////            mainTV.snp.updateConstraints { make in
-        ////                make.top.equalToSuperview().inset(-220)
-        ////            }
-        //
-        ////            tableViewTopLength = -47
-        //        } else {
-        //            tableViewTopLength = 0
-        //        }
-        
-        //            if yOffset < 60 {
-        ////                mainTV.setContentOffset(CGPoint(x: 0, y: 53), animated: true)
     }
-    
-    //
-    
-    //     else {
-    //    //            mainTV.setContentOffset(CGPoint(x: 0, y: -100), animated: true)
-    //    }
 }
 
 // MARK: - UITableViewDelegate
@@ -224,9 +186,6 @@ extension MainCVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:
-            let firstHeaderView = UIView()
-            firstHeaderView.backgroundColor = .brown
-            firstHeaderView.alpha = 0.5
             return UIView()
         default:
             let secondHeaderView = TimeTempHeaderView()
@@ -247,22 +206,10 @@ extension MainCVC: UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 0
-        } else {
-            return tableView.rowHeight
-        }
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
-        // if 문으로 걍 section 1일 때만 주는 것.
         case 0:
-            let cell = UITableViewCell()
-            cell.backgroundColor = .green
-            cell.alpha = 0.5
-            return cell
+            return UITableViewCell()
         default:
             if indexPath.row < 10 {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC

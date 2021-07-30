@@ -40,7 +40,7 @@ class TimeTempHeaderView: UIView {
     
     // MARK: - Custom Method
     func configUI() {
-        backgroundColor = .clear
+//        backgroundColor = .clear
     }
     
     func setupAutoLayout() {

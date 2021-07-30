@@ -57,6 +57,11 @@ class TopLocationView: UIView {
         $0.backgroundColor = .white
     }
     
+    let backView = UIView().then {
+        $0.backgroundColor = .brown
+        $0.alpha = 0.5
+    }
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -74,10 +79,15 @@ class TopLocationView: UIView {
     }
     
     func setupAutoLayout() {
+        addSubview(backView)
         addSubviews([locationLabel, conditionLabel, tempLabel,
                      highLowStackView, lineView])
         highLowStackView.addArrangedSubview(highLabel)
         highLowStackView.addArrangedSubview(lowLabel)
+        
+        backView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         locationLabel.snp.makeConstraints { make in
             make.top.equalTo(self.snp.top).inset(80)

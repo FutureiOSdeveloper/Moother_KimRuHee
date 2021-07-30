@@ -7,16 +7,20 @@
 
 import UIKit
 
+import Then
+import SafariServices
+import SnapKit
+
 class MapTVC: UITableViewCell {
     static let identifier = "MapTVC"
     
     // MARK: - Properties
+    let local: String = "아현동"
     let lineView = UIView().then {
         $0.backgroundColor = .white
     }
     
     let localLabel = UILabel().then {
-        $0.text = "아현동 날씨."
         $0.font = .systemFont(ofSize: 14, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
@@ -26,7 +30,8 @@ class MapTVC: UITableViewCell {
         $0.titleLabel?.text = "지도에서 열기"
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.setTitleColor(.white, for: .normal)
-        $0.addTarget(self, action: #selector(touchupMapButton), for: .touchUpInside)
+//        $0.addTarget(self, action: #selector(touchupMapButton), for: .touchUpInside)
+        
         let attributedString = NSMutableAttributedString(string: ($0.titleLabel?.text)!)
         attributedString.addAttribute(.underlineStyle, value: 1, range: NSMakeRange(0, ($0.titleLabel?.text!.count)!))
         $0.setAttributedTitle(attributedString, for: .normal)
@@ -37,6 +42,7 @@ class MapTVC: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configUI()
         setupAutoLayout()
+        mapButton.addTarget(self, action: #selector(touchupMapButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -50,6 +56,8 @@ class MapTVC: UITableViewCell {
     // MARK: - Custom Method
     func configUI() {
         backgroundColor = .clear
+        sendSubviewToBack(contentView)
+        localLabel.text = "\(local) 날씨."
     }
     
     func setupAutoLayout() {
@@ -61,18 +69,27 @@ class MapTVC: UITableViewCell {
         }
         
         localLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(10)
             make.leading.equalToSuperview().inset(20)
         }
         
         mapButton.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(7)
+            make.centerY.equalTo(localLabel.snp.centerY)
             make.leading.equalTo(localLabel.snp.trailing).offset(5)
         }
     }
     
     // MARK: - @objc
     @objc func touchupMapButton(_ sender: UIButton) {
+        let application = UIApplication.shared
+        let mapURL = URL(string: "http://maps.apple.com/?q=\(local)")
+        let mapSecondURL = URL(string: "http://maps.apple.com/?q=")!
+        let webSiteURL = URL(string: "http://maps.apple.com")!
         
+        if application.canOpenURL(mapURL ?? mapSecondURL) {
+            application.open(mapURL ?? mapSecondURL, options: [:], completionHandler: nil)
+        } else {
+            application.open(webSiteURL)
+        }
     }
 }

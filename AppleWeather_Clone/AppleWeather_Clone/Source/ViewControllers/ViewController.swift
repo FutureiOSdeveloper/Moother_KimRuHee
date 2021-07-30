@@ -71,8 +71,9 @@ class ViewController: UIViewController {
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
         mainCV.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(770)
+            make.top.equalTo(view.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomBarView.snp.top)
         }
         
         lineView.snp.makeConstraints { make in
@@ -82,8 +83,9 @@ class ViewController: UIViewController {
         }
         
         bottomBarView.snp.makeConstraints { make in
-            make.top.equalTo(mainCV.snp.bottom)
+//            make.top.equalTo(mainCV.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(70)
         }
         
         leftBarButton.snp.makeConstraints { make in

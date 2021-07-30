@@ -7,6 +7,9 @@
 
 import UIKit
 
+import Then
+import SnapKit
+
 class DailyTVC: UITableViewCell {
     // 화~요일별 날씨 테이블 셀 총 10개를 반복하면 됨
     static let identifier = "DailyTVC"

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0C524026B42BE600362A3D /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 5B0C523F26B42BE600362A3D /* Lottie */; };
+		5B0C524326B42CC900362A3D /* 16477-rain-background-animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B0C524226B42CC900362A3D /* 16477-rain-background-animation.json */; };
 		5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */; };
 		5B212C1926AE142200603649 /* MainCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1826AE142200603649 /* MainCVC.swift */; };
 		5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1B26AE17E500603649 /* WeatherListViewController.swift */; };
@@ -30,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B0C524226B42CC900362A3D /* 16477-rain-background-animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "16477-rain-background-animation.json"; path = "../../../../../Downloads/16477-rain-background-animation.json"; sourceTree = "<group>"; };
 		5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extenison.swift"; sourceTree = "<group>"; };
 		5B212C1826AE142200603649 /* MainCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCVC.swift; sourceTree = "<group>"; };
 		5B212C1B26AE17E500603649 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 			files = (
 				5B72C17226AB371F008A4B6A /* SnapKit in Frameworks */,
 				5B72C17626AB372A008A4B6A /* Then in Frameworks */,
+				5B0C524026B42BE600362A3D /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +119,7 @@
 		5B72C16826AB3559008A4B6A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5B0C524226B42CC900362A3D /* 16477-rain-background-animation.json */,
 				5B72C16026AB3422008A4B6A /* Info.plist */,
 				5B72C15B26AB3422008A4B6A /* Assets.xcassets */,
 				5B72C16926AB3579008A4B6A /* Storyboard */,
@@ -198,6 +203,7 @@
 			packageProductDependencies = (
 				5B72C17126AB371F008A4B6A /* SnapKit */,
 				5B72C17526AB372A008A4B6A /* Then */,
+				5B0C523F26B42BE600362A3D /* Lottie */,
 			);
 			productName = "Moother iOS";
 			productReference = 5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */;
@@ -230,6 +236,7 @@
 				5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				5B72C17426AB372A008A4B6A /* XCRemoteSwiftPackageReference "Then" */,
 				5B72C17826AB3844008A4B6A /* XCRemoteSwiftPackageReference "Moya" */,
+				5B0C523E26B42BE600362A3D /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 5B72C15026AB341F008A4B6A /* Products */;
 			projectDirPath = "";
@@ -247,6 +254,7 @@
 			files = (
 				5B72C15F26AB3422008A4B6A /* LaunchScreen.storyboard in Resources */,
 				5B72C15C26AB3422008A4B6A /* Assets.xcassets in Resources */,
+				5B0C524326B42CC900362A3D /* 16477-rain-background-animation.json in Resources */,
 				5B72C15A26AB341F008A4B6A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +484,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5B0C523E26B42BE600362A3D /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.3;
+			};
+		};
 		5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -503,6 +519,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5B0C523F26B42BE600362A3D /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B0C523E26B42BE600362A3D /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		5B72C17126AB371F008A4B6A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5B72C17026AB371F008A4B6A /* XCRemoteSwiftPackageReference "SnapKit" */;

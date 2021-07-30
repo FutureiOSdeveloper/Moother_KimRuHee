@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Lottie
 import Then
 import SafariServices
 import SnapKit
@@ -25,8 +26,15 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let backgroundView = UIView().then {
-        $0.backgroundColor = .orange
+    let backgroundView = UIImageView().then {
+        $0.image = UIImage(named: "backImage")
+    }
+    
+    let animationView = AnimationView().then {
+        $0.animation = Animation.named("16477-rain-background-animation")
+        $0.contentMode = .scaleAspectFill
+        $0.loopMode = .loop
+        $0.play()
     }
     
     let lineView = UIView().then {
@@ -72,9 +80,14 @@ class ViewController: UIViewController {
     
     func setupAutoLayout() {
         view.addSubviews([backgroundView, mainCV, lineView, bottomBarView])
+        backgroundView.addSubview(animationView)
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
         backgroundView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        animationView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         

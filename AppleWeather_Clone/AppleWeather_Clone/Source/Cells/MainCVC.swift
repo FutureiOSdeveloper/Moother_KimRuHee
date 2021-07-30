@@ -86,7 +86,6 @@ class MainCVC: UICollectionViewCell {
     // MARK: - Custom Method
     func configUI() {
         mainTV.backgroundColor = .clear
-        
         mainTV.separatorStyle = .none
         mainTV.showsVerticalScrollIndicator = false
     }
@@ -114,7 +113,6 @@ class MainCVC: UICollectionViewCell {
         
         highLowStackView.snp.makeConstraints { make in
             make.top.equalTo(tempLabel.snp.bottom).offset(-7)
-            //            make.bottom.equalToSuperview().inset(80)
             make.centerX.equalToSuperview()
         }
         
@@ -159,6 +157,8 @@ extension MainCVC: UITableViewDelegate {
                 locationLabel.snp.updateConstraints { make in
                     make.top.equalTo(50)
                 }
+                tempLabel.alpha = 0
+                highLowStackView.alpha = 0
             }
             
         } else if tvContentOffsetY >= -75 {
@@ -176,16 +176,6 @@ extension MainCVC: UITableViewDelegate {
 
 // MARK: - UITableViewDelegate
 extension MainCVC: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 0:
-            return 0
-        default:
-            return mainTV.sectionHeaderHeight
-        }
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch section {
         case 0:

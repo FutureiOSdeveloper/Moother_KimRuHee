@@ -29,6 +29,8 @@
 		5B72C15F26AB3422008A4B6A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B72C15D26AB3422008A4B6A /* LaunchScreen.storyboard */; };
 		5B72C17226AB371F008A4B6A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5B72C17126AB371F008A4B6A /* SnapKit */; };
 		5B72C17626AB372A008A4B6A /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 5B72C17526AB372A008A4B6A /* Then */; };
+		5B91AA8A26B7B7E80085161B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AA8926B7B7E80085161B /* SearchViewController.swift */; };
+		5B91AA8D26B7B8100085161B /* ListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AA8C26B7B8100085161B /* ListTVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		5B72C15B26AB3422008A4B6A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B72C15E26AB3422008A4B6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B72C16026AB3422008A4B6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
+		5B91AA8926B7B7E80085161B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		5B91AA8C26B7B8100085161B /* ListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +163,7 @@
 			children = (
 				5B72C15626AB341F008A4B6A /* ViewController.swift */,
 				5B212C1B26AE17E500603649 /* WeatherListViewController.swift */,
+				5B91AA8926B7B7E80085161B /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				5B212C2726AEA2DE00603649 /* TodayTVC.swift */,
 				5B212C2E26AEA34200603649 /* DetailTVC.swift */,
 				5B212C3F26AFE1ED00603649 /* MapTVC.swift */,
+				5B91AA8C26B7B8100085161B /* ListTVC.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -276,6 +282,8 @@
 				5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */,
 				5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */,
 				5B0C524626B431F200362A3D /* UILabel + Extension.swift in Sources */,
+				5B91AA8D26B7B8100085161B /* ListTVC.swift in Sources */,
+				5B91AA8A26B7B7E80085161B /* SearchViewController.swift in Sources */,
 				5B212C4026AFE1ED00603649 /* MapTVC.swift in Sources */,
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
 				5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */,

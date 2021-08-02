@@ -28,7 +28,7 @@ class ListTVC: UITableViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.text = "29"
+        $0.text = "25"
         $0.font = .systemFont(ofSize: 60, weight: .regular)
         $0.textColor = .white
         $0.textAlignment = .left
@@ -52,6 +52,15 @@ class ListTVC: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configUI()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(changeToC),
+                                               name: NSNotification.Name("changeUnitToC"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(changeToF),
+                                               name: NSNotification.Name("changeUnitToF"),
+                                               object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -108,5 +117,16 @@ class ListTVC: UITableViewCell {
             make.trailing.equalToSuperview().inset(20)
             make.centerY.equalToSuperview()
         }
+    }
+    
+    // MARK: - @objc
+    @objc func changeToC(_ sender: Notification) {
+        tempLabel.text = "\(5*(Int(tempLabel.text!)! - 32)/9)"
+        print("F -> C")
+    }
+    
+    @objc func changeToF(_ sender: Notification) {
+        tempLabel.text = "\((9*(Int(tempLabel.text!)!)/5 + 32))"
+        print("C -> F")
     }
 }

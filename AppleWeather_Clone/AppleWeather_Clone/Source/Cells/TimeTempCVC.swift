@@ -49,7 +49,7 @@ class TimeTempCVC: UICollectionViewCell {
     
     // MARK: - Custom Method
     func configUI() {
-
+        backgroundColor = .clear
     }
     
     func setupAutoLayout() {

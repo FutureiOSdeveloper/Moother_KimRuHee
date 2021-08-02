@@ -19,6 +19,7 @@ class TimeTempHeaderView: UIView {
         layout.scrollDirection = .horizontal
         cv.isPagingEnabled = false
         cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .clear
         return cv
     }()
     

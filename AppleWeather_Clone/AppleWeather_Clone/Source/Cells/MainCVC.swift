@@ -178,6 +178,19 @@ extension MainCVC: UITableViewDelegate {
             highLowStackView.alpha = 1.0
         }
     }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let tvContentOffsetY = (mainTV.contentOffset.y+47)
+        let yPlusOffset = tvContentOffsetY+320
+        print("tvContentOffsetY", round(tvContentOffsetY))
+        print("yPlusOffset", round(yPlusOffset))
+        
+        if tvContentOffsetY > -320 && tvContentOffsetY < 47 {
+            UIView.animate(withDuration: 0.5) {
+                self.mainTV.contentInset = UIEdgeInsets(top: 47, left: 0, bottom: 0, right: 0)
+            }
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate

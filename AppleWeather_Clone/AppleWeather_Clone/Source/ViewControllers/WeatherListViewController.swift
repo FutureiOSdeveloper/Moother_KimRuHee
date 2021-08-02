@@ -12,6 +12,8 @@ import SnapKit
 
 class WeatherListViewController: UIViewController {
     // MARK: - Properties
+    var weatherList: [String] = ["0", "1", "2", "3", "4"]
+    
     let mainTV = UITableView()
     
     // MARK: - Lifecycle
@@ -39,7 +41,7 @@ class WeatherListViewController: UIViewController {
         mainTV.delegate = self
         mainTV.dataSource = self
         mainTV.register(ListTVC.self, forCellReuseIdentifier: "ListTVC")
-        
+
         mainTV.separatorStyle = .none
         mainTV.backgroundColor = .clear
         mainTV.contentInsetAdjustmentBehavior = .never
@@ -62,10 +64,27 @@ class WeatherListViewController: UIViewController {
         self.present(nextVC, animated: true, completion: nil)
     }
 }
- 
+
 // MARK: - UITableViewDelegate
 extension WeatherListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        if indexPath.row == 0 {
+            return UITableViewCell.EditingStyle.none
+        } else {
+            return UITableViewCell.EditingStyle.delete
+        }
+    }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            weatherList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -94,7 +113,7 @@ extension WeatherListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return weatherList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,6 +123,8 @@ extension WeatherListViewController: UITableViewDataSource {
             listCell.setupFirstCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundColor = .brown
+//            listCell.isUserInteractionEnabled = false
+//            listCell.userInteractionEnabledWhileDragging = false
             return listCell
         } else {
             guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC
@@ -113,5 +134,11 @@ extension WeatherListViewController: UITableViewDataSource {
             listCell.backgroundColor = .blue
             return listCell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let moveCell = weatherList[sourceIndexPath.row]
+        weatherList.remove(at: sourceIndexPath.row)
+        weatherList.insert(moveCell, at: destinationIndexPath.row)
     }
 }

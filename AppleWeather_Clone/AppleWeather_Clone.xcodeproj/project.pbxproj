@@ -32,6 +32,8 @@
 		5B91AA8A26B7B7E80085161B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AA8926B7B7E80085161B /* SearchViewController.swift */; };
 		5B91AA8D26B7B8100085161B /* ListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AA8C26B7B8100085161B /* ListTVC.swift */; };
 		5B91AABD26B7D1140085161B /* ListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AABC26B7D1140085161B /* ListFooterView.swift */; };
+		5B91AAC226B9ABD20085161B /* SearchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AAC126B9ABD20085161B /* SearchTVC.swift */; };
+		5B91AAC626B9CEE20085161B /* CountryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AAC526B9CEE20085161B /* CountryDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +61,8 @@
 		5B91AA8926B7B7E80085161B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5B91AA8C26B7B8100085161B /* ListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTVC.swift; sourceTree = "<group>"; };
 		5B91AABC26B7D1140085161B /* ListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFooterView.swift; sourceTree = "<group>"; };
+		5B91AAC126B9ABD20085161B /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
+		5B91AAC526B9CEE20085161B /* CountryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,7 @@
 			children = (
 				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
 				5B212C4826B02C6000603649 /* DetailModel.swift */,
+				5B91AAC526B9CEE20085161B /* CountryDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			children = (
 				5B91AABA26B7D0E80085161B /* Main */,
 				5B91AABB26B7D0ED0085161B /* List */,
+				5B91AAC026B9ABA70085161B /* Search */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -207,6 +213,14 @@
 				5B91AA8C26B7B8100085161B /* ListTVC.swift */,
 			);
 			path = List;
+			sourceTree = "<group>";
+		};
+		5B91AAC026B9ABA70085161B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				5B91AAC126B9ABD20085161B /* SearchTVC.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B91AAC626B9CEE20085161B /* CountryDataModel.swift in Sources */,
 				5B212C4526B02C1C00603649 /* DailyWeatherModel.swift in Sources */,
 				5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */,
 				5B212C3626AEB3DC00603649 /* TimeTempCVC.swift in Sources */,
@@ -298,6 +313,7 @@
 				5B212C2F26AEA34200603649 /* DetailTVC.swift in Sources */,
 				5B212C4926B02C6000603649 /* DetailModel.swift in Sources */,
 				5B212C2826AEA2DE00603649 /* TodayTVC.swift in Sources */,
+				5B91AAC226B9ABD20085161B /* SearchTVC.swift in Sources */,
 				5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */,
 				5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */,
 				5B0C524626B431F200362A3D /* UILabel + Extension.swift in Sources */,

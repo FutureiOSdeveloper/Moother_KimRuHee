@@ -12,10 +12,14 @@ import SnapKit
 
 class WeatherListViewController: UIViewController {
     // MARK: - Properties
-    var weatherList: [String] = ["0", "1", "2", "3", "4"]
+    var weatherList: [ListModel] = [ListModel(time: "마포구", country: "나의 위치", temp: "33"),
+                                    ListModel(time: "오전 4:21", country: "하와이", temp: "33"),
+                                    ListModel(time: "오전 6:21", country: "도쿄", temp: "22"),
+                                    ListModel(time: "오전 7:21", country: "Chiyoda", temp: "18"),
+                                    ListModel(time: "오전 8:21", country: "로스엔젤레스", temp: "33")]
     
     let mainTV = UITableView()
-    
+        
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +127,9 @@ extension WeatherListViewController: UITableViewDataSource {
             listCell.setupFirstCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundColor = .brown
+            listCell.setFirstCellData(local: weatherList[indexPath.row].time,
+                                      myLocal: weatherList[indexPath.row].country,
+                                      temp: weatherList[indexPath.row].temp)
 //            listCell.isUserInteractionEnabled = false
 //            listCell.userInteractionEnabledWhileDragging = false
             return listCell
@@ -132,6 +139,9 @@ extension WeatherListViewController: UITableViewDataSource {
             listCell.setupRemainCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundColor = .blue
+            listCell.setCellData(time: weatherList[indexPath.row].time,
+                                 country: weatherList[indexPath.row].country,
+                                 temp: weatherList[indexPath.row].temp)
             return listCell
         }
     }
@@ -140,5 +150,21 @@ extension WeatherListViewController: UITableViewDataSource {
         let moveCell = weatherList[sourceIndexPath.row]
         weatherList.remove(at: sourceIndexPath.row)
         weatherList.insert(moveCell, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true) {
+            NotificationCenter.default.post(name: NSNotification.Name("pageControl"), object: indexPath.row)
+            if indexPath.row == 0 {
+                NotificationCenter.default.post(name: NSNotification.Name("clickFirstCell"),
+                                                object: [self.weatherList[0].time, self.weatherList[0].temp])
+            } else {
+                NotificationCenter.default.post(name: NSNotification.Name("clickOtherCell"),
+                                                object: [self.weatherList[indexPath.row].country, self.weatherList[indexPath.row].temp])
+            }
+        }
+        
+        
     }
 }

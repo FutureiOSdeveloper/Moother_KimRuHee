@@ -34,6 +34,7 @@
 		5B91AABD26B7D1140085161B /* ListFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AABC26B7D1140085161B /* ListFooterView.swift */; };
 		5B91AAC226B9ABD20085161B /* SearchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AAC126B9ABD20085161B /* SearchTVC.swift */; };
 		5B91AAC626B9CEE20085161B /* CountryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AAC526B9CEE20085161B /* CountryDataModel.swift */; };
+		5B91AAC926BBC87F0085161B /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B91AAC826BBC87F0085161B /* ListModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		5B91AABC26B7D1140085161B /* ListFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFooterView.swift; sourceTree = "<group>"; };
 		5B91AAC126B9ABD20085161B /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
 		5B91AAC526B9CEE20085161B /* CountryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDataModel.swift; sourceTree = "<group>"; };
+		5B91AAC826BBC87F0085161B /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			children = (
 				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
 				5B212C4826B02C6000603649 /* DetailModel.swift */,
+				5B91AAC826BBC87F0085161B /* ListModel.swift */,
 				5B91AAC526B9CEE20085161B /* CountryDataModel.swift */,
 			);
 			path = Model;
@@ -323,6 +326,7 @@
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
 				5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */,
 				5B91AABD26B7D1140085161B /* ListFooterView.swift in Sources */,
+				5B91AAC926BBC87F0085161B /* ListModel.swift in Sources */,
 				5B212C1926AE142200603649 /* MainCVC.swift in Sources */,
 				5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */,
 			);

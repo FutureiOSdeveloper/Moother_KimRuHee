@@ -70,13 +70,18 @@ class MainCVC: UICollectionViewCell {
     }
     
     let mainTV = UITableView()
-    
+
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         configUI()
         setupAutoLayout()
         setupTableView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveFirstCell(_:)),
+                                               name: NSNotification.Name("clickFirstCell"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
+                                               name: NSNotification.Name("clickOtherCell"), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -139,6 +144,23 @@ class MainCVC: UICollectionViewCell {
         mainTV.register(TodayTVC.self, forCellReuseIdentifier: "TodayTVC")
         mainTV.register(DetailTVC.self, forCellReuseIdentifier: "DetailTVC")
         mainTV.register(MapTVC.self, forCellReuseIdentifier: "MapTVC")
+    }
+    
+    // MARK: - @objc
+    @objc func receiveFirstCell(_ notifiction: Notification) {
+        if let location = notifiction.object as? [String],
+           let temp = notifiction.object as? [String] {
+            locationLabel.text = location[0]
+            tempLabel.text = temp[1]
+        }
+    }
+    
+    @objc func receiveOtherCell(_ notifiction: Notification) {
+        if let location = notifiction.object as? [String],
+           let temp = notifiction.object as? [String] {
+            locationLabel.text = location[0]
+            tempLabel.text = temp[1]
+        }
     }
 }
 

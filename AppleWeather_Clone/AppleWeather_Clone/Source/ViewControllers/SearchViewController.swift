@@ -12,14 +12,12 @@ import SnapKit
 
 class SearchViewController: UIViewController {
     // MARK: - Properties
-    var countryList: [String] = ["ㅇ", "한국", "서울"]
+    var countryList: [String] = ["Blur Effect 주기", "김연경 사랑해", "네카라쿠배 가자들!"]
 
     let topView = UIView().then {
         $0.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
     }
-    
-    let blurEffect = UIBlurEffect(style: .dark)
-    
+        
     let titleLabel = UILabel().then {
         $0.text = "도시, 우편번호 또는 공항 위치 입력"
         $0.font = .systemFont(ofSize: 14, weight: .semibold)
@@ -50,12 +48,15 @@ class SearchViewController: UIViewController {
         $0.backgroundColor = .lightGray
     }
     
-    let searchTV = UITableView()
+    let searchTV = UITableView().then {
+        $0.backgroundColor = .clear
+    }
             
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
+        setupBlurEffect()
         setupAutoLayout()
         setupTableView()
     }
@@ -63,10 +64,12 @@ class SearchViewController: UIViewController {
     // MARK: - Custom Method
     func configUI() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
-        searchTV.backgroundColor = .clear
-        
+    }
+    
+    func setupBlurEffect() {
+        let blurEffect = UIBlurEffect(style: .dark)
         let visualEffectView = UIVisualEffectView(effect: blurEffect)
-        visualEffectView.frame = self.view.frame
+        visualEffectView.frame = view.frame
         view.addSubview(visualEffectView)
         topView.addSubview(visualEffectView)
     }

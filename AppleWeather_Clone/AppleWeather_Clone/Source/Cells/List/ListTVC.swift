@@ -121,12 +121,28 @@ class ListTVC: UITableViewCell {
     
     // MARK: - @objc
     @objc func changeToC(_ sender: Notification) {
-        tempLabel.text = "\(5*(Int(tempLabel.text!)! - 32)/9)"
-        print("F -> C")
+        let temp = Int(tempLabel.text!)!
+        tempLabel.text = "\(Int(5*(temp - 32)/9))"
+        print("F -> C", temp)
     }
     
     @objc func changeToF(_ sender: Notification) {
-        tempLabel.text = "\((9*(Int(tempLabel.text!)!)/5 + 32))"
-        print("C -> F")
+        let temp = Int(tempLabel.text!)!
+        tempLabel.text = "\(Int(9*temp/5) + 32)"
+        print("C -> F", temp)
+    }
+    
+    // MARK: - setFirstCellData
+    func setFirstCellData(local: String, myLocal: String, temp: String) {
+        localLabel.text = local
+        myLocalLabel.text = myLocal
+        tempLabel.text = temp
+    }
+    
+    // MARK: - setFirstCellData
+    func setCellData(time: String, country: String, temp: String) {
+        timeLabel.text = time
+        countryLabel.text = country
+        tempLabel.text = temp
     }
 }

@@ -71,6 +71,9 @@ class ViewController: UIViewController {
         setupCollectionView()
         setupAutoLayout()
         setupPageControl()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
+                                               name: NSNotification.Name("pageControl"), object: nil)
     }
     
     // MARK: - Custom Method
@@ -133,6 +136,12 @@ class ViewController: UIViewController {
     }
     
     // MARK: - @objc
+    @objc func changePageControl(_ notification: Notification) {
+        if let number = notification.object as? Int {
+            pageControl.currentPage = number
+        }
+    }
+    
     @objc func touchupLeftBarButton(_ sender: UIButton) {
         let application = UIApplication.shared
         let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!

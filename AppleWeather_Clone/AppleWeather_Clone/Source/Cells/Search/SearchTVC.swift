@@ -27,7 +27,11 @@ class SearchTVC: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        if selected {
+            self.backgroundColor = .init(white: 1.0, alpha: 0.1)
+        } else {
+            self.backgroundColor = .none
+        }
     }
     
     required init?(coder: NSCoder) {

@@ -26,6 +26,8 @@ class SearchViewController: UIViewController {
     }
     
     let searchBar = UISearchBar().then {
+        $0.becomeFirstResponder()
+        $0.keyboardAppearance = .dark
         $0.showsCancelButton = false
         $0.searchBarStyle = .minimal
         $0.searchTextField.leftView?.tintColor = UIColor.white.withAlphaComponent(0.5)

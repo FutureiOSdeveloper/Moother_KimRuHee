@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     }
     
     let animationView = AnimationView().then {
-        $0.animation = Animation.named("16477-rain-background-animation")
+//        $0.animation = Animation.named("16477-rain-background-animation")
         $0.contentMode = .scaleAspectFill
         $0.loopMode = .loop
         $0.play()
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
         setupCollectionView()
         setupAutoLayout()
         setupPageControl()
-        
+    
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
     }
@@ -134,7 +134,7 @@ class ViewController: UIViewController {
         pageControl.numberOfPages = backColor.count
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
-    
+
     // MARK: - @objc
     @objc func changePageControl(_ notification: Notification) {
         if let number = notification.object as? Int {

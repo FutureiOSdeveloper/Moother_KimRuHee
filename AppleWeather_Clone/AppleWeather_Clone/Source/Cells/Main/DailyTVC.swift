@@ -26,7 +26,7 @@ class DailyTVC: UITableViewCell {
     let rainPercentLabel = UILabel().then {
         $0.text = "40%"
         $0.font = .systemFont(ofSize: 14, weight: .semibold)
-        $0.textColor = .blue
+        $0.textColor = .cyan
     }
     
     let highTempLabel = UILabel().then {

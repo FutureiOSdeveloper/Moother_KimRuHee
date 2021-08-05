@@ -100,6 +100,7 @@ iOSInjectionProject/
 
 
 #.DS_Store
+#General API.swift
 
 ## Gcc Patch
 /*.gcno

@@ -31,7 +31,7 @@ class MainCVC: UICollectionViewCell {
                                      DetailModel(leftTitle: "강수량", leftDetail: "0.2cm", rightTitle: "기압", rightDetail: "1008hPa"),
                                      DetailModel(leftTitle: "가시거리", leftDetail: "11.3km", rightTitle: "자외선 지수", rightDetail: "5")]
     
-    // MARK: - Properties
+    // MARK: - Properties    
     let locationLabel = UILabel().then {
         $0.text = "마포구"
         $0.font = .systemFont(ofSize: 30, weight: .semibold)
@@ -45,7 +45,7 @@ class MainCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.text = "36"
+        $0.text = "36º"
         $0.font = .systemFont(ofSize: 100, weight: .light)
         $0.textColor = .white
     }
@@ -70,7 +70,7 @@ class MainCVC: UICollectionViewCell {
     }
     
     let mainTV = UITableView()
-
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -172,7 +172,7 @@ extension MainCVC: UITableViewDelegate {
         /// 아래 locationLabel의 top Constraint를 쉽게 계산해주기 위함
         let tvContentOffsetY = (mainTV.contentOffset.y+47)
         let yPlusOffset = tvContentOffsetY+320
-            
+        
         if tvContentOffsetY >= -320 && tvContentOffsetY < -75 {
             mainTV.contentInset = UIEdgeInsets(top: -tvContentOffsetY, left: 0, bottom: 0, right: 0)
             if yPlusOffset >= 0 && yPlusOffset <= 60 {
@@ -199,8 +199,26 @@ extension MainCVC: UITableViewDelegate {
             tempLabel.alpha = 1.0
             highLowStackView.alpha = 1.0
         }
+        
+        for cell in self.mainTV.visibleCells {
+            let paddingToDisappear = CGFloat(75 + 117)
+            let hiddenFrameHeight = tvContentOffsetY + paddingToDisappear - cell.frame.origin.y
+            if (hiddenFrameHeight >= 0 || hiddenFrameHeight <= cell.frame.size.height) {
+                if let dailyTVC = cell as? DailyTVC {
+                    dailyTVC.maskCell(fromTop: hiddenFrameHeight)
+                }
+                
+                if let todayTVC = cell as? TodayTVC {
+                    todayTVC.maskCell(fromTop: hiddenFrameHeight)
+                }
+                
+                if let detailTVC = cell as? DetailTVC {
+                    detailTVC.maskCell(fromTop: hiddenFrameHeight)
+                }
+            }
+        }
     }
-
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let tvContentOffsetY = (mainTV.contentOffset.y+47)
         let yPlusOffset = tvContentOffsetY+320

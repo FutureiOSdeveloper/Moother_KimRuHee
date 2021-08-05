@@ -153,7 +153,7 @@ class ViewController: UIViewController {
     
     @objc func touchupRightBarButton(_ sender: UIButton) {
         let nextVC = WeatherListViewController()
-        nextVC.modalPresentationStyle = .fullScreen
+        nextVC.modalPresentationStyle = .currentContext
         present(nextVC, animated: true, completion: nil)
     }
 }

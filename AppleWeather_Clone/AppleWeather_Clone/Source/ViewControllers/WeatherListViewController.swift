@@ -164,7 +164,5 @@ extension WeatherListViewController: UITableViewDataSource {
                                                 object: [self.weatherList[indexPath.row].country, self.weatherList[indexPath.row].temp])
             }
         }
-        
-        
     }
 }

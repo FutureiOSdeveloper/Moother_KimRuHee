@@ -13,12 +13,12 @@ import SnapKit
 class SearchViewController: UIViewController {
     // MARK: - Properties
     var countryList: [String] = ["ㅇ", "한국", "서울"]
-    let searchController = UISearchController(searchResultsController: nil)
 
     let topView = UIView().then {
-        $0.backgroundColor = UIColor.black
-        $0.alpha = 0.7
+        $0.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
     }
+    
+    let blurEffect = UIBlurEffect(style: .dark)
     
     let titleLabel = UILabel().then {
         $0.text = "도시, 우편번호 또는 공항 위치 입력"
@@ -30,17 +30,24 @@ class SearchViewController: UIViewController {
     let searchBar = UISearchBar().then {
         $0.showsCancelButton = false
         $0.searchBarStyle = .minimal
+        $0.searchTextField.leftView?.tintColor = UIColor.white.withAlphaComponent(0.5)
         $0.searchTextField.backgroundColor = .lightGray
         $0.searchTextField.textColor = .white
         $0.searchTextField.tintColor = .white
         $0.searchTextField.font = .systemFont(ofSize: 14, weight: .semibold)
-        $0.searchTextField.attributedPlaceholder = NSAttributedString(string: "검색", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.6)])
+        $0.searchTextField.attributedPlaceholder = NSAttributedString(string: "검색",
+                                                                      attributes: [NSAttributedString.Key.foregroundColor : UIColor.white.withAlphaComponent(0.5)])
     }
     
     let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
         $0.tintColor = .white
-        $0.titleLabel?.font = .systemFont(ofSize: 19, weight: .semibold)
+        $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        $0.addTarget(self, action: #selector(touchupCancelButton(_:)), for: .touchUpInside)
+    }
+    
+    let lineView = UIView().then {
+        $0.backgroundColor = .lightGray
     }
     
     let searchTV = UITableView()
@@ -55,13 +62,18 @@ class SearchViewController: UIViewController {
     
     // MARK: - Custom Method
     func configUI() {
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         searchTV.backgroundColor = .clear
+        
+        let visualEffectView = UIVisualEffectView(effect: blurEffect)
+        visualEffectView.frame = self.view.frame
+        view.addSubview(visualEffectView)
+        topView.addSubview(visualEffectView)
     }
     
     func setupAutoLayout() {
         view.addSubviews([topView, searchTV])
-        topView.addSubviews([titleLabel, searchBar, cancelButton])
+        topView.addSubviews([titleLabel, searchBar, cancelButton, lineView])
         
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -85,6 +97,11 @@ class SearchViewController: UIViewController {
             make.trailing.equalToSuperview().inset(10)
         }
         
+        lineView.snp.makeConstraints { make in
+            make.leading.bottom.trailing.equalToSuperview()
+            make.height.equalTo(0.5)
+        }
+        
         searchTV.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.leading.bottom.trailing.equalToSuperview()
@@ -98,7 +115,11 @@ class SearchViewController: UIViewController {
         
         searchTV.separatorStyle = .none
     }
-
+    
+    // MARK: - @objc
+    @objc func touchupCancelButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -116,8 +137,8 @@ extension SearchViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTVC", for: indexPath) as? SearchTVC
         else { return UITableViewCell() }
         cell.countryLabel.text = self.countryList[indexPath.row]
-        cell.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-        cell.selectionStyle = .gray
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         return cell
     }
 }

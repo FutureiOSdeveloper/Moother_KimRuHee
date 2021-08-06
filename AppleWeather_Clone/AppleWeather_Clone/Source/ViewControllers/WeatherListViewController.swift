@@ -130,8 +130,6 @@ extension WeatherListViewController: UITableViewDataSource {
             listCell.setFirstCellData(local: weatherList[indexPath.row].time,
                                       myLocal: weatherList[indexPath.row].country,
                                       temp: weatherList[indexPath.row].temp)
-//            listCell.isUserInteractionEnabled = false
-//            listCell.userInteractionEnabledWhileDragging = false
             return listCell
         } else {
             guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC

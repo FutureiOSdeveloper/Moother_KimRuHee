@@ -15,6 +15,21 @@ import SnapKit
 class ViewController: UIViewController {
     // MARK: - Properties
     private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
+    var isAddNewCityView: Bool = false
+    
+    let cancelButton = UIButton().then {
+        $0.setTitle("취소", for: .normal)
+        $0.tintColor = .white
+        $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        $0.addTarget(self, action: #selector(touchupCancelButton(_:)), for: .touchUpInside)
+    }
+    
+    let addButton = UIButton().then {
+        $0.setTitle("추가", for: .normal)
+        $0.tintColor = .white
+        $0.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        $0.addTarget(self, action: #selector(touchupAddButton(_:)), for: .touchUpInside)
+    }
     
     let mainCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -82,7 +97,7 @@ class ViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-        view.addSubviews([backgroundView, mainCV, lineView, bottomBarView])
+        view.addSubviews([backgroundView, mainCV, cancelButton, addButton, lineView, bottomBarView])
         backgroundView.addSubview(animationView)
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
@@ -122,6 +137,21 @@ class ViewController: UIViewController {
         rightBarButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(15)
         }
+        
+        if isAddNewCityView {
+            cancelButton.snp.makeConstraints { make in
+                make.top.leading.equalToSuperview().inset(15)
+            }
+            
+            addButton.snp.makeConstraints { make in
+                make.top.trailing.equalToSuperview().inset(15)
+            }
+            
+            mainCV.snp.makeConstraints { make in
+                make.top.equalToSuperview().inset(50)
+                make.leading.bottom.trailing.equalToSuperview()
+            }
+        }
     }
     
     func setupCollectionView() {
@@ -136,6 +166,14 @@ class ViewController: UIViewController {
     }
 
     // MARK: - @objc
+    @objc func touchupCancelButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func touchupAddButton(_ sender: UIButton) {
+        
+    }
+    
     @objc func changePageControl(_ notification: Notification) {
         if let number = notification.object as? Int {
             pageControl.currentPage = number

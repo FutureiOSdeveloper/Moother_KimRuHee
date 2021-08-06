@@ -7,13 +7,16 @@
 
 import UIKit
 
+import MapKit
 import Then
 import SnapKit
 
 class SearchViewController: UIViewController {
     // MARK: - Properties
-    var countryList: [String] = ["Blur Effect 주기", "김연경 사랑해", "네카라쿠배 가자들!"]
-
+    private var searchCompleter = MKLocalSearchCompleter() /// 검색을 도와주는 변수
+    private var searchResults = [MKLocalSearchCompletion]() /// 검색 결과를 담는 변수
+    let mainCVC = MainCVC()
+           
     let topView = UIView().then {
         $0.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
     }
@@ -53,13 +56,15 @@ class SearchViewController: UIViewController {
     let searchTV = UITableView().then {
         $0.backgroundColor = .clear
     }
-            
+     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
         setupBlurEffect()
         setupAutoLayout()
+        setupSearchBar()
+        setupSearchCompleter()
         setupTableView()
     }
     
@@ -113,12 +118,21 @@ class SearchViewController: UIViewController {
         }
     }
     
+    func setupSearchBar() {
+        searchBar.delegate = self
+    }
+    
     func setupTableView() {
         searchTV.delegate = self
         searchTV.dataSource = self
         searchTV.register(SearchTVC.self, forCellReuseIdentifier: "SearchTVC")
         
         searchTV.separatorStyle = .none
+    }
+    
+    func setupSearchCompleter() {
+        searchCompleter.delegate = self
+        searchCompleter.resultTypes = .address /// resultTypes은 검색 유형인데 address는 주소를 의미
     }
     
     // MARK: - @objc
@@ -129,21 +143,51 @@ class SearchViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = ViewController()
+        vc.isAddNewCityView = true
+        self.mainCVC.locationLabel.text = self.searchResults[indexPath.row].title
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return countryList.count
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTVC", for: indexPath) as? SearchTVC
         else { return UITableViewCell() }
-        cell.countryLabel.text = self.countryList[indexPath.row]
+        cell.countryLabel.text = self.searchResults[indexPath.row].title
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    // 검색창의 text가 변하는 경우에 searchBar가 delegate에게 알리는데 사용하는 함수
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // searchText를 queryFragment로 넘겨준다.
+        searchCompleter.queryFragment = searchText
+    }
+}
+
+// MARK: - MKLocalSearchCompleterDelegate
+extension SearchViewController: MKLocalSearchCompleterDelegate {
+    // 자동완성 완료 시에 결과를 받는 함수
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        // completer.results를 통해 검색한 결과를 searchResults에 담아줍니다
+        searchResults = completer.results
+        searchTV.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        // 에러 확인
+        print(error.localizedDescription)
     }
 }

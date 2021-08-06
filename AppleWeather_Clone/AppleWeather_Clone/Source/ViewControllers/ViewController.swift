@@ -180,7 +180,11 @@ class ViewController: UIViewController {
     }
     
     @objc func touchupAddButton(_ sender: UIButton) {
+        guard let pvc = self.presentingViewController else { return }
         self.dismiss(animated: true) {
+            pvc.dismiss(animated: true, completion: nil)
+            pvc.modalPresentationStyle = .overFullScreen
+            pvc.present(WeatherListViewController(), animated: true, completion: nil)
         }
     }
     

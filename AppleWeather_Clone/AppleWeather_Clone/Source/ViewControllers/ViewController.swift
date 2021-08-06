@@ -13,9 +13,13 @@ import SafariServices
 import SnapKit
 
 class ViewController: UIViewController {
+    let searchVC = SearchViewController()
+
     // MARK: - Properties
     private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
+    
     var isAddNewCityView: Bool = false
+    var location: String = ""
     
     let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
@@ -86,6 +90,10 @@ class ViewController: UIViewController {
         setupCollectionView()
         setupAutoLayout()
         setupPageControl()
+        
+        if isAddNewCityView {
+            mainCV.isScrollEnabled = false
+        }
     
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
@@ -140,16 +148,17 @@ class ViewController: UIViewController {
         
         if isAddNewCityView {
             cancelButton.snp.makeConstraints { make in
-                make.top.leading.equalToSuperview().inset(15)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(5)
+                make.leading.equalToSuperview().inset(20)
             }
             
             addButton.snp.makeConstraints { make in
-                make.top.trailing.equalToSuperview().inset(15)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(5)
+                make.trailing.equalToSuperview().inset(20)
             }
             
             mainCV.snp.makeConstraints { make in
-                make.top.equalToSuperview().inset(50)
-                make.leading.bottom.trailing.equalToSuperview()
+                make.top.leading.bottom.trailing.equalToSuperview()
             }
         }
     }
@@ -171,7 +180,8 @@ class ViewController: UIViewController {
     }
     
     @objc func touchupAddButton(_ sender: UIButton) {
-        
+        self.dismiss(animated: true) {
+        }
     }
     
     @objc func changePageControl(_ notification: Notification) {
@@ -215,6 +225,9 @@ extension ViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
         cell.backgroundColor = backColor[indexPath.item]
+        if isAddNewCityView {
+            cell.locationLabel.text = location
+        }
         return cell
     }
 }

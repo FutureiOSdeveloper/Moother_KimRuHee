@@ -45,7 +45,7 @@ class MainCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.text = "36º"
+        $0.text = "36"
         $0.font = .systemFont(ofSize: 100, weight: .light)
         $0.textColor = .white
     }

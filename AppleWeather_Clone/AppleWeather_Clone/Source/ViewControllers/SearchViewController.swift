@@ -15,12 +15,11 @@ class SearchViewController: UIViewController {
     // MARK: - Properties
     private var searchCompleter = MKLocalSearchCompleter() /// 검색을 도와주는 변수
     private var searchResults = [MKLocalSearchCompletion]() /// 검색 결과를 담는 변수
-    let mainCVC = MainCVC()
-           
+    
     let topView = UIView().then {
         $0.backgroundColor = UIColor.lightGray.withAlphaComponent(0.7)
     }
-        
+    
     let titleLabel = UILabel().then {
         $0.text = "도시, 우편번호 또는 공항 위치 입력"
         $0.font = .systemFont(ofSize: 14, weight: .semibold)
@@ -56,7 +55,7 @@ class SearchViewController: UIViewController {
     let searchTV = UITableView().then {
         $0.backgroundColor = .clear
     }
-     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,12 +142,18 @@ class SearchViewController: UIViewController {
 
 // MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
+    /// 검색 결과 선택 시에 (취소/추가)버튼이 있는 VC이 보여야 함
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
         let vc = ViewController()
         vc.isAddNewCityView = true
-        self.mainCVC.locationLabel.text = self.searchResults[indexPath.row].title
+        vc.location = self.searchResults[indexPath.row].title
+        print(self.searchResults[indexPath.row].title)
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.searchBar.resignFirstResponder()
     }
 }
 

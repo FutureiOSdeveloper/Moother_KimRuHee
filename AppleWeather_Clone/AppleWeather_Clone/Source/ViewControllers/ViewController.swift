@@ -7,6 +7,7 @@
 
 import UIKit
 
+import CoreLocation
 import Lottie
 import Then
 import SafariServices
@@ -184,7 +185,9 @@ class ViewController: UIViewController {
         self.dismiss(animated: true) {
             pvc.dismiss(animated: true, completion: nil)
             pvc.modalPresentationStyle = .overFullScreen
-            pvc.present(WeatherListViewController(), animated: true, completion: nil)
+            pvc.present(WeatherListViewController(), animated: true) {
+                // 여기에 노티로 도시이름, 온도 추가해주는 거 쏴줘야 함. )
+            }
         }
     }
     

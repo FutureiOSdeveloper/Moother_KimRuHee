@@ -126,7 +126,7 @@ extension WeatherListViewController: UITableViewDataSource {
             else { return UITableViewCell() }
             listCell.setupFirstCellAutoLayout()
             listCell.selectionStyle = .none
-            listCell.backgroundColor = .brown
+            listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_rain"))
             listCell.setFirstCellData(local: weatherList[indexPath.row].time,
                                       myLocal: weatherList[indexPath.row].country,
                                       temp: weatherList[indexPath.row].temp)
@@ -136,7 +136,7 @@ extension WeatherListViewController: UITableViewDataSource {
             else { return UITableViewCell() }
             listCell.setupRemainCellAutoLayout()
             listCell.selectionStyle = .none
-            listCell.backgroundColor = .blue
+            listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_sun"))
             listCell.setCellData(time: weatherList[indexPath.row].time,
                                  country: weatherList[indexPath.row].country,
                                  temp: weatherList[indexPath.row].temp)

@@ -14,13 +14,18 @@ import SafariServices
 import SnapKit
 
 class ViewController: UIViewController {
-    let searchVC = SearchViewController()
-
     // MARK: - Properties
     private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
-    
+
     var isAddNewCityView: Bool = false
     var location: String = ""
+    
+    /// locationManager 인스턴스 생성
+    var locationManager: CLLocationManager! = CLLocationManager()
+    
+    /// 위도 및 경도
+    var latitude: Double?
+    var longtitude: Double?
     
     let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
@@ -91,10 +96,7 @@ class ViewController: UIViewController {
         setupCollectionView()
         setupAutoLayout()
         setupPageControl()
-        
-        if isAddNewCityView {
-            mainCV.isScrollEnabled = false
-        }
+        setupLocationManager()
     
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
@@ -103,6 +105,9 @@ class ViewController: UIViewController {
     // MARK: - Custom Method
     func configUI() {
         view.backgroundColor = .clear
+        if isAddNewCityView {
+            mainCV.isScrollEnabled = false
+        }
     }
     
     func setupAutoLayout() {
@@ -174,6 +179,20 @@ class ViewController: UIViewController {
         pageControl.numberOfPages = backColor.count
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
+    
+    func setupLocationManager() {
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization() // 사용자에게 위치 추적 권한 요청
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest // 배터리에 맞게 위치 정확도 설정
+        locationManager.startUpdatingLocation() // 위치 업데이트
+        
+        /// 위도, 경도 가져오기
+        let coor = locationManager.location?.coordinate
+        latitude = coor?.latitude
+        longtitude = coor?.longitude
+        
+        print("위도 = \(latitude!), 경도 = \(longtitude!)")
+    }
 
     // MARK: - @objc
     @objc func touchupCancelButton(_ sender: UIButton) {
@@ -185,7 +204,7 @@ class ViewController: UIViewController {
         self.dismiss(animated: true) {
             pvc.dismiss(animated: true, completion: nil)
             pvc.modalPresentationStyle = .overFullScreen
-            pvc.present(WeatherListViewController(), animated: true) {
+            pvc.present(ListViewController(), animated: true) {
                 // 여기에 노티로 도시이름, 온도 추가해주는 거 쏴줘야 함. )
             }
         }
@@ -207,7 +226,7 @@ class ViewController: UIViewController {
     }
     
     @objc func touchupRightBarButton(_ sender: UIButton) {
-        let nextVC = WeatherListViewController()
+        let nextVC = ListViewController()
         nextVC.modalPresentationStyle = .currentContext
         present(nextVC, animated: true, completion: nil)
     }
@@ -256,4 +275,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.zero
     }
+}
+
+// MARK: - CLLocationManagerDelegate
+extension ViewController: CLLocationManagerDelegate {
+    
 }

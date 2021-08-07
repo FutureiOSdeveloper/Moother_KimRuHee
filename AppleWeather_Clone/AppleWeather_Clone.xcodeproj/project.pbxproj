@@ -12,7 +12,7 @@
 		5B0C524626B431F200362A3D /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C524526B431F200362A3D /* UILabel + Extension.swift */; };
 		5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */; };
 		5B212C1926AE142200603649 /* MainCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1826AE142200603649 /* MainCVC.swift */; };
-		5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1B26AE17E500603649 /* WeatherListViewController.swift */; };
+		5B212C1C26AE17E500603649 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C1B26AE17E500603649 /* ListViewController.swift */; };
 		5B212C2226AEA0F900603649 /* TimeTempHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2126AEA0F900603649 /* TimeTempHeaderView.swift */; };
 		5B212C2826AEA2DE00603649 /* TodayTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2726AEA2DE00603649 /* TodayTVC.swift */; };
 		5B212C2C26AEA31600603649 /* DailyTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B212C2B26AEA31600603649 /* DailyTVC.swift */; };
@@ -43,7 +43,7 @@
 		5B0C524526B431F200362A3D /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extenison.swift"; sourceTree = "<group>"; };
 		5B212C1826AE142200603649 /* MainCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCVC.swift; sourceTree = "<group>"; };
-		5B212C1B26AE17E500603649 /* WeatherListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherListViewController.swift; sourceTree = "<group>"; };
+		5B212C1B26AE17E500603649 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		5B212C2126AEA0F900603649 /* TimeTempHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTempHeaderView.swift; sourceTree = "<group>"; };
 		5B212C2726AEA2DE00603649 /* TodayTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTVC.swift; sourceTree = "<group>"; };
 		5B212C2B26AEA31600603649 /* DailyTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTVC.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				5B72C15626AB341F008A4B6A /* ViewController.swift */,
-				5B212C1B26AE17E500603649 /* WeatherListViewController.swift */,
+				5B212C1B26AE17E500603649 /* ListViewController.swift */,
 				5B91AA8926B7B7E80085161B /* SearchViewController.swift */,
 			);
 			path = ViewControllers;
@@ -336,7 +336,7 @@
 				5B91AA8A26B7B7E80085161B /* SearchViewController.swift in Sources */,
 				5B212C4026AFE1ED00603649 /* MapTVC.swift in Sources */,
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
-				5B212C1C26AE17E500603649 /* WeatherListViewController.swift in Sources */,
+				5B212C1C26AE17E500603649 /* ListViewController.swift in Sources */,
 				5B91AABD26B7D1140085161B /* ListFooterView.swift in Sources */,
 				5B91AAC926BBC87F0085161B /* ListModel.swift in Sources */,
 				5B212C1926AE142200603649 /* MainCVC.swift in Sources */,

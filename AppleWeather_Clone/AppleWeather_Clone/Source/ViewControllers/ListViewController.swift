@@ -1,5 +1,5 @@
 //
-//  WeatherListViewController.swift
+//  ListViewController.swift
 //  AppleWeather_Clone
 //
 //  Created by Thisisme Hi on 2021/07/26.
@@ -12,7 +12,7 @@ import SnapKit
 
 class ListViewController: UIViewController {
     // MARK: - Properties
-    var weatherList: [ListModel] = [ListModel(time: "마포구", country: "나의 위치", temp: "33"),
+    var cityList: [ListModel] = [ListModel(time: "마포구", country: "나의 위치", temp: "33"),
                                     ListModel(time: "오전 4:21", country: "하와이", temp: "33"),
                                     ListModel(time: "오전 6:21", country: "도쿄", temp: "22"),
                                     ListModel(time: "오전 7:21", country: "Chiyoda", temp: "18"),
@@ -81,7 +81,7 @@ extension ListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            weatherList.remove(at: indexPath.row)
+            cityList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
@@ -117,7 +117,7 @@ extension ListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return weatherList.count
+        return cityList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -127,9 +127,9 @@ extension ListViewController: UITableViewDataSource {
             listCell.setupFirstCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_rain"))
-            listCell.setFirstCellData(local: weatherList[indexPath.row].time,
-                                      myLocal: weatherList[indexPath.row].country,
-                                      temp: weatherList[indexPath.row].temp)
+            listCell.setFirstCellData(local: cityList[indexPath.row].time,
+                                      myLocal: cityList[indexPath.row].country,
+                                      temp: cityList[indexPath.row].temp)
             return listCell
         } else {
             guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC
@@ -137,17 +137,17 @@ extension ListViewController: UITableViewDataSource {
             listCell.setupRemainCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_sun"))
-            listCell.setCellData(time: weatherList[indexPath.row].time,
-                                 country: weatherList[indexPath.row].country,
-                                 temp: weatherList[indexPath.row].temp)
+            listCell.setCellData(time: cityList[indexPath.row].time,
+                                 country: cityList[indexPath.row].country,
+                                 temp: cityList[indexPath.row].temp)
             return listCell
         }
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = weatherList[sourceIndexPath.row]
-        weatherList.remove(at: sourceIndexPath.row)
-        weatherList.insert(moveCell, at: destinationIndexPath.row)
+        let moveCell = cityList[sourceIndexPath.row]
+        cityList.remove(at: sourceIndexPath.row)
+        cityList.insert(moveCell, at: destinationIndexPath.row)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -156,10 +156,10 @@ extension ListViewController: UITableViewDataSource {
             NotificationCenter.default.post(name: NSNotification.Name("pageControl"), object: indexPath.row)
             if indexPath.row == 0 {
                 NotificationCenter.default.post(name: NSNotification.Name("clickFirstCell"),
-                                                object: [self.weatherList[0].time, self.weatherList[0].temp])
+                                                object: [self.cityList[0].time, self.cityList[0].temp])
             } else {
                 NotificationCenter.default.post(name: NSNotification.Name("clickOtherCell"),
-                                                object: [self.weatherList[indexPath.row].country, self.weatherList[indexPath.row].temp])
+                                                object: [self.cityList[indexPath.row].country, self.cityList[indexPath.row].temp])
             }
         }
     }

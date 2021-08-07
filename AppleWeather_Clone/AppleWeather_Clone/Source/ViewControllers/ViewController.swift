@@ -16,7 +16,7 @@ import SnapKit
 class ViewController: UIViewController {
     // MARK: - Properties
     private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
-
+    
     var isAddNewCityView: Bool = false
     var location: String = ""
     
@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     }
     
     let animationView = AnimationView().then {
-//        $0.animation = Animation.named("16477-rain-background-animation")
+        //        $0.animation = Animation.named("16477-rain-background-animation")
         $0.contentMode = .scaleAspectFill
         $0.loopMode = .loop
         $0.play()
@@ -97,7 +97,7 @@ class ViewController: UIViewController {
         setupAutoLayout()
         setupPageControl()
         setupLocationManager()
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
     }
@@ -111,7 +111,8 @@ class ViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-        view.addSubviews([backgroundView, mainCV, cancelButton, addButton, lineView, bottomBarView])
+        view.addSubviews([backgroundView, mainCV, cancelButton,
+                          addButton, lineView, bottomBarView])
         backgroundView.addSubview(animationView)
         bottomBarView.addSubviews([leftBarButton, pageControl, rightBarButton])
         
@@ -190,10 +191,24 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        
         print("위도 = \(latitude!), 경도 = \(longtitude!)")
+        
+        /// 위도, 경도 기반으로 주소 가져오기
+        let myLocation = CLLocation(latitude: latitude!, longitude: longtitude!)
+        let geocoder = CLGeocoder()
+        let locale = Locale(identifier: "Ko-kr") /// 한국어로 변환
+        geocoder.reverseGeocodeLocation(myLocation, preferredLocale: locale, completionHandler: {(placemarks, error) in
+            if let address: [CLPlacemark] = placemarks, error == nil {
+                print(address)
+            } else {
+                print(error as Any)
+            }
+            
+            let cityName = placemarks?.first?.locality
+            print(cityName!)
+        })
     }
-
+    
     // MARK: - @objc
     @objc func touchupCancelButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

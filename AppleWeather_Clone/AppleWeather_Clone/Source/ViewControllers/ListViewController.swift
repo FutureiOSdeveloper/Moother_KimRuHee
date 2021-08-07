@@ -19,7 +19,9 @@ class ListViewController: UIViewController {
                                     ListModel(time: "오전 8:21", country: "로스엔젤레스", temp: "33")]
     
     let mainTV = UITableView()
-        
+    
+    var firstCellLocation: String = ""
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,7 @@ class ListViewController: UIViewController {
     }
     
     func setupAutoLayout() {
-        view.addSubviews([mainTV])
+        view.addSubview(mainTV)
         
         mainTV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -127,7 +129,7 @@ extension ListViewController: UITableViewDataSource {
             listCell.setupFirstCellAutoLayout()
             listCell.selectionStyle = .none
             listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_rain"))
-            listCell.setFirstCellData(local: cityList[indexPath.row].time,
+            listCell.setFirstCellData(local: firstCellLocation,
                                       myLocal: cityList[indexPath.row].country,
                                       temp: cityList[indexPath.row].temp)
             return listCell
@@ -156,7 +158,7 @@ extension ListViewController: UITableViewDataSource {
             NotificationCenter.default.post(name: NSNotification.Name("pageControl"), object: indexPath.row)
             if indexPath.row == 0 {
                 NotificationCenter.default.post(name: NSNotification.Name("clickFirstCell"),
-                                                object: [self.cityList[0].time, self.cityList[0].temp])
+                                                object: [self.firstCellLocation, self.cityList[0].temp])
             } else {
                 NotificationCenter.default.post(name: NSNotification.Name("clickOtherCell"),
                                                 object: [self.cityList[indexPath.row].country, self.cityList[indexPath.row].temp])

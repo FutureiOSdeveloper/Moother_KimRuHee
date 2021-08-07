@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     var isAddNewCityView: Bool = false
     var location: String = ""
     var myCurrentLocation: String = ""
-    
+        
     /// locationManager 인스턴스 생성
     var locationManager: CLLocationManager! = CLLocationManager()
     
@@ -94,15 +94,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLocationManager()
-        print("1")
         configUI()
-        print("2")
         setupCollectionView()
-        print("3")
         setupAutoLayout()
-        print("4")
         setupPageControl()
-        print("5")
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
     }
@@ -208,7 +203,6 @@ class ViewController: UIViewController {
             } else {
                 print(error as Any)
             }
-            
             self.myCurrentLocation = (placemarks?.first?.locality)!
             self.mainCV.reloadData()
         })
@@ -247,6 +241,7 @@ class ViewController: UIViewController {
     
     @objc func touchupRightBarButton(_ sender: UIButton) {
         let nextVC = ListViewController()
+        nextVC.firstCellLocation = myCurrentLocation
         nextVC.modalPresentationStyle = .currentContext
         present(nextVC, animated: true, completion: nil)
     }
@@ -272,7 +267,6 @@ extension ViewController: UICollectionViewDataSource {
         else { return UICollectionViewCell() }
         cell.backgroundColor = backColor[indexPath.item]
         cell.locationLabel.text = myCurrentLocation
-        print(myCurrentLocation, "여기")
         if isAddNewCityView {
             cell.locationLabel.text = location
         }

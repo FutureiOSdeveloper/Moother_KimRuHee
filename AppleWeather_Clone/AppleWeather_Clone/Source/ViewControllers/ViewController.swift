@@ -191,10 +191,10 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        print("위도 = \(latitude!), 경도 = \(longtitude!)")
+        print("위도 = \(latitude ?? 0), 경도 = \(longtitude ?? 0)")
         
         /// 위도, 경도 기반으로 주소 가져오기
-        let myLocation = CLLocation(latitude: latitude!, longitude: longtitude!)
+        let myLocation = CLLocation(latitude: latitude ?? 0, longitude: longtitude ?? 0 )
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr") /// 한국어로 변환
         geocoder.reverseGeocodeLocation(myLocation, preferredLocale: locale, completionHandler: {(placemarks, error) in
@@ -203,7 +203,7 @@ class ViewController: UIViewController {
             } else {
                 print(error as Any)
             }
-            self.myCurrentLocation = (placemarks?.first?.locality)!
+            self.myCurrentLocation = (placemarks?.first?.locality ?? "북대서양") 
             self.mainCV.reloadData()
         })
     }

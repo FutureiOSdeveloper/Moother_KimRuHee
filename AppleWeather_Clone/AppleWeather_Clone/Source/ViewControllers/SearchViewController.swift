@@ -144,12 +144,23 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDelegate {
     /// 검색 결과 선택 시에 (취소/추가)버튼이 있는 VC이 보여야 함
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ViewController()
-        vc.isAddNewCityView = true
-        vc.location = self.searchResults[indexPath.row].title
-        print(self.searchResults[indexPath.row].title)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let selectedResult = searchResults[indexPath.row]
+        let searchReqeust = MKLocalSearch.Request(completion: selectedResult)
+        let search = MKLocalSearch(request: searchReqeust)
+        search.start { (response, error) in
+            guard error == nil else {
+                print(error.debugDescription)
+                return
+            }
+            guard let placeMark = response?.mapItems[0].placemark else {
+                return
+            }
+            let vc = ViewController()
+            vc.isAddNewCityView = true
+            vc.location = placeMark.locality!
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

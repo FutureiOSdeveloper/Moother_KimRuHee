@@ -16,11 +16,11 @@ import SnapKit
 
 class ViewController: UIViewController {
     // MARK: - Network
-    private let authProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
-    private var weatherModel: WeatherModel?
+    private let weatherProvider = MoyaProvider<WeatherService>()
+    var weatherModel: WeatherModel?
     
     // MARK: - Properties
-    private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
+    private let weatherList: [UIColor] = [.clear, .clear, .clear, .clear]
     
     var isAddNewCityView: Bool = false
     var location: String = ""
@@ -182,7 +182,7 @@ class ViewController: UIViewController {
     }
     
     func setupPageControl() {
-        pageControl.numberOfPages = backColor.count
+        pageControl.numberOfPages = weatherList.count
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
     
@@ -264,13 +264,13 @@ extension ViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return backColor.count
+        return weatherList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.backgroundColor = backColor[indexPath.item]
+        cell.backgroundColor = weatherList[indexPath.item]
         cell.locationLabel.text = myCurrentLocation
         if isAddNewCityView {
             cell.locationLabel.text = location
@@ -305,11 +305,15 @@ extension ViewController: CLLocationManagerDelegate {
 
 // MARK: - Network : fetchWeather
 extension ViewController {
-    func fetchWeather(lat: Double, lon: Double, exc: String) {
-        authProvider.request(.weather(param: WeatherRequest(lat, lon, exc))) { response in
+    func fetchWeather(lat: Double, lon: Double) {
+        let param = WeatherRequest.init(lat, lon)
+        
+        weatherProvider.request(.weather(param: param)) { response in
             switch response {
             case .success(let result):
                 do {
+                    self.weatherModel = try result.map(WeatherModel.self)
+                    print("서버통신완료", self.weatherModel)
                     
                 } catch(let err) {
                     print(err.localizedDescription)

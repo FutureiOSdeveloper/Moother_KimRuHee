@@ -5,6 +5,7 @@
 //  Created by Thisisme Hi on 2021/08/12.
 //
 
+import Foundation
 import Moya
 
 enum WeatherService {
@@ -19,14 +20,7 @@ extension WeatherService: TargetType {
     var path: String {
         switch self {
         case .weather:
-            return ""
-        }
-    }
-    
-    var parameterEncoding: ParameterEncoding {
-        switch self {
-        case .weather(param: _):
-           return URLEncoding.default
+            return "/onecall"
         }
     }
 

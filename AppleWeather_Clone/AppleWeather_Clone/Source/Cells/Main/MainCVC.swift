@@ -31,7 +31,9 @@ class MainCVC: UICollectionViewCell {
                                      DetailModel(leftTitle: "강수량", leftDetail: "0.2cm", rightTitle: "기압", rightDetail: "1008hPa"),
                                      DetailModel(leftTitle: "가시거리", leftDetail: "11.3km", rightTitle: "자외선 지수", rightDetail: "5")]
     
-    // MARK: - Properties    
+    // MARK: - Properties
+    let vc = ViewController()
+    
     let locationLabel = UILabel().then {
         $0.text = "마포구"
         $0.font = .systemFont(ofSize: 30, weight: .semibold)

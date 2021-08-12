@@ -8,7 +8,8 @@
 import Foundation
 
 struct GeneralAPI {
-    static let baseURL = "https://api.openweathermap.org/data/2.5/onecall?appid=cea1d8866a0ca2c205c2b5e2a30f160c&units=metric&lang=kr"
+    static let baseURL = "https://api.openweathermap.org/data/2.5"
+    static let appid = "cea1d8866a0ca2c205c2b5e2a30f160c"
     
-    // https://api.openweathermap.org/data/2.5/onecall?appid=cea1d8866a0ca2c205c2b5e2a30f160c&units=metric
+    /// https://api.openweathermap.org/data/2.5/onecall?appid=cea1d8866a0ca2c205c2b5e2a30f160c&units=metric&lang=kr
 }

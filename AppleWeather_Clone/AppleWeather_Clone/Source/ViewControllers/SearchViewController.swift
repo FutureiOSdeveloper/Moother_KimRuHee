@@ -166,9 +166,11 @@ extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTVC", for: indexPath) as? SearchTVC
         else { return UITableViewCell() }
-        cell.countryLabel.text = self.searchResults[indexPath.row].title
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        if let highlightText = searchBar.text {
+            cell.countryLabel.setHighlighted(searchResults[indexPath.row].title, with: highlightText)
+        }
         return cell
     }
 }

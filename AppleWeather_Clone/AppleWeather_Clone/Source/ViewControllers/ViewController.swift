@@ -9,11 +9,16 @@ import UIKit
 
 import CoreLocation
 import Lottie
+import Moya
 import Then
 import SafariServices
 import SnapKit
 
 class ViewController: UIViewController {
+    // MARK: - Network
+    private let authProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
+    private var weatherModel: WeatherModel?
+    
     // MARK: - Properties
     private let backColor: [UIColor] = [.clear, .clear, .clear, .clear]
     
@@ -296,4 +301,22 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - CLLocationManagerDelegate
 extension ViewController: CLLocationManagerDelegate {
     
+}
+
+// MARK: - Network : fetchWeather
+extension ViewController {
+    func fetchWeather(lat: Double, lon: Double, exc: String) {
+        authProvider.request(.weather(param: WeatherRequest(lat, lon, exc))) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    
+                } catch(let err) {
+                    print(err.localizedDescription)
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+        }
+    }
 }

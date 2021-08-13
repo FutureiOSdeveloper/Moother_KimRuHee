@@ -18,26 +18,26 @@ class MainCVC: UICollectionViewCell {
     private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
     var weatherModel: WeatherModel?
     
-    // MARK: - Dummy Data
-    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
-    
-    var detailList: [DetailModel] = [DetailModel(leftTitle: "일출", leftDetail: "오전 5:18", rightTitle: "일몰", rightDetail: "오후8:55"),
-                                     DetailModel(leftTitle: "비 올 확률", leftDetail: "30%", rightTitle: "습도", rightDetail: "82%"),
-                                     DetailModel(leftTitle: "바람", leftDetail: "남 3m/s", rightTitle: "체감", rightDetail: "18"),
-                                     DetailModel(leftTitle: "강수량", leftDetail: "0.2cm", rightTitle: "기압", rightDetail: "1008hPa"),
-                                     DetailModel(leftTitle: "가시거리", leftDetail: "11.3km", rightTitle: "자외선 지수", rightDetail: "5")]
-    
     // MARK: - Properties
+    var hourlyWeather: [HourlyWeather]?
+    var dailyWeather: [DailyWeatherModel] = []
+    var detailInfo: [DetailInfoModel] = []
+    var latitude: Double?
+    var longtitude: Double?
     let vc = ViewController()
+    
+    var rain: Int = 0
+    var max: Int?
+    var min: Int?
+    var sunrise: Int = 0
+    var sunset: Int = 0
+    var rainPercent: Int = 0
+    var humidity: Int = 0
+    var wind: Int = 0
+    var feelLike: Int = 0
+    var pressure: Int = 0
+    var look: Double = 0
+    var uvi: Int = 0
     
     let locationLabel = UILabel().then {
         $0.text = "마포구"
@@ -78,10 +78,24 @@ class MainCVC: UICollectionViewCell {
     
     let mainTV = UITableView()
     
+    // MARK: - Dummy Data
+    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
+    
+    var detailList: [DetailModel] = []
+    
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        fetchWeather(lat: 10, lon: 24)
+        fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0, exclude: "hourly")
         configUI()
         setupAutoLayout()
         setupTableView()
@@ -91,7 +105,7 @@ class MainCVC: UICollectionViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
                                                name: NSNotification.Name("clickOtherCell"), object: nil)
         
-        vc.fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -109,6 +123,7 @@ class MainCVC: UICollectionViewCell {
         tempLabel.getShadow()
         highLabel.getShadow()
         lowLabel.getShadow()
+        
     }
     
     func setupAutoLayout() {
@@ -154,6 +169,15 @@ class MainCVC: UICollectionViewCell {
         mainTV.register(TodayTVC.self, forCellReuseIdentifier: "TodayTVC")
         mainTV.register(DetailTVC.self, forCellReuseIdentifier: "DetailTVC")
         mainTV.register(MapTVC.self, forCellReuseIdentifier: "MapTVC")
+    }
+
+    // MARK: - setData
+    func setData(location: String, temp: String, condition: String, max: String, min: String) {
+        locationLabel.text = location
+        tempLabel.text = temp
+        conditionLabel.text = condition
+        highLabel.text = max
+        lowLabel.text = min
     }
     
     // MARK: - @objc
@@ -251,6 +275,9 @@ extension MainCVC: UITableViewDataSource {
             return UIView()
         default:
             let secondHeaderView = TimeTempHeaderView()
+            if let weather = hourlyWeather {
+                secondHeaderView.setData(weather: weather)
+            }
             return secondHeaderView
         }
     }
@@ -277,15 +304,18 @@ extension MainCVC: UITableViewDataSource {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
-                dailyCell.setData(week: dailyList[indexPath.row].week, image: dailyList[indexPath.row].image,
-                                  rain: dailyList[indexPath.row].rain, high: dailyList[indexPath.row].high,
-                                  low: dailyList[indexPath.row].low)
+                dailyCell.setData(week: dailyList[indexPath.row].week,
+                                  image: dailyList[indexPath.row].image,
+                                  rain: rain,
+                                  high: max,
+                                  low: min)
                 return dailyCell
                 
             } else if indexPath.row < 11 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
+                todayCell.todayLabel.text = "오늘: 현재 날씨 \(conditionLabel.text!), 최고 기온은 \(max!)도이며 최저 기온은 \(min!)도입니다."
                 return todayCell
                 
             } else if indexPath.row < 16 {
@@ -302,34 +332,64 @@ extension MainCVC: UITableViewDataSource {
                 guard let mapCell = tableView.dequeueReusableCell(withIdentifier: MapTVC.identifier, for: indexPath) as? MapTVC
                 else { return UITableViewCell() }
                 mapCell.selectionStyle = .none
+                mapCell.localLabel.text = locationLabel.text! + " 날씨"
                 return mapCell
             }
         }
     }
 }
 
-//// MARK: - Network : fetchWeather
-//extension MainCVC{
-//    func fetchWeather(lat: Double, lon: Double) {
-//        let param = WeatherRequest.init(lat, lon)
-//
-//        weatherProvider.request(.weather(param: param)) { response in
-//            switch response {
-//            case .success(let result):
-//                do {
-//
-//                    print("요이땅")
-//                    self.weatherModel = try result.map(WeatherModel.self)
-//                    print("눙물",self.weatherModel)
-////                    self.weatherList[0] = self.weatherModel!.timezone
-//                    self.tempLabel.text = String((self.weatherModel?.current.temp)!)
-//
-//                } catch(let err) {
-//                    print(err.localizedDescription)
-//                }
-//            case .failure(let err):
-//                print(err.localizedDescription)
-//            }
-//        }
-//    }
-//}
+// MARK: - Network : fetchWeather
+extension MainCVC{
+    func fetchWeather(lat: Double, lon: Double, exclude: String) {
+        let param = WeatherRequest.init(lat, lon, exclude)
+        
+        weatherProvider.request(.weather(param: param)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    self.weatherModel = try result.map(WeatherModel.self)
+                    if let rain = self.weatherModel?.daily[0].rain,
+                       let max = self.weatherModel?.daily[0].temp.max,
+                       let min = self.weatherModel?.daily[0].temp.min,
+                       let sunset = self.weatherModel?.current.sunrise,
+                       let sunrise = self.weatherModel?.current.sunset,
+                       let humidity = self.weatherModel?.current.humidity,
+                       let wind = self.weatherModel?.current.windSpeed,
+                       let feelLike = self.weatherModel?.current.feelsLike,
+                       let pressure = self.weatherModel?.current.pressure,
+                       let look = self.weatherModel?.current.visibility,
+                       let uvi = self.weatherModel?.current.uvi {
+                        self.rain = Int(rain)
+                        self.max = Int(max)
+                        self.min = Int(min)
+                        self.sunset = sunset
+                        self.sunrise = sunrise
+                        self.humidity = humidity
+                        self.wind = Int(wind)
+                        self.feelLike = Int(feelLike)
+                        self.pressure = pressure
+                        self.look = Double(look)
+                        self.uvi = Int(uvi)
+                    }
+                    
+                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringFromDate(),
+                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringFromDate()),
+                                       DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rainPercent)%",
+                                                   rightTitle: "습도", rightDetail: "\(self.humidity)%"),
+                                       DetailModel(leftTitle: "바람", leftDetail: "\(self.wind)m/s",
+                                                   rightTitle: "체감", rightDetail: "\(self.feelLike)"),
+                                       DetailModel(leftTitle: "강수량", leftDetail: "\(self.rain)cm",
+                                                   rightTitle: "기압", rightDetail: "\(self.pressure)hPa"),
+                                       DetailModel(leftTitle: "가시거리", leftDetail: "\(self.look)km",
+                                                   rightTitle: "자외선 지수", rightDetail: "\(self.uvi)")]
+                    self.mainTV.reloadData()
+                } catch(let err) {
+                    print(err.localizedDescription)
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+        }
+    }
+}

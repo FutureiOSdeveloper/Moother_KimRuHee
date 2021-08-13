@@ -15,12 +15,13 @@ class TodayTVC: UITableViewCell {
     static let identifier = "TodayTVC"
     
     // MARK: - Properties
+    var weatherModel: WeatherModel?
+    
     let topLineView = UIView().then {
         $0.backgroundColor = .white
     }
     
     let todayLabel = UILabel().then {
-        $0.text = "오늘: 현재 날씨 한때 흐림, 기온은 27도이며 최고 기온은 37도입니다."
         $0.font = .systemFont(ofSize: 14, weight: .semibold)
         $0.textColor = .white
         $0.numberOfLines = 0

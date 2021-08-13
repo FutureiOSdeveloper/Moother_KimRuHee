@@ -15,11 +15,11 @@ struct WeatherRequest: Codable {
     var units: String
     var lang: String
     
-    init(_ lat: Double, _ lon: Double) {
+    init(_ lat: Double, _ lon: Double, _ exclude: String) {
         self.lat = lat
         self.lon = lon
         self.appid = "cea1d8866a0ca2c205c2b5e2a30f160c"
-        self.exclude = "hourly"
+        self.exclude = exclude
         self.units = "metric"
         self.lang = "kr"
     }

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
     var weatherModel: WeatherModel?
     var temperature: Double = 0
-    var condition: String?
+    var condition: String = ""
     var max: Double = 0
     var min: Double = 0
     
@@ -200,7 +200,7 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0)
+        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "hourly")
 //        print("위도 = \(latitude ?? 0), 경도 = \(longtitude ?? 0)")
 //        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0)
         
@@ -276,11 +276,13 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.locationLabel.text = myCurrentLocation
-        cell.tempLabel.text = "\(Int(temperature))º"
-        cell.conditionLabel.text = condition
-        cell.highLabel.text = "최고: \(Int(max))º"
-        cell.lowLabel.text = "최저: \(Int(min))º"
+        cell.latitude = latitude
+        cell.longtitude = longtitude
+        cell.setData(location: myCurrentLocation,
+                     temp: "\(Int(temperature))º",
+                     condition: condition,
+                     max: "최고: \(Int(max))º",
+                     min: "최저: \(Int(min))º")
         if isAddNewCityView {
             cell.locationLabel.text = location
         }
@@ -314,8 +316,8 @@ extension ViewController: CLLocationManagerDelegate {
 
 // MARK: - Network : fetchWeather
 extension ViewController {
-    func fetchWeather(lat: Double, lon: Double) {
-        let param = WeatherRequest.init(lat, lon)
+    func fetchWeather(lat: Double, lon: Double, exclude: String) {
+        let param = WeatherRequest.init(lat, lon, exclude)
         
         weatherProvider.request(.weather(param: param)) { response in
             switch response {
@@ -331,7 +333,6 @@ extension ViewController {
                         self.max = max
                         self.min = min
                     }
-                    
                     self.mainCV.reloadData()
                     
                 } catch(let err) {

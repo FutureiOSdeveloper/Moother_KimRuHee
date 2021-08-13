@@ -25,6 +25,9 @@
 		5B531EC726C5075300EC0647 /* NetworkLoggerPluggin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EC626C5075300EC0647 /* NetworkLoggerPluggin.swift */; };
 		5B531ECA26C50F0600EC0647 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EC926C50F0600EC0647 /* Encodable.swift */; };
 		5B531ECD26C50F5900EC0647 /* WeatherRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */; };
+		5B531EF326C6606F00EC0647 /* HourlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF226C6606E00EC0647 /* HourlyWeather.swift */; };
+		5B531EF726C66D3E00EC0647 /* DetailInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */; };
+		5B531EFA26C6A18800EC0647 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF926C6A18700EC0647 /* String + Extension.swift */; };
 		5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15226AB341F008A4B6A /* AppDelegate.swift */; };
 		5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15426AB341F008A4B6A /* SceneDelegate.swift */; };
 		5B72C15726AB341F008A4B6A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15626AB341F008A4B6A /* ViewController.swift */; };
@@ -61,6 +64,9 @@
 		5B531EC626C5075300EC0647 /* NetworkLoggerPluggin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoggerPluggin.swift; sourceTree = "<group>"; };
 		5B531EC926C50F0600EC0647 /* Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encodable.swift; sourceTree = "<group>"; };
 		5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRequest.swift; sourceTree = "<group>"; };
+		5B531EF226C6606E00EC0647 /* HourlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeather.swift; sourceTree = "<group>"; };
+		5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoModel.swift; sourceTree = "<group>"; };
+		5B531EF926C6A18700EC0647 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWeather_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B72C15226AB341F008A4B6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5B72C15426AB341F008A4B6A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 				5B531EF026C5B42200EC0647 /* OlderModel */,
 				5B91AAC526B9CEE20085161B /* WeatherModel.swift */,
 				5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */,
+				5B531EF226C6606E00EC0647 /* HourlyWeather.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -112,6 +119,7 @@
 				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
 				5B212C4826B02C6000603649 /* DetailModel.swift */,
 				5B91AAC826BBC87F0085161B /* ListModel.swift */,
+				5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */,
 			);
 			path = OlderModel;
 			sourceTree = "<group>";
@@ -191,6 +199,7 @@
 			children = (
 				5B212BEB26ABF2C800603649 /* UIView + Extenison.swift */,
 				5B0C524526B431F200362A3D /* UILabel + Extension.swift */,
+				5B531EF926C6A18700EC0647 /* String + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -407,8 +416,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B531EF726C66D3E00EC0647 /* DetailInfoModel.swift in Sources */,
 				5B91AAD126BBEDD40085161B /* General API.swift in Sources */,
 				5B91AAC626B9CEE20085161B /* WeatherModel.swift in Sources */,
+				5B531EFA26C6A18800EC0647 /* String + Extension.swift in Sources */,
 				5B212C4526B02C1C00603649 /* DailyWeatherModel.swift in Sources */,
 				5B212BEC26ABF2C800603649 /* UIView + Extenison.swift in Sources */,
 				5B212C3626AEB3DC00603649 /* TimeTempCVC.swift in Sources */,
@@ -429,6 +440,7 @@
 				5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */,
 				5B212C1C26AE17E500603649 /* ListViewController.swift in Sources */,
 				5B91AABD26B7D1140085161B /* ListFooterView.swift in Sources */,
+				5B531EF326C6606F00EC0647 /* HourlyWeather.swift in Sources */,
 				5B91AAC926BBC87F0085161B /* ListModel.swift in Sources */,
 				5B212C1926AE142200603649 /* MainCVC.swift in Sources */,
 				5B531ECD26C50F5900EC0647 /* WeatherRequest.swift in Sources */,

@@ -14,14 +14,15 @@ class TimeTempCVC: UICollectionViewCell {
     static let identifier = "TimeTempCVC"
     
     // MARK: - Properties
+    var weatherModel: WeatherModel!
+    var hourlyModel: [HourlyWeather] = []
+    
     let timeLabel = UILabel().then {
-        $0.text = "오후 8:45"
         $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     
     let rainPercentLabel = UILabel().then {
-        $0.text = "30%"
         $0.font = .systemFont(ofSize: 11, weight: .black)
         $0.textColor = .cyan
     }
@@ -31,7 +32,6 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.text = "일몰"
         $0.font = .systemFont(ofSize: 16, weight: .semibold)
         $0.textColor = .white
     }
@@ -77,13 +77,26 @@ class TimeTempCVC: UICollectionViewCell {
         }
     }
     
-    func setData(time: String, rain: String, image: String, temp: String) {
-        timeLabel.text = time
-        rainPercentLabel.text = rain
-        tempLabel.text = temp
+    func generateCell(weather: HourlyWeather) {
+        timeLabel.text = String(weather.time) + "시"
+        rainPercentLabel.text = String(weather.rain) + "%"
+        weatherImageView.image = UIImage(contentsOfFile: weather.image)
+        tempLabel.text = String(weather.temp)
+    }
+    
+    func setData(time: Int?, rain: Double?, image: String?, temp: Double?) {
+        timeLabel.text = String(time ?? 0)
         
-        if let image = UIImage(named: image) {
+        if rain == 0 {
+            rainPercentLabel.alpha = 0
+        } else {
+            rainPercentLabel.text = String(rain ?? 0) + "%"
+        }
+        
+        if let image = UIImage(named: image ?? "") {
             weatherImageView.image = image
         }
+        
+        tempLabel.text = String(temp ?? 0)
     }
 }

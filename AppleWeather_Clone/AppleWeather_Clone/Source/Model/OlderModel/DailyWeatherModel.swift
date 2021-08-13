@@ -13,4 +13,5 @@ struct DailyWeatherModel {
     var rain: String
     var high: String
     var low: String
+    
 }

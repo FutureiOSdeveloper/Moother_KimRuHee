@@ -15,7 +15,6 @@ class MapTVC: UITableViewCell {
     static let identifier = "MapTVC"
     
     // MARK: - Properties
-    let local: String = "아현동"
     let lineView = UIView().then {
         $0.backgroundColor = .white
     }
@@ -56,7 +55,6 @@ class MapTVC: UITableViewCell {
     func configUI() {
         backgroundColor = .clear
         sendSubviewToBack(contentView)
-        localLabel.text = "\(local) 날씨."
     }
     
     func setupAutoLayout() {
@@ -81,7 +79,7 @@ class MapTVC: UITableViewCell {
     // MARK: - @objc
     @objc func touchupMapButton(_ sender: UIButton) {
         let application = UIApplication.shared
-        let mapURL = URL(string: "http://maps.apple.com/?q=\(local)")
+        let mapURL = URL(string: "http://maps.apple.com/?q=\(localLabel.text)")
         let mapSecondURL = URL(string: "http://maps.apple.com/?q=")!
         let webSiteURL = URL(string: "http://maps.apple.com")!
         

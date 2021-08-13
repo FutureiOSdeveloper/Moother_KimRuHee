@@ -16,11 +16,12 @@ struct WeatherModel: Codable {
     let minutely: [Minutely]
     let hourly: [Current]
     let daily: [Daily]
+    let alerts: Alert?
 
     enum CodingKeys: String, CodingKey {
         case lat, lon, timezone
         case timezoneOffset = "timezone_offset"
-        case current, minutely, hourly, daily
+        case current, minutely, hourly, daily, alerts
     }
     
     init(from decoder: Decoder) throws {
@@ -30,13 +31,14 @@ struct WeatherModel: Codable {
         timezone = (try? value.decode(String.self, forKey: .timezone)) ?? ""
         timezoneOffset = (try? value.decode(Int.self, forKey: .timezoneOffset)) ?? 0
         current = (try value.decode(Current.self, forKey: .current))
-        minutely = (try value.decode([Minutely].self, forKey: .minutely))
-        hourly = (try value.decode([Current].self, forKey: .hourly))
-        daily = (try value.decode([Daily].self, forKey: .daily))
+        minutely = (try? value.decode([Minutely].self, forKey: .minutely)) ?? []
+        hourly = (try? value.decode([Current].self, forKey: .hourly)) ?? []
+        daily = (try? value.decode([Daily].self, forKey: .daily)) ?? []
+        alerts = (try? value.decode(Alert.self, forKey: .alerts))
     }
 }
 
-// MARK: - Current
+// MARK: - WeatherModel
 struct Current: Codable {
     let dt: Int
     let sunrise, sunset: Int?
@@ -50,7 +52,7 @@ struct Current: Codable {
     let weather: [Weather]
     let rain: Rain?
     let pop: Double?
-
+    
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
         case feelsLike = "feels_like"
@@ -105,7 +107,7 @@ struct Weather: Codable {
     let main: String
     let weatherDescription: String
     let icon: String
-
+    
     enum CodingKeys: String, CodingKey {
         case id, main
         case weatherDescription = "description"
@@ -115,10 +117,32 @@ struct Weather: Codable {
     init(from decoder: Decoder) throws {
         let value = try decoder.container(keyedBy: CodingKeys.self)
         id = (try? value.decode(Int.self, forKey: .id)) ?? 0
-        main = (try? value.decode(String.self, forKey: .main)) ?? ""
-        weatherDescription = (try value.decode(String.self, forKey: .weatherDescription))
+        main = (try? value.decode(String.self, forKey: .main)) ?? "Clear"
+        weatherDescription = (try? value.decode(String.self, forKey: .weatherDescription)) ?? "맑음"
         icon = (try? value.decode(String.self, forKey: .icon)) ?? ""
     }
+}
+
+enum Icon: String, Codable {
+    case the01D = "01d"
+    case the04D = "04d"
+    case the04N = "04n"
+    case the10D = "10d"
+    case the10N = "10n"
+}
+
+enum Main: String, Codable {
+    case clear = "Clear"
+    case clouds = "Clouds"
+    case rain = "Rain"
+}
+
+enum Description: String, Codable {
+    case 맑음 = "맑음"
+    case 보통비 = "보통 비"
+    case 실비 = "실 비"
+    case 온흐림 = "온흐림"
+    case 튼구름 = "튼구름"
 }
 
 // MARK: - Daily
@@ -137,7 +161,7 @@ struct Daily: Codable {
     let pop: Double
     let rain: Double?
     let uvi: Double
-
+    
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, moonrise, moonset
         case moonPhase = "moon_phase"
@@ -213,6 +237,31 @@ struct Minutely: Codable {
         let value = try decoder.container(keyedBy: CodingKeys.self)
         dt = (try? value.decode(Int.self, forKey: .dt)) ?? 0
         precipitation = (try? value.decode(Double.self, forKey: .precipitation)) ?? 0
+    }
+}
+
+// MARK: - Alert
+struct Alert: Codable {
+    let senderName, event: String
+    let start, end: Int
+    let alertDescription: String
+    let tags: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case senderName = "sender_name"
+        case event, start, end
+        case alertDescription = "description"
+        case tags
+    }
+    
+    init(from decoder: Decoder) throws {
+        let value = try decoder.container(keyedBy: CodingKeys.self)
+        senderName = (try? value.decode(String.self, forKey: .senderName)) ?? ""
+        event = (try? value.decode(String.self, forKey: .event)) ?? ""
+        start = (try? value.decode(Int.self, forKey: .start)) ?? 0
+        end = (try? value.decode(Int.self, forKey: .end)) ?? 0
+        alertDescription = (try? value.decode(String.self, forKey: .alertDescription)) ?? ""
+        tags = (try? value.decode([String].self, forKey: .tags)) ?? []
     }
 }
 

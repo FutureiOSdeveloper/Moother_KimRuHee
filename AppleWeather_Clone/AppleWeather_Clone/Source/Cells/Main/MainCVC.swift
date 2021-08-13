@@ -7,11 +7,16 @@
 
 import UIKit
 
+import Moya
 import Then
 import SnapKit
 
 class MainCVC: UICollectionViewCell {
     static let identifier = "MainCVC"
+    
+    // MARK: - Network
+    private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
+    var weatherModel: WeatherModel?
     
     // MARK: - Dummy Data
     var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
@@ -47,7 +52,7 @@ class MainCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.text = "36"
+//        $0.text = "36"
         $0.font = .systemFont(ofSize: 100, weight: .light)
         $0.textColor = .white
     }
@@ -76,6 +81,7 @@ class MainCVC: UICollectionViewCell {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+//        fetchWeather(lat: 10, lon: 24)
         configUI()
         setupAutoLayout()
         setupTableView()
@@ -84,6 +90,8 @@ class MainCVC: UICollectionViewCell {
                                                name: NSNotification.Name("clickFirstCell"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
                                                name: NSNotification.Name("clickOtherCell"), object: nil)
+        
+        vc.fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0)
     }
     
     required init?(coder: NSCoder) {
@@ -299,3 +307,29 @@ extension MainCVC: UITableViewDataSource {
         }
     }
 }
+
+//// MARK: - Network : fetchWeather
+//extension MainCVC{
+//    func fetchWeather(lat: Double, lon: Double) {
+//        let param = WeatherRequest.init(lat, lon)
+//
+//        weatherProvider.request(.weather(param: param)) { response in
+//            switch response {
+//            case .success(let result):
+//                do {
+//
+//                    print("요이땅")
+//                    self.weatherModel = try result.map(WeatherModel.self)
+//                    print("눙물",self.weatherModel)
+////                    self.weatherList[0] = self.weatherModel!.timezone
+//                    self.tempLabel.text = String((self.weatherModel?.current.temp)!)
+//
+//                } catch(let err) {
+//                    print(err.localizedDescription)
+//                }
+//            case .failure(let err):
+//                print(err.localizedDescription)
+//            }
+//        }
+//    }
+//}

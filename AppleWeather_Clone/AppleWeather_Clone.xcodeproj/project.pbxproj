@@ -99,13 +99,21 @@
 		5B212C4326B02BF100603649 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
-				5B212C4826B02C6000603649 /* DetailModel.swift */,
-				5B91AAC826BBC87F0085161B /* ListModel.swift */,
+				5B531EF026C5B42200EC0647 /* OlderModel */,
 				5B91AAC526B9CEE20085161B /* WeatherModel.swift */,
 				5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5B531EF026C5B42200EC0647 /* OlderModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
+				5B212C4826B02C6000603649 /* DetailModel.swift */,
+				5B91AAC826BBC87F0085161B /* ListModel.swift */,
+			);
+			path = OlderModel;
 			sourceTree = "<group>";
 		};
 		5B72C14626AB341E008A4B6A = {

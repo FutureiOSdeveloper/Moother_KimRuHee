@@ -16,11 +16,15 @@ import SnapKit
 
 class ViewController: UIViewController {
     // MARK: - Network
-    private let weatherProvider = MoyaProvider<WeatherService>()
+    private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
     var weatherModel: WeatherModel?
+    var temperature: Double = 0
+    var condition: String?
+    var max: Double = 0
+    var min: Double = 0
     
     // MARK: - Properties
-    private let weatherList: [UIColor] = [.clear, .clear, .clear, .clear]
+    private var weatherList: [String] = ["", "", "", "", ""]
     
     var isAddNewCityView: Bool = false
     var location: String = ""
@@ -196,7 +200,9 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        print("위도 = \(latitude ?? 0), 경도 = \(longtitude ?? 0)")
+        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0)
+//        print("위도 = \(latitude ?? 0), 경도 = \(longtitude ?? 0)")
+//        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0)
         
         /// 위도, 경도 기반으로 주소 가져오기
         let myLocation = CLLocation(latitude: latitude ?? 0, longitude: longtitude ?? 0 )
@@ -208,7 +214,7 @@ class ViewController: UIViewController {
             } else {
                 print(error as Any)
             }
-            self.myCurrentLocation = (placemarks?.first?.locality ?? "북대서양") 
+            self.myCurrentLocation = (placemarks?.first?.locality ?? "북대서양")
             self.mainCV.reloadData()
         })
     }
@@ -270,8 +276,11 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.backgroundColor = weatherList[indexPath.item]
         cell.locationLabel.text = myCurrentLocation
+        cell.tempLabel.text = "\(Int(temperature))º"
+        cell.conditionLabel.text = condition
+        cell.highLabel.text = "최고: \(Int(max))º"
+        cell.lowLabel.text = "최저: \(Int(min))º"
         if isAddNewCityView {
             cell.locationLabel.text = location
         }
@@ -313,7 +322,17 @@ extension ViewController {
             case .success(let result):
                 do {
                     self.weatherModel = try result.map(WeatherModel.self)
-                    print("서버통신완료", self.weatherModel)
+                    if let temp = self.weatherModel?.current.temp,
+                       let condition = self.weatherModel?.current.weather[0].weatherDescription,
+                       let max = self.weatherModel?.daily[0].temp.max,
+                       let min = self.weatherModel?.daily[0].temp.min {
+                        self.temperature = temp
+                        self.condition = condition
+                        self.max = max
+                        self.min = min
+                    }
+                    
+                    self.mainCV.reloadData()
                     
                 } catch(let err) {
                     print(err.localizedDescription)

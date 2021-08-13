@@ -11,6 +11,7 @@ struct WeatherRequest: Codable {
     var lat: Double
     var lon: Double
     var appid: String
+    var exclude: String
     var units: String
     var lang: String
     
@@ -18,6 +19,7 @@ struct WeatherRequest: Codable {
         self.lat = lat
         self.lon = lon
         self.appid = "cea1d8866a0ca2c205c2b5e2a30f160c"
+        self.exclude = "hourly"
         self.units = "metric"
         self.lang = "kr"
     }

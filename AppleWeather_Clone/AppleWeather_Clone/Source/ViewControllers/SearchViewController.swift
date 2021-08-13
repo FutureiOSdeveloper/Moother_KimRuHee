@@ -157,7 +157,7 @@ extension SearchViewController: UITableViewDelegate {
             }
             let vc = ViewController()
             vc.isAddNewCityView = true
-            vc.location = placeMark.locality!
+            vc.location = (placeMark.locality ?? placeMark.title!)
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }

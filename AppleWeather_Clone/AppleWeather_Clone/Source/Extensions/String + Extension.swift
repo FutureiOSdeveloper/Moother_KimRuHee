@@ -15,12 +15,4 @@ extension String {
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.string(from: date as Date)
     }
-    
-    func stringToWeek() -> String {
-        let date = NSDate(timeIntervalSince1970: TimeInterval(Double(self)!))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        return dateFormatter.string(from: date as Date)
-    }
 }

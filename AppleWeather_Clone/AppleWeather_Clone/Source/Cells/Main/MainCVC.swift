@@ -285,7 +285,7 @@ extension MainCVC: UITableViewDataSource {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
-                todayCell.todayLabel.text = "오늘: 현재 날씨 \(condition), 최고 기온은 \(max ?? 0)도이며 최저 기온은 \(min ?? 0)도입니다."
+                todayCell.todayLabel.text = "오늘: 현재 날씨 \(condition), 최고 기온은 \(max ?? 0)º이며 최저 기온은 \(min ?? 0)º입니다."
                 return todayCell
                 
             } else if indexPath.row < 14 {
@@ -330,7 +330,7 @@ extension MainCVC{
                        let pressure = self.weatherModel?.current.pressure,
                        let look = self.weatherModel?.current.visibility,
                        let uvi = self.weatherModel?.current.uvi,
-                       let condition = self.weatherModel?.current.weather[0].weatherDescription{
+                       let condition = self.weatherModel?.current.weather[0].weatherDescription {
                         self.rain = Int(rain)
                         self.max = Int(max)
                         self.min = Int(min)
@@ -344,17 +344,15 @@ extension MainCVC{
                         self.uvi = Int(uvi)
                         self.condition = condition
                     }
-                    
                     self.timeList = self.weatherModel!.hourly
                     self.dailyList = self.weatherModel!.daily
-                    
                     self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(formatter: "a hh:mm"),
                                                    rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime(formatter: "a hh:mm")),
-                                       DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rainPercent)%",
+                                       DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rain)%",
                                                    rightTitle: "습도", rightDetail: "\(self.humidity)%"),
                                        DetailModel(leftTitle: "바람", leftDetail: "\(self.wind)m/s",
-                                                   rightTitle: "체감", rightDetail: "\(self.feelLike)"),
-                                       DetailModel(leftTitle: "강수량", leftDetail: "\(self.rain)cm",
+                                                   rightTitle: "체감", rightDetail: "\(self.feelLike)º"),
+                                       DetailModel(leftTitle: "강수량", leftDetail: "\(String(self.weatherModel?.current.rain?.the1H ?? 0))cm",
                                                    rightTitle: "기압", rightDetail: "\(self.pressure)hPa"),
                                        DetailModel(leftTitle: "가시거리", leftDetail: "\(self.look)km",
                                                    rightTitle: "자외선 지수", rightDetail: "\(self.uvi)")]

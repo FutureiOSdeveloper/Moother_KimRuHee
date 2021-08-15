@@ -15,7 +15,7 @@ class TimeTempCVC: UICollectionViewCell {
     
     // MARK: - Properties    
     let timeLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .regular)
+        $0.font = .systemFont(ofSize: 15, weight: .medium)
         $0.textColor = .white
     }
     
@@ -50,33 +50,32 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     func setupAutoLayout() {
-        addSubviews([timeLabel, rainPercentLabel, weatherImageView, tempLabel])
+        addSubviews([timeLabel, weatherImageView, tempLabel])
         
         timeLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
-            make.centerX.equalToSuperview()
-        }
-        
-        rainPercentLabel.snp.makeConstraints { make in
-            make.top.equalTo(timeLabel.snp.bottom)
+            make.top.equalToSuperview().inset(10)
             make.centerX.equalToSuperview()
         }
         
         weatherImageView.snp.makeConstraints { make in
-            make.top.equalTo(rainPercentLabel.snp.bottom).offset(10)
+            make.top.equalTo(timeLabel.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
             make.width.height.equalTo(20)
         }
         
         tempLabel.snp.makeConstraints { make in
-            make.top.equalTo(weatherImageView.snp.bottom).offset(18)
+            make.top.equalTo(weatherImageView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
+    
     // MARK: - setData
     func setData(time: Int?, image: String?, temp: Double?) {
-        timeLabel.text = String(time ?? 0).stringToTime(formatter: "a hh:mm")
+        timeLabel.text = String(time ?? 0).stringToTime(formatter: "a h") + "시"
         tempLabel.text = String(Int(temp ?? 0)) + "º"
         if let image = UIImage(named: image ?? "") {
             weatherImageView.image = image

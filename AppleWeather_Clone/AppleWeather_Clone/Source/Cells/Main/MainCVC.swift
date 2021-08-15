@@ -40,51 +40,39 @@ class MainCVC: UICollectionViewCell {
     var condition: String = ""
     
     let locationLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 30, weight: .semibold)
+        $0.font = .systemFont(ofSize: 30, weight: .regular)
         $0.textColor = .white
     }
     
     let conditionLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .medium)
+        $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.textColor = .white
     }
     
     let tempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 100, weight: .light)
+        $0.font = .systemFont(ofSize: 100, weight: .thin)
         $0.textColor = .white
     }
     
     let highLowStackView = UIStackView().then {
         $0.axis = .horizontal
-        $0.spacing = 4
+        $0.spacing = 6
         $0.alignment = .center
         $0.backgroundColor = .clear
     }
     
     let highLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+        $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.textColor = .white
     }
     
     let lowLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+        $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.textColor = .white
     }
     
     let mainTV = UITableView()
-    
-    // MARK: - Dummy Data
-//    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-//                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
-        
+            
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -243,9 +231,6 @@ extension MainCVC: UITableViewDelegate {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let tvContentOffsetY = (mainTV.contentOffset.y+47)
         let yPlusOffset = tvContentOffsetY+320
-        print("tvContentOffsetY", round(tvContentOffsetY))
-        print("yPlusOffset", round(yPlusOffset))
-        
         if tvContentOffsetY > -320 && tvContentOffsetY < 47 {
             UIView.animate(withDuration: 0.5) {
                 self.mainTV.contentInset = UIEdgeInsets(top: 47, left: 0, bottom: 0, right: 0)
@@ -262,9 +247,6 @@ extension MainCVC: UITableViewDataSource {
             return UIView()
         default:
             let secondHeaderView = TimeTempHeaderView()
-//            if let weather = hourlyWeather {
-//                secondHeaderView.setData(weather: weather)
-//            }
             return secondHeaderView
         }
     }
@@ -319,7 +301,7 @@ extension MainCVC: UITableViewDataSource {
                 guard let mapCell = tableView.dequeueReusableCell(withIdentifier: MapTVC.identifier, for: indexPath) as? MapTVC
                 else { return UITableViewCell() }
                 mapCell.selectionStyle = .none
-                mapCell.localLabel.text = locationLabel.text! + " 날씨"
+                mapCell.localLabel.text = locationLabel.text! + " 날씨."
                 return mapCell
             }
         }

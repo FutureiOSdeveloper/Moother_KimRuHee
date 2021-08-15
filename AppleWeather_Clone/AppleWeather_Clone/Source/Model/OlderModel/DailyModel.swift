@@ -1,5 +1,5 @@
 //
-//  DailyWeatherModel.swift
+//  DailyModel.swift
 //  AppleWeather_Clone
 //
 //  Created by Thisisme Hi on 2021/07/27.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DailyWeatherModel {
+struct DailyModel {
     var week: String
     var image: String
     var rain: String

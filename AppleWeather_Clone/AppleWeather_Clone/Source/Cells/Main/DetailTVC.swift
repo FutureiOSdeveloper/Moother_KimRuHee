@@ -15,32 +15,26 @@ class DetailTVC: UITableViewCell {
     static let identifier = "DetailTVC"
     
     // MARK: - Properties
-    var detailModel: [DetailModel]?
-    
     let leftTitleLabel = UILabel().then {
-        $0.text = "일출"
-        $0.font = .systemFont(ofSize: 10, weight: .semibold)
+        $0.font = .systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .lightGray
         $0.textAlignment = .left
     }
     
     let leftDetailLabel = UILabel().then {
-        $0.text = "오전 5:32"
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 20, weight: .regular)
         $0.textColor = .white
         $0.textAlignment = .left
     }
     
     let rightTitleLabel = UILabel().then {
-        $0.text = "일몰"
-        $0.font = .systemFont(ofSize: 10, weight: .semibold)
+        $0.font = .systemFont(ofSize: 10, weight: .regular)
         $0.textColor = .lightGray
         $0.textAlignment = .left
     }
     
     let rightDetailLabel = UILabel().then {
-        $0.text = "오후 7:44"
-        $0.font = .systemFont(ofSize: 20, weight: .semibold)
+        $0.font = .systemFont(ofSize: 20, weight: .regular)
         $0.textColor = .white
         $0.textAlignment = .left
     }

@@ -17,7 +17,7 @@ class TimeTempHeaderView: UIView {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
-    var timeList: [HourlyWeather]?
+    var timeList: [TimeModel]?
     var exclude: String = "hourly"
     
     var time: Int = 0
@@ -90,7 +90,7 @@ class TimeTempHeaderView: UIView {
         timeTempCV.register(TimeTempCVC.self, forCellWithReuseIdentifier: "TimeTempCVC")
     }
     
-    func setData(weather: [HourlyWeather]) {
+    func setData(weather: [TimeModel]) {
         self.timeList = weather
     }
 }
@@ -109,12 +109,7 @@ extension TimeTempHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC
         else { return UICollectionViewCell() }
-        cell.setData(time: time, image: image, temp: temp)
         
-
-        if let weather = timeList {
-            cell.generateCell(weather: weather[indexPath.row])
-        }
         return cell
     }
 }

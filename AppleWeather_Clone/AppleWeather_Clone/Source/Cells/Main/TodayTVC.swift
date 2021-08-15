@@ -14,15 +14,13 @@ class TodayTVC: UITableViewCell {
     // 1개만 써주면 됨 오늘~ 웅앵부분
     static let identifier = "TodayTVC"
     
-    // MARK: - Properties
-    var weatherModel: WeatherModel?
-    
+    // MARK: - Properties    
     let topLineView = UIView().then {
         $0.backgroundColor = .white
     }
     
     let todayLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 14, weight: .semibold)
+        $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.textColor = .white
         $0.numberOfLines = 0
         $0.textAlignment = .left

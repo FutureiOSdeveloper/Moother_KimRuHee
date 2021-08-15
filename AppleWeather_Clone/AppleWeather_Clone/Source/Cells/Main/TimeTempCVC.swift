@@ -13,17 +13,14 @@ import SnapKit
 class TimeTempCVC: UICollectionViewCell {
     static let identifier = "TimeTempCVC"
     
-    // MARK: - Properties
-    var weatherModel: WeatherModel!
-    var hourlyModel: [HourlyWeather] = []
-    
+    // MARK: - Properties    
     let timeLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+        $0.font = .systemFont(ofSize: 15, weight: .regular)
         $0.textColor = .white
     }
     
     let rainPercentLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 11, weight: .black)
+        $0.font = .systemFont(ofSize: 11, weight: .regular)
         $0.textColor = .cyan
     }
     
@@ -32,7 +29,7 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
         $0.textColor = .white
     }
         
@@ -77,20 +74,18 @@ class TimeTempCVC: UICollectionViewCell {
         }
     }
     
-    func generateCell(weather: HourlyWeather) {
-        timeLabel.text = String(weather.time) + "시"
-        rainPercentLabel.text = String(weather.rain) + "%"
-        weatherImageView.image = UIImage(contentsOfFile: weather.image)
-        tempLabel.text = String(weather.temp)
-    }
-    
-    func setData(time: Int?, image: String?, temp: Double?) {
+    // MARK: - setData
+    func setData(time: Int?, rain: Double?, image: String?, temp: Double?) {
         timeLabel.text = String(time ?? 0)
-//        rainPercentLabel.text = String(rain ?? 0) + "%"
+        if rain == 0.0 {
+            rainPercentLabel.alpha = 0
+        } else {
+            rainPercentLabel.text = String(Int(rain ?? 0)) + "%"
+        }
+        
+        tempLabel.text = String(Int(temp ?? 0))
         if let image = UIImage(named: image ?? "") {
             weatherImageView.image = image
         }
-        
-        tempLabel.text = String(temp ?? 0)
     }
 }

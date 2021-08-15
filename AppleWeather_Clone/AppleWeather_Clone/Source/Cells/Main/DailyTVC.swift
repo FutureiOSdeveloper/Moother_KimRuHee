@@ -16,28 +16,24 @@ class DailyTVC: UITableViewCell {
     
     // MARK: - Properties
     let weekLabel = UILabel().then {
-        $0.text = "화요일"
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .white
     }
     
     let weatherImageView = UIImageView()
     
     let rainPercentLabel = UILabel().then {
-        $0.text = "40%"
-        $0.font = .systemFont(ofSize: 14, weight: .semibold)
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
         $0.textColor = .cyan
     }
     
     let highTempLabel = UILabel().then {
-        $0.text = "37"
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .white
     }
     
     let lowTempLabel = UILabel().then {
-        $0.text = "26"
-        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.textColor = .lightGray
     }
     
@@ -106,18 +102,14 @@ class DailyTVC: UITableViewCell {
         return mask
     }
     
-    func generateCell(weather: DailyWeatherModel) {
-        weekLabel.text = weather.week
-        weatherImageView.image = UIImage(contentsOfFile: weather.image)
-        rainPercentLabel.text = weather.rain
-        highTempLabel.text = weather.high
-        lowTempLabel.text = weather.low
-    }
-    
     // MARK: - setData
     func setData(week: Int?, image: String?, rain: Double?, high: Double?, low: Double?) {
         weekLabel.text = String(week ?? 0).stringToWeek()
-        rainPercentLabel.text = String(Int(rain ?? 0)) + "%"
+        if rain == 0.0 {
+            rainPercentLabel.alpha = 0
+        } else {
+            rainPercentLabel.text = String(Int(rain ?? 0)) + "%"
+        }
         highTempLabel.text = String(Int(high ?? 0))
         lowTempLabel.text = String(Int(low ?? 0))
         if let image = UIImage(named: image ?? "") {

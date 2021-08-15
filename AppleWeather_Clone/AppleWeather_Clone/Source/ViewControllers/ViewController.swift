@@ -107,9 +107,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupLocationManager()
         configUI()
-        setupCollectionView()
         setupAutoLayout()
         setupPageControl()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
     }
@@ -204,6 +204,7 @@ class ViewController: UIViewController {
         latitude = coor?.latitude
         longtitude = coor?.longitude
         fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "")
+        
         if isAddNewCityView {
             fetchWeather(lat: searchLatitude ?? 0, lon: searchLongtitude ?? 0, exclude: "")
         }
@@ -280,22 +281,21 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.latitude = latitude
-        cell.longtitude = longtitude
+        cell.fetchWeather(lat: latitude!, lon: longtitude!, exclude: "")
         cell.setData(location: myCurrentLocation,
                      temp: "\(Int(temperature))º",
                      condition: condition,
                      max: "최고: \(Int(max))º",
                      min: "최저: \(Int(min))º")
         if isAddNewCityView {
-            cell.latitude = searchLatitude
-            cell.longtitude = searchLongtitude
+            cell.fetchWeather(lat: searchLatitude!, lon: searchLongtitude!, exclude: "")
             cell.setData(location: location,
                          temp: "\(Int(temperature))º",
                          condition: condition,
                          max: "최고: \(Int(max))º",
                          min: "최저: \(Int(min))º")
         }
+        
         return cell
     }
 }
@@ -343,8 +343,9 @@ extension ViewController {
                         self.max = max
                         self.min = min
                     }
+                    self.setupCollectionView()
                     self.mainCV.reloadData()
-                    
+                   
                 } catch(let err) {
                     print(err.localizedDescription)
                 }

@@ -119,11 +119,7 @@ class DailyTVC: UITableViewCell {
     // MARK: - setData
     func setData(week: String?, image: String?, rain: Int?, high: Int?, low: Int?) {
         weekLabel.text = week
-        if rain == 0 {
-            rainPercentLabel.alpha = 0
-        } else {
-            rainPercentLabel.text = String(rain ?? 0) + "%"
-        }
+        rainPercentLabel.text = String(rain ?? 0) + "%"
         highTempLabel.text = String(high ?? 0)
         lowTempLabel.text = String(low ?? 0)
         

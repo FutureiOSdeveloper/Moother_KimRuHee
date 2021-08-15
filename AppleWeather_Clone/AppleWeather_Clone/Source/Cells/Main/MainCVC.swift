@@ -38,21 +38,19 @@ class MainCVC: UICollectionViewCell {
     var pressure: Int = 0
     var look: Double = 0
     var uvi: Int = 0
+    var condition: String = ""
     
     let locationLabel = UILabel().then {
-        $0.text = "마포구"
         $0.font = .systemFont(ofSize: 30, weight: .semibold)
         $0.textColor = .white
     }
     
     let conditionLabel = UILabel().then {
-        $0.text = "맑음"
         $0.font = .systemFont(ofSize: 15, weight: .medium)
         $0.textColor = .white
     }
     
     let tempLabel = UILabel().then {
-//        $0.text = "36"
         $0.font = .systemFont(ofSize: 100, weight: .light)
         $0.textColor = .white
     }
@@ -65,13 +63,11 @@ class MainCVC: UICollectionViewCell {
     }
     
     let highLabel = UILabel().then {
-        $0.text = "최고:37"
         $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     
     let lowLabel = UILabel().then {
-        $0.text = "최저:25"
         $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
@@ -95,17 +91,12 @@ class MainCVC: UICollectionViewCell {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0, exclude: "minutely")
         configUI()
         setupAutoLayout()
-        setupTableView()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(receiveFirstCell(_:)),
                                                name: NSNotification.Name("clickFirstCell"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
                                                name: NSNotification.Name("clickOtherCell"), object: nil)
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -123,7 +114,6 @@ class MainCVC: UICollectionViewCell {
         tempLabel.getShadow()
         highLabel.getShadow()
         lowLabel.getShadow()
-        
     }
     
     func setupAutoLayout() {
@@ -304,28 +294,28 @@ extension MainCVC: UITableViewDataSource {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
-//                dailyCell.setData(week: dailyList[indexPath.row].week,
-//                                  image: dailyList[indexPath.row].image,
-//                                  rain: rain,
-//                                  high: max,
-//                                  low: min)
+                dailyCell.setData(week: dailyList[indexPath.row].week,
+                                  image: dailyList[indexPath.row].image,
+                                  rain: rain,
+                                  high: max,
+                                  low: min)
                 return dailyCell
                 
             } else if indexPath.row < 11 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
-//                todayCell.todayLabel.text = "오늘: 현재 날씨 \(conditionLabel.text ?? ""), 최고 기온은 \(max ?? 0)도이며 최저 기온은 \(min ?? 0)도입니다."
+                todayCell.todayLabel.text = "오늘: 현재 날씨 \(condition), 최고 기온은 \(max ?? 0)도이며 최저 기온은 \(min ?? 0)도입니다."
                 return todayCell
                 
             } else if indexPath.row < 16 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC
                 else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
-//                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
-//                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
-//                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
-//                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
+                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
+                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
+                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
+                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
 
                 return detailCell
                 
@@ -360,7 +350,8 @@ extension MainCVC{
                        let feelLike = self.weatherModel?.current.feelsLike,
                        let pressure = self.weatherModel?.current.pressure,
                        let look = self.weatherModel?.current.visibility,
-                       let uvi = self.weatherModel?.current.uvi {
+                       let uvi = self.weatherModel?.current.uvi,
+                       let condition = self.weatherModel?.current.weather[0].weatherDescription{
                         self.rain = Int(rain)
                         self.max = Int(max)
                         self.min = Int(min)
@@ -372,6 +363,7 @@ extension MainCVC{
                         self.pressure = pressure
                         self.look = Double(look)
                         self.uvi = Int(uvi)
+                        self.condition = condition
                     }
                     
                     self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringFromDate(),
@@ -384,6 +376,7 @@ extension MainCVC{
                                                    rightTitle: "기압", rightDetail: "\(self.pressure)hPa"),
                                        DetailModel(leftTitle: "가시거리", leftDetail: "\(self.look)km",
                                                    rightTitle: "자외선 지수", rightDetail: "\(self.uvi)")]
+                    self.setupTableView()
                     self.mainTV.reloadData()
                 } catch(let err) {
                     print(err.localizedDescription)

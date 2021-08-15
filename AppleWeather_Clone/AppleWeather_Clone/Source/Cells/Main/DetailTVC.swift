@@ -104,11 +104,7 @@ class DetailTVC: UITableViewCell {
         mask.locations = [num, num]
         return mask
     }
-    
-    func generateCell(detail: DetailModel) {
-        
-    }
-    
+
     // MARK: - setData
     func setData(leftTitle: String, leftDetail: String, rightTitle: String, rightDetail: String) {
         leftTitleLabel.text = leftTitle

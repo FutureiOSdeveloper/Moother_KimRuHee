@@ -84,8 +84,4 @@ class TodayTVC: UITableViewCell {
         mask.locations = [num, num]
         return mask
     }
-    
-    func setData() {
-        
-    }
 }

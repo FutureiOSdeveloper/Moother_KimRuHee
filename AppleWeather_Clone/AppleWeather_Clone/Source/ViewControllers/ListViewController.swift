@@ -55,7 +55,6 @@ class ListViewController: UIViewController {
     
     // MARK: - @objc
     @objc func touchupWebButton(_ sender: UIButton) {
-        print("web버튼 누름")
         let application = UIApplication.shared
         let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!
         
@@ -65,7 +64,6 @@ class ListViewController: UIViewController {
     }
     
     @objc func touchupSearchButton(_ sender: UIButton) {
-        print("검색버튼 누름")
         let nextVC = SearchViewController()
         self.present(nextVC, animated: true, completion: nil)
     }

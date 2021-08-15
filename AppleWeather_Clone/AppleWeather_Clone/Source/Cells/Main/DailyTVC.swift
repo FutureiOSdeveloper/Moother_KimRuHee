@@ -15,8 +15,6 @@ class DailyTVC: UITableViewCell {
     static let identifier = "DailyTVC"
     
     // MARK: - Properties
-    var weatherModel: WeatherModel?
-    
     let weekLabel = UILabel().then {
         $0.text = "화요일"
         $0.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -110,19 +108,18 @@ class DailyTVC: UITableViewCell {
     
     func generateCell(weather: DailyWeatherModel) {
         weekLabel.text = weather.week
+        weatherImageView.image = UIImage(contentsOfFile: weather.image)
         rainPercentLabel.text = weather.rain
         highTempLabel.text = weather.high
         lowTempLabel.text = weather.low
-        weatherImageView.image = UIImage(contentsOfFile: weather.image)
     }
     
     // MARK: - setData
-    func setData(week: String?, image: String?, rain: Int?, high: Int?, low: Int?) {
-        weekLabel.text = week
-        rainPercentLabel.text = String(rain ?? 0) + "%"
-        highTempLabel.text = String(high ?? 0)
-        lowTempLabel.text = String(low ?? 0)
-        
+    func setData(week: Int?, image: String?, rain: Double?, high: Double?, low: Double?) {
+        weekLabel.text = String(week ?? 0).stringToWeek()
+        rainPercentLabel.text = String(Int(rain ?? 0)) + "%"
+        highTempLabel.text = String(Int(high ?? 0))
+        lowTempLabel.text = String(Int(low ?? 0))
         if let image = UIImage(named: image ?? "") {
             weatherImageView.image = image
         }

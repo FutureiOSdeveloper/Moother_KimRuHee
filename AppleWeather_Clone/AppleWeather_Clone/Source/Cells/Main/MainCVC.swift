@@ -19,12 +19,11 @@ class MainCVC: UICollectionViewCell {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
-    var hourlyWeather: [HourlyWeather]?
-    var dailyWeather: [DailyWeatherModel] = []
-    var detailInfo: [DetailInfoModel] = []
+    var dailyList = [Daily]()
+    var detailList: [DetailModel] = []
+
     var latitude: Double?
     var longtitude: Double?
-    let vc = ViewController()
     
     var rain: Int = 0
     var max: Int?
@@ -75,19 +74,17 @@ class MainCVC: UICollectionViewCell {
     let mainTV = UITableView()
     
     // MARK: - Dummy Data
-    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
-                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
-    
-    var detailList: [DetailModel] = []
-    
+//    var dailyList: [DailyWeatherModel] = [DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "금요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "토요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "일요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "월요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "화요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "수요일", image: "img_example", rain: "40%", high: "36", low: "28"),
+//                                          DailyWeatherModel(week: "목요일", image: "img_example", rain: "40%", high: "36", low: "28")]
+        
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -265,9 +262,9 @@ extension MainCVC: UITableViewDataSource {
             return UIView()
         default:
             let secondHeaderView = TimeTempHeaderView()
-            if let weather = hourlyWeather {
-                secondHeaderView.setData(weather: weather)
-            }
+//            if let weather = hourlyWeather {
+//                secondHeaderView.setData(weather: weather)
+//            }
             return secondHeaderView
         }
     }
@@ -290,25 +287,25 @@ extension MainCVC: UITableViewDataSource {
         case 0:
             return UITableViewCell()
         default:
-            if indexPath.row < 10 {
+            if indexPath.row < 8 {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
-                dailyCell.setData(week: dailyList[indexPath.row].week,
-                                  image: dailyList[indexPath.row].image,
-                                  rain: rain,
-                                  high: max,
-                                  low: min)
+                dailyCell.setData(week: dailyList[indexPath.row].dt,
+                                  image: dailyList[indexPath.row].weather[0].icon,
+                                  rain: dailyList[indexPath.row].rain,
+                                  high: dailyList[indexPath.row].temp.max,
+                                  low: dailyList[indexPath.row].temp.min)
                 return dailyCell
                 
-            } else if indexPath.row < 11 {
+            } else if indexPath.row < 9 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
                 todayCell.todayLabel.text = "오늘: 현재 날씨 \(condition), 최고 기온은 \(max ?? 0)도이며 최저 기온은 \(min ?? 0)도입니다."
                 return todayCell
                 
-            } else if indexPath.row < 16 {
+            } else if indexPath.row < 14 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC
                 else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
@@ -316,7 +313,6 @@ extension MainCVC: UITableViewDataSource {
                                    leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
                                    rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
                                    rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
-
                 return detailCell
                 
             } else {
@@ -366,8 +362,10 @@ extension MainCVC{
                         self.condition = condition
                     }
                     
-                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringFromDate(),
-                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringFromDate()),
+                    self.dailyList = self.weatherModel!.daily
+                    
+                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(),
+                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime()),
                                        DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rainPercent)%",
                                                    rightTitle: "습도", rightDetail: "\(self.humidity)%"),
                                        DetailModel(leftTitle: "바람", leftDetail: "\(self.wind)m/s",

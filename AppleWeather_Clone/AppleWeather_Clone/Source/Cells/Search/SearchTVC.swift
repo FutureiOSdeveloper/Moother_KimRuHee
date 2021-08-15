@@ -40,7 +40,6 @@ class SearchTVC: UITableViewCell {
     
     // MARK: - Custom Method
     func configUI() {
-        
     }
     
     func setupAutoLayout() {

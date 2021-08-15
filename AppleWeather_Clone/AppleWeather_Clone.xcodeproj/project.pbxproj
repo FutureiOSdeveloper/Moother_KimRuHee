@@ -26,7 +26,6 @@
 		5B531ECA26C50F0600EC0647 /* Encodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EC926C50F0600EC0647 /* Encodable.swift */; };
 		5B531ECD26C50F5900EC0647 /* WeatherRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */; };
 		5B531EF326C6606F00EC0647 /* HourlyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF226C6606E00EC0647 /* HourlyWeather.swift */; };
-		5B531EF726C66D3E00EC0647 /* DetailInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */; };
 		5B531EFA26C6A18800EC0647 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B531EF926C6A18700EC0647 /* String + Extension.swift */; };
 		5B72C15326AB341F008A4B6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15226AB341F008A4B6A /* AppDelegate.swift */; };
 		5B72C15526AB341F008A4B6A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B72C15426AB341F008A4B6A /* SceneDelegate.swift */; };
@@ -65,7 +64,6 @@
 		5B531EC926C50F0600EC0647 /* Encodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Encodable.swift; sourceTree = "<group>"; };
 		5B531ECC26C50F5900EC0647 /* WeatherRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRequest.swift; sourceTree = "<group>"; };
 		5B531EF226C6606E00EC0647 /* HourlyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyWeather.swift; sourceTree = "<group>"; };
-		5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInfoModel.swift; sourceTree = "<group>"; };
 		5B531EF926C6A18700EC0647 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		5B72C14F26AB341F008A4B6A /* AppleWeather_Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWeather_Clone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B72C15226AB341F008A4B6A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +117,6 @@
 				5B212C4426B02C1C00603649 /* DailyWeatherModel.swift */,
 				5B212C4826B02C6000603649 /* DetailModel.swift */,
 				5B91AAC826BBC87F0085161B /* ListModel.swift */,
-				5B531EF626C66D3E00EC0647 /* DetailInfoModel.swift */,
 			);
 			path = OlderModel;
 			sourceTree = "<group>";
@@ -416,7 +413,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B531EF726C66D3E00EC0647 /* DetailInfoModel.swift in Sources */,
 				5B91AAD126BBEDD40085161B /* General API.swift in Sources */,
 				5B91AAC626B9CEE20085161B /* WeatherModel.swift in Sources */,
 				5B531EFA26C6A18800EC0647 /* String + Extension.swift in Sources */,

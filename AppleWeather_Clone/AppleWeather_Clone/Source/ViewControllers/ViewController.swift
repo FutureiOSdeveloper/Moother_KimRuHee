@@ -281,7 +281,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.fetchWeather(lat: latitude!, lon: longtitude!, exclude: "")
+        cell.fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "")
         cell.setData(location: myCurrentLocation,
                      temp: "\(Int(temperature))º",
                      condition: condition,

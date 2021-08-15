@@ -84,14 +84,8 @@ class TimeTempCVC: UICollectionViewCell {
         tempLabel.text = String(weather.temp)
     }
     
-    func setData(time: Int?, rain: Double?, image: String?, temp: Double?) {
+    func setData(time: Int?, image: String?, temp: Double?) {
         timeLabel.text = String(time ?? 0)
-        
-        if rain == 0 {
-            rainPercentLabel.alpha = 0
-        } else {
-            rainPercentLabel.text = String(rain ?? 0) + "%"
-        }
         
         if let image = UIImage(named: image ?? "") {
             weatherImageView.image = image

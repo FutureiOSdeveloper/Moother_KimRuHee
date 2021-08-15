@@ -36,6 +36,9 @@ class ViewController: UIViewController {
     /// 위도 및 경도
     var latitude: Double?
     var longtitude: Double?
+    /// 검색 위도 및 경도
+    var searchLatitude: Double?
+    var searchLongtitude: Double?
     
     let cancelButton = UIButton().then {
         $0.setTitle("취소", for: .normal)
@@ -200,9 +203,10 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "hourly")
-//        print("위도 = \(latitude ?? 0), 경도 = \(longtitude ?? 0)")
-//        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0)
+        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "")
+        if isAddNewCityView {
+            fetchWeather(lat: searchLatitude ?? 0, lon: searchLongtitude ?? 0, exclude: "")
+        }
         
         /// 위도, 경도 기반으로 주소 가져오기
         let myLocation = CLLocation(latitude: latitude ?? 0, longitude: longtitude ?? 0 )
@@ -284,7 +288,13 @@ extension ViewController: UICollectionViewDataSource {
                      max: "최고: \(Int(max))º",
                      min: "최저: \(Int(min))º")
         if isAddNewCityView {
-            cell.locationLabel.text = location
+            cell.latitude = searchLatitude
+            cell.longtitude = searchLongtitude
+            cell.setData(location: location,
+                         temp: "\(Int(temperature))º",
+                         condition: condition,
+                         max: "최고: \(Int(max))º",
+                         min: "최저: \(Int(min))º")
         }
         return cell
     }

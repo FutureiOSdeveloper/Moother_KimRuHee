@@ -155,9 +155,14 @@ extension SearchViewController: UITableViewDelegate {
             guard let placeMark = response?.mapItems[0].placemark else {
                 return
             }
+            let searchLatitude = placeMark.coordinate.latitude
+            let searchLongtitude = placeMark.coordinate.longitude
+            
             let vc = ViewController()
             vc.isAddNewCityView = true
             vc.location = (placeMark.locality ?? placeMark.title!)
+            vc.searchLatitude = searchLatitude
+            vc.searchLongtitude = searchLongtitude
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         }

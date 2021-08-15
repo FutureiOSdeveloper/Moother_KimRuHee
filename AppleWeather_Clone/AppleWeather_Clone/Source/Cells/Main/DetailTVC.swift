@@ -15,6 +15,8 @@ class DetailTVC: UITableViewCell {
     static let identifier = "DetailTVC"
     
     // MARK: - Properties
+    var detailModel: [DetailModel]?
+    
     let leftTitleLabel = UILabel().then {
         $0.text = "일출"
         $0.font = .systemFont(ofSize: 10, weight: .semibold)
@@ -101,6 +103,10 @@ class DetailTVC: UITableViewCell {
         let num = location as NSNumber
         mask.locations = [num, num]
         return mask
+    }
+    
+    func generateCell(detail: DetailModel) {
+        
     }
     
     // MARK: - setData

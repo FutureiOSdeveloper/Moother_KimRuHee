@@ -109,11 +109,12 @@ extension TimeTempHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC
         else { return UICollectionViewCell() }
+        cell.setData(time: time, image: image, temp: temp)
+        
 
         if let weather = timeList {
             cell.generateCell(weather: weather[indexPath.row])
         }
-        
         return cell
     }
 }
@@ -137,36 +138,30 @@ extension TimeTempHeaderView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//// MARK: - Network : fetchWeather
-//extension TimeTempHeaderView {
-//    func fetchWeather(lat: Double, lon: Double, exclude: String) {
-//        let param = WeatherRequest.init(lat, lon, exclude)
-//
-//        weatherProvider.request(.weather(param: param)) { response in
-//            switch response {
-//            case .success(let result):
-//                do {
-//                    self.weatherModel = try result.map(WeatherModel.self)
-//
-//                    if let time = self.weatherModel?.hourly,
-//                       let rain = self.weatherModel?.daily[0].rain,
-//                       let icon = self.weatherModel?.hourly[0].weather[0].icon,
-//                       let temp = self.weatherModel?.hourly[0].temp {
-//                        self.time = time
-//                        self.rain = rain
-//                        self.image = icon
-//                        self.temp = temp
-//                    }
-//                    self.timeList = [HourlyWeather(time: self.time, rain: self.rain, image: self.image, temp: self.temp)]
-//                    self.timeList
-//                    self.timeTempCV.reloadData()
-//
-//                } catch(let err) {
-//                    print(err.localizedDescription)
-//                }
-//            case .failure(let err):
-//                print(err.localizedDescription)
-//            }
-//        }
-//    }
-//}
+// MARK: - Network : fetchWeather
+extension TimeTempHeaderView {
+    func fetchWeather(lat: Double, lon: Double, exclude: String) {
+        let param = WeatherRequest.init(lat, lon, exclude)
+        
+        weatherProvider.request(.weather(param: param)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    self.weatherModel = try result.map(WeatherModel.self)
+                    if let time = self.weatherModel?.current.dt,
+                       let image = self.weatherModel?.current.weather[0].icon,
+                       let temp = self.weatherModel?.current.temp {
+                        self.time = time
+                        self.image = image
+                        self.temp = temp
+                    }
+                    self.timeTempCV.reloadData()
+                } catch(let err) {
+                    print(err.localizedDescription)
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+        }
+    }
+}

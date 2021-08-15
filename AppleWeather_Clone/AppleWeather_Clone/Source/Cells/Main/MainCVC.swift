@@ -95,7 +95,7 @@ class MainCVC: UICollectionViewCell {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0, exclude: "hourly")
+        fetchWeather(lat: vc.latitude ?? 0, lon: vc.longtitude ?? 0, exclude: "minutely")
         configUI()
         setupAutoLayout()
         setupTableView()
@@ -304,28 +304,29 @@ extension MainCVC: UITableViewDataSource {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
-                dailyCell.setData(week: dailyList[indexPath.row].week,
-                                  image: dailyList[indexPath.row].image,
-                                  rain: rain,
-                                  high: max,
-                                  low: min)
+//                dailyCell.setData(week: dailyList[indexPath.row].week,
+//                                  image: dailyList[indexPath.row].image,
+//                                  rain: rain,
+//                                  high: max,
+//                                  low: min)
                 return dailyCell
                 
             } else if indexPath.row < 11 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
-                todayCell.todayLabel.text = "오늘: 현재 날씨 \(conditionLabel.text!), 최고 기온은 \(max!)도이며 최저 기온은 \(min!)도입니다."
+//                todayCell.todayLabel.text = "오늘: 현재 날씨 \(conditionLabel.text ?? ""), 최고 기온은 \(max ?? 0)도이며 최저 기온은 \(min ?? 0)도입니다."
                 return todayCell
                 
             } else if indexPath.row < 16 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC
                 else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
-                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
-                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
-                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
-                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
+//                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
+//                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
+//                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
+//                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
+
                 return detailCell
                 
             } else {
@@ -352,8 +353,8 @@ extension MainCVC{
                     if let rain = self.weatherModel?.daily[0].rain,
                        let max = self.weatherModel?.daily[0].temp.max,
                        let min = self.weatherModel?.daily[0].temp.min,
-                       let sunset = self.weatherModel?.current.sunrise,
-                       let sunrise = self.weatherModel?.current.sunset,
+                       let sunset = self.weatherModel?.current.sunset,
+                       let sunrise = self.weatherModel?.current.sunrise,
                        let humidity = self.weatherModel?.current.humidity,
                        let wind = self.weatherModel?.current.windSpeed,
                        let feelLike = self.weatherModel?.current.feelsLike,

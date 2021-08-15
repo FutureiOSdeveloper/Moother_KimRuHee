@@ -9,7 +9,6 @@ import Foundation
 
 struct TimeModel {
     var time: Int
-    var rain: Double
     var image: String
     var temp: Double
 }

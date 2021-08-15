@@ -12,22 +12,8 @@ import Then
 import SnapKit
 
 class TimeTempHeaderView: UIView {
-    // MARK: - Network
-    private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
-    var weatherModel: WeatherModel?
-    
     // MARK: - Properties
-    var timeList: [TimeModel]?
-    var exclude: String = "hourly"
-    
-    var time: Int = 0
-    var rain: Double = 0
-    var image: String = ""
-    var temp: Double = 0
-    
-    var vc = ViewController()
-    var latitude: Double?
-    var longtitude: Double?
+    var timeList = [Current]()
     
     let topLineView = UIView().then {
         $0.backgroundColor = .white
@@ -53,7 +39,6 @@ class TimeTempHeaderView: UIView {
         configUI()
         setupAutoLayout()
         setupCollectionView()
-        timeTempCV.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -62,7 +47,6 @@ class TimeTempHeaderView: UIView {
     
     // MARK: - Custom Method
     func configUI() {
-        
     }
     
     func setupAutoLayout() {
@@ -90,7 +74,8 @@ class TimeTempHeaderView: UIView {
         timeTempCV.register(TimeTempCVC.self, forCellWithReuseIdentifier: "TimeTempCVC")
     }
     
-    func setData(weather: [TimeModel]) {
+    // MARK: - setData
+    func setData(weather: [Current]) {
         self.timeList = weather
     }
 }
@@ -103,13 +88,21 @@ extension TimeTempHeaderView: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension TimeTempHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return timeList?.count ?? 27
+        return 27
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TimeTempCVC.identifier, for: indexPath) as? TimeTempCVC
         else { return UICollectionViewCell() }
-        
+        if indexPath.row == 0 {
+            cell.timeLabel.text = "지금"
+            cell.weatherImageView.image = UIImage(named: timeList[0].weather[0].icon)
+            cell.tempLabel.text = String(Int(timeList[0].temp)) + "º"
+        } else {
+            cell.setData(time: timeList[indexPath.row].dt,
+                         image: timeList[indexPath.row].weather[0].icon,
+                         temp: timeList[indexPath.row].temp)
+        }
         return cell
     }
 }
@@ -130,33 +123,5 @@ extension TimeTempHeaderView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-    }
-}
-
-// MARK: - Network : fetchWeather
-extension TimeTempHeaderView {
-    func fetchWeather(lat: Double, lon: Double, exclude: String) {
-        let param = WeatherRequest.init(lat, lon, exclude)
-        
-        weatherProvider.request(.weather(param: param)) { response in
-            switch response {
-            case .success(let result):
-                do {
-                    self.weatherModel = try result.map(WeatherModel.self)
-                    if let time = self.weatherModel?.current.dt,
-                       let image = self.weatherModel?.current.weather[0].icon,
-                       let temp = self.weatherModel?.current.temp {
-                        self.time = time
-                        self.image = image
-                        self.temp = temp
-                    }
-                    self.timeTempCV.reloadData()
-                } catch(let err) {
-                    print(err.localizedDescription)
-                }
-            case .failure(let err):
-                print(err.localizedDescription)
-            }
-        }
     }
 }

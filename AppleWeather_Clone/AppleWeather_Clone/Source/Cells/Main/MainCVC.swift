@@ -19,6 +19,7 @@ class MainCVC: UICollectionViewCell {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
+    var timeList = [Current]()
     var dailyList = [Daily]()
     var detailList: [DetailModel] = []
 
@@ -229,8 +230,7 @@ extension MainCVC: UITableViewDelegate {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let tvContentOffsetY = (mainTV.contentOffset.y+47)
-        let yPlusOffset = tvContentOffsetY+320
+        let tvContentOffsetY = (mainTV.contentOffset.y + 47)
         if tvContentOffsetY > -320 && tvContentOffsetY < 47 {
             UIView.animate(withDuration: 0.5) {
                 self.mainTV.contentInset = UIEdgeInsets(top: 47, left: 0, bottom: 0, right: 0)
@@ -247,6 +247,7 @@ extension MainCVC: UITableViewDataSource {
             return UIView()
         default:
             let secondHeaderView = TimeTempHeaderView()
+            secondHeaderView.setData(weather: self.timeList)
             return secondHeaderView
         }
     }
@@ -344,10 +345,11 @@ extension MainCVC{
                         self.condition = condition
                     }
                     
+                    self.timeList = self.weatherModel!.hourly
                     self.dailyList = self.weatherModel!.daily
                     
-                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(),
-                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime()),
+                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(formatter: "a hh:mm"),
+                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime(formatter: "a hh:mm")),
                                        DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rainPercent)%",
                                                    rightTitle: "습도", rightDetail: "\(self.humidity)%"),
                                        DetailModel(leftTitle: "바람", leftDetail: "\(self.wind)m/s",

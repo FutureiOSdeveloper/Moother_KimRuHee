@@ -8,10 +8,10 @@
 import Foundation
 
 extension String {
-    func stringToTime() -> String {
+    func stringToTime(formatter: String) -> String {
         let date = NSDate(timeIntervalSince1970: TimeInterval(Double(self)!))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "a hh:mm"
+        dateFormatter.dateFormat = formatter
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.string(from: date as Date)
     }

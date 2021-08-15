@@ -25,7 +25,7 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     let weatherImageView = UIImageView().then {
-        $0.image = UIImage(named: "img_example")
+        $0.tintColor = .white
     }
     
     let tempLabel = UILabel().then {
@@ -77,8 +77,6 @@ class TimeTempCVC: UICollectionViewCell {
     func setData(time: Int?, image: String?, temp: Double?) {
         timeLabel.text = String(time ?? 0).stringToTime(formatter: "a h") + "시"
         tempLabel.text = String(Int(temp ?? 0)) + "º"
-        if let image = UIImage(named: image ?? "") {
-            weatherImageView.image = image
-        }
+        weatherImageView.image = UIImage(systemName: image ?? "")
     }
 }

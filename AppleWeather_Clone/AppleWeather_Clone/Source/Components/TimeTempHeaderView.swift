@@ -96,11 +96,11 @@ extension TimeTempHeaderView: UICollectionViewDataSource {
         else { return UICollectionViewCell() }
         if indexPath.row == 0 {
             cell.timeLabel.text = "지금"
-            cell.weatherImageView.image = UIImage(named: timeList[0].weather[0].icon)
+            cell.weatherImageView.image = UIImage(systemName: timeList[0].weather[0].icon.convertIcon())
             cell.tempLabel.text = String(Int(timeList[0].temp)) + "º"
         } else {
             cell.setData(time: timeList[indexPath.row].dt,
-                         image: timeList[indexPath.row].weather[0].icon,
+                         image: timeList[indexPath.row].weather[0].icon.convertIcon(),
                          temp: timeList[indexPath.row].temp)
         }
         return cell
@@ -122,6 +122,6 @@ extension TimeTempHeaderView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
     }
 }

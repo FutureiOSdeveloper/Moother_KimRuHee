@@ -51,7 +51,7 @@ class MainCVC: UICollectionViewCell {
     }
     
     let tempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 100, weight: .thin)
+        $0.font = .systemFont(ofSize: 100, weight: .regular)
         $0.textColor = .white
     }
     
@@ -275,7 +275,7 @@ extension MainCVC: UITableViewDataSource {
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
                 dailyCell.setData(week: dailyList[indexPath.row].dt,
-                                  image: dailyList[indexPath.row].weather[0].icon,
+                                  image: dailyList[indexPath.row].weather[0].icon.convertIcon(),
                                   rain: dailyList[indexPath.row].rain,
                                   high: dailyList[indexPath.row].temp.max,
                                   low: dailyList[indexPath.row].temp.min)
@@ -344,8 +344,10 @@ extension MainCVC{
                         self.uvi = Int(uvi)
                         self.condition = condition
                     }
+                    
                     self.timeList = self.weatherModel!.hourly
                     self.dailyList = self.weatherModel!.daily
+                    
                     self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(formatter: "a hh:mm"),
                                                    rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime(formatter: "a hh:mm")),
                                        DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rain)%",

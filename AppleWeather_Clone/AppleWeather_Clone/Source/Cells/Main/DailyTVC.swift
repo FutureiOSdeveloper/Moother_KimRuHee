@@ -20,11 +20,13 @@ class DailyTVC: UITableViewCell {
         $0.textColor = .white
     }
     
-    let weatherImageView = UIImageView()
+    let weatherImageView = UIImageView().then {
+        $0.tintColor = .white
+    }
     
     let rainPercentLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 14, weight: .medium)
-        $0.textColor = .cyan
+        $0.textColor = UIColor.init(red: 120/255, green: 219/255, blue: 249/255, alpha: 1.0)
     }
     
     let highTempLabel = UILabel().then {
@@ -113,8 +115,6 @@ class DailyTVC: UITableViewCell {
         }
         highTempLabel.text = String(Int(high ?? 0))
         lowTempLabel.text = String(Int(low ?? 0))
-        if let image = UIImage(named: image ?? "") {
-            weatherImageView.image = image
-        }
+        weatherImageView.image = UIImage(systemName: image ?? "")
     }
 }

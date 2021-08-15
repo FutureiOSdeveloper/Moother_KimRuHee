@@ -16,25 +16,25 @@ class DetailTVC: UITableViewCell {
     
     // MARK: - Properties
     let leftTitleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 10, weight: .regular)
-        $0.textColor = .lightGray
+        $0.font = .systemFont(ofSize: 10, weight: .semibold)
+        $0.textColor = .init(white: 0.8, alpha: 1)
         $0.textAlignment = .left
     }
     
     let leftDetailLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 20, weight: .regular)
+        $0.font = .systemFont(ofSize: 20, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
     }
     
     let rightTitleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 10, weight: .regular)
-        $0.textColor = .lightGray
+        $0.font = .systemFont(ofSize: 10, weight: .semibold)
+        $0.textColor = .init(white: 0.8, alpha: 1)
         $0.textAlignment = .left
     }
     
     let rightDetailLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 20, weight: .regular)
+        $0.font = .systemFont(ofSize: 20, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
     }

@@ -118,13 +118,13 @@ class ListTVC: UITableViewCell {
     // MARK: - @objc
     @objc func changeToC(_ sender: Notification) {
         let temp = Int(tempLabel.text!)!
-        tempLabel.text = "\(Int(5*(temp - 32)/9))"
+        tempLabel.text = "\(Int(5*(temp - 32)/9))" + "º"
         print("F -> C", temp)
     }
     
     @objc func changeToF(_ sender: Notification) {
         let temp = Int(tempLabel.text!)!
-        tempLabel.text = "\(Int(9*temp/5) + 32)"
+        tempLabel.text = "\(Int(9*temp/5) + 32)" + "º"
         print("C -> F", temp)
     }
     

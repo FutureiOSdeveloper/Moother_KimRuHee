@@ -66,7 +66,6 @@ class ViewController: UIViewController {
     }()
     
     let backgroundView = UIImageView()
-    
     let animationView = AnimationView()
     
     let lineView = UIView().then {
@@ -203,6 +202,7 @@ class ViewController: UIViewController {
         animationView.animation = Animation.named(condition.convertLottie())
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .loop
+        animationView.backgroundBehavior = .pauseAndRestore
         animationView.play()
     }
     

@@ -8,11 +8,13 @@
 import Foundation
 
 extension String {
-    func stringToTime(formatter: String) -> String {
+    func toTime(_ format: String, _ timezone: Int) -> String {
         let date = NSDate(timeIntervalSince1970: TimeInterval(Double(self)!))
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatter
+        dateFormatter.dateFormat = format
         dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: timezone)
+
         return dateFormatter.string(from: date as Date)
     }
     
@@ -66,7 +68,7 @@ extension String {
         case "보통 비":
             return "4803-weather-storm"
         case "실 비":
-            return "4803-weather-storm"
+            return "4801-weather-partly-shower"
         case "온흐림":
             return "4806-weather-windy"
         case "튼구름":

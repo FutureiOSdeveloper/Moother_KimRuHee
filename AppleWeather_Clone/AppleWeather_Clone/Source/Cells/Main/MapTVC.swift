@@ -79,7 +79,7 @@ class MapTVC: UITableViewCell {
     // MARK: - @objc
     @objc func touchupMapButton(_ sender: UIButton) {
         let application = UIApplication.shared
-        let mapURL = URL(string: "http://maps.apple.com/?q=\(localLabel.text)")
+        let mapURL = URL(string: "http://maps.apple.com/?q=\(String(describing: localLabel.text))")
         let mapSecondURL = URL(string: "http://maps.apple.com/?q=")!
         let webSiteURL = URL(string: "http://maps.apple.com")!
         

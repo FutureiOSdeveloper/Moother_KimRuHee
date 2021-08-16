@@ -190,7 +190,7 @@ class ViewController: UIViewController {
     }
     
     func backgroundColor(time: Int) {
-        let timeToString = String(time).stringToTime(formatter: "H")
+        let timeToString = String(time).toTime("H", timezone)
         if timeToString > "20" && timeToString < "5" {
             backgroundView.backgroundColor = UIColor.init(red: 0/255, green: 51/255, blue: 102/255, alpha: 1)
         } else {
@@ -347,7 +347,6 @@ extension ViewController {
             case .success(let result):
                 do {
                     self.weatherModel = try result.map(WeatherModel.self)
-                    
                     if let temp = self.weatherModel?.current.temp,
                        let condition = self.weatherModel?.current.weather[0].weatherDescription,
                        let max = self.weatherModel?.daily[0].temp.max,

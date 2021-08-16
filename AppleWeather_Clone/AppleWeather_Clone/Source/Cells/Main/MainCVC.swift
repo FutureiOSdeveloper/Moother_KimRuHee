@@ -39,6 +39,7 @@ class MainCVC: UICollectionViewCell {
     var look: Double = 0
     var uvi: Int = 0
     var condition: String = ""
+    var timezoneOffset: Int = 0
     
     let locationLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 30, weight: .semibold)
@@ -248,6 +249,7 @@ extension MainCVC: UITableViewDataSource {
         default:
             let secondHeaderView = TimeTempHeaderView()
             secondHeaderView.setData(weather: self.timeList)
+            secondHeaderView.timezoneOffset = timezoneOffset
             return secondHeaderView
         }
     }
@@ -261,7 +263,7 @@ extension MainCVC: UITableViewDataSource {
         case 0:
             return 0
         default:
-            return dailyList.count + 1 + detailList.count + 1
+            return dailyList.count + 1 + detailList.count
         }
     }
     
@@ -270,32 +272,33 @@ extension MainCVC: UITableViewDataSource {
         case 0:
             return UITableViewCell()
         default:
-            if indexPath.row < 8 {
+            if indexPath.row < 7 {
                 guard let dailyCell = tableView.dequeueReusableCell(withIdentifier: DailyTVC.identifier, for: indexPath) as? DailyTVC
                 else { return UITableViewCell() }
                 dailyCell.selectionStyle = .none
-                dailyCell.setData(week: dailyList[indexPath.row].dt,
-                                  image: dailyList[indexPath.row].weather[0].icon.convertIcon(),
-                                  rain: dailyList[indexPath.row].rain,
-                                  high: dailyList[indexPath.row].temp.max,
-                                  low: dailyList[indexPath.row].temp.min)
+                dailyCell.setData(week: String(dailyList[indexPath.row + 1].dt).toTime("EEEE", self.timezoneOffset),
+                                  image: dailyList[indexPath.row + 1].weather[0].icon.convertIcon(),
+                                  rain: dailyList[indexPath.row + 1].rain,
+                                  high: dailyList[indexPath.row + 1].temp.max,
+                                  low: dailyList[indexPath.row + 1].temp.min)
+                print(self.timezoneOffset, "dpd")
                 return dailyCell
                 
-            } else if indexPath.row < 9 {
+            } else if indexPath.row < 8 {
                 guard let todayCell = tableView.dequeueReusableCell(withIdentifier: TodayTVC.identifier, for: indexPath) as? TodayTVC
                 else { return UITableViewCell() }
                 todayCell.selectionStyle = .none
                 todayCell.todayLabel.text = "오늘: 현재 날씨 \(condition), 최고 기온은 \(max ?? 0)º이며 최저 기온은 \(min ?? 0)º입니다."
                 return todayCell
                 
-            } else if indexPath.row < 14 {
+            } else if indexPath.row < 13 {
                 guard let detailCell = tableView.dequeueReusableCell(withIdentifier: DetailTVC.identifier, for: indexPath) as? DetailTVC
                 else { return UITableViewCell() }
                 detailCell.selectionStyle = .none
-                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count - 1].leftTitle,
-                                   leftDetail: detailList[indexPath.row - dailyList.count - 1].leftDetail,
-                                   rightTitle: detailList[indexPath.row - dailyList.count - 1].rightTitle,
-                                   rightDetail: detailList[indexPath.row - dailyList.count - 1].rightDetail)
+                detailCell.setData(leftTitle: detailList[indexPath.row - dailyList.count].leftTitle,
+                                   leftDetail: detailList[indexPath.row - dailyList.count].leftDetail,
+                                   rightTitle: detailList[indexPath.row - dailyList.count].rightTitle,
+                                   rightDetail: detailList[indexPath.row - dailyList.count].rightDetail)
                 return detailCell
                 
             } else {
@@ -330,7 +333,8 @@ extension MainCVC{
                        let pressure = self.weatherModel?.current.pressure,
                        let look = self.weatherModel?.current.visibility,
                        let uvi = self.weatherModel?.current.uvi,
-                       let condition = self.weatherModel?.current.weather[0].weatherDescription {
+                       let condition = self.weatherModel?.current.weather[0].weatherDescription,
+                       let timezoneOffset = self.weatherModel?.timezoneOffset {
                         self.rain = Int(rain)
                         self.max = Int(max)
                         self.min = Int(min)
@@ -343,21 +347,30 @@ extension MainCVC{
                         self.look = Double(look)
                         self.uvi = Int(uvi)
                         self.condition = condition
+                        self.timezoneOffset = timezoneOffset
                     }
-                    
                     self.timeList = self.weatherModel!.hourly
                     self.dailyList = self.weatherModel!.daily
-                    
-                    self.detailList = [DetailModel(leftTitle: "일출", leftDetail: "\(self.sunrise)".stringToTime(formatter: "a hh:mm"),
-                                                   rightTitle: "일몰", rightDetail: "\(self.sunset)".stringToTime(formatter: "a hh:mm")),
-                                       DetailModel(leftTitle: "비 올 확률", leftDetail: "\(self.rain)%",
-                                                   rightTitle: "습도", rightDetail: "\(self.humidity)%"),
-                                       DetailModel(leftTitle: "바람", leftDetail: "\(self.wind)m/s",
-                                                   rightTitle: "체감", rightDetail: "\(self.feelLike)º"),
-                                       DetailModel(leftTitle: "강수량", leftDetail: "\(String(self.weatherModel?.current.rain?.the1H ?? 0))cm",
-                                                   rightTitle: "기압", rightDetail: "\(self.pressure)hPa"),
-                                       DetailModel(leftTitle: "가시거리", leftDetail: "\(self.look)km",
-                                                   rightTitle: "자외선 지수", rightDetail: "\(self.uvi)")]
+                    self.detailList = [DetailModel(leftTitle: "일출",
+                                                   leftDetail: "\(self.sunrise)".toTime("a hh:mm", self.timezoneOffset),
+                                                   rightTitle: "일몰",
+                                                   rightDetail: "\(self.sunset)".toTime("a hh:mm", self.timezoneOffset)),
+                                       DetailModel(leftTitle: "비 올 확률",
+                                                   leftDetail: "\(self.rain)%",
+                                                   rightTitle: "습도",
+                                                   rightDetail: "\(self.humidity)%"),
+                                       DetailModel(leftTitle: "바람",
+                                                   leftDetail: "\(self.wind)m/s",
+                                                   rightTitle: "체감",
+                                                   rightDetail: "\(self.feelLike)º"),
+                                       DetailModel(leftTitle: "강수량",
+                                                   leftDetail: "\(String(self.weatherModel?.current.rain?.the1H ?? 0))cm",
+                                                   rightTitle: "기압",
+                                                   rightDetail: "\(self.pressure)hPa"),
+                                       DetailModel(leftTitle: "가시거리",
+                                                   leftDetail: "\(self.look)km",
+                                                   rightTitle: "자외선 지수",
+                                                   rightDetail: "\(self.uvi)")]
                     self.setupTableView()
                     self.mainTV.reloadData()
                 } catch(let err) {

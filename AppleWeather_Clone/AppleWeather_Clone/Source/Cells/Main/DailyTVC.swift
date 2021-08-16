@@ -105,8 +105,8 @@ class DailyTVC: UITableViewCell {
     }
     
     // MARK: - setData
-    func setData(week: Int?, image: String?, rain: Double?, high: Double?, low: Double?) {
-        weekLabel.text = String(week ?? 0).stringToTime(formatter: "EEEE")
+    func setData(week: String?, image: String?, rain: Double?, high: Double?, low: Double?) {
+        weekLabel.text = week ?? ""
         if Int(rain!) == 0 {
             rainPercentLabel.alpha = 0
         } else {

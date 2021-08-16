@@ -74,8 +74,8 @@ class TimeTempCVC: UICollectionViewCell {
     }
     
     // MARK: - setData
-    func setData(time: Int?, image: String?, temp: Double?) {
-        timeLabel.text = String(time ?? 0).stringToTime(formatter: "a h") + "시"
+    func setData(time: String?, image: String?, temp: Double?) {
+        timeLabel.text = (time ?? "") + "시"
         tempLabel.text = String(Int(temp ?? 0)) + "º"
         weatherImageView.image = UIImage(systemName: image ?? "")
     }

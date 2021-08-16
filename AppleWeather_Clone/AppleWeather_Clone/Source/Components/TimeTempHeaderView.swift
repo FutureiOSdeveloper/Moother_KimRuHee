@@ -14,6 +14,7 @@ import SnapKit
 class TimeTempHeaderView: UIView {
     // MARK: - Properties
     var timeList = [Current]()
+    var timezoneOffset: Int = 0
     
     let topLineView = UIView().then {
         $0.backgroundColor = .white
@@ -99,7 +100,7 @@ extension TimeTempHeaderView: UICollectionViewDataSource {
             cell.weatherImageView.image = UIImage(systemName: timeList[0].weather[0].icon.convertIcon())
             cell.tempLabel.text = String(Int(timeList[0].temp)) + "º"
         } else {
-            cell.setData(time: timeList[indexPath.row].dt,
+            cell.setData(time: String(timeList[indexPath.row].dt).toTime("a h", self.timezoneOffset),
                          image: timeList[indexPath.row].weather[0].icon.convertIcon(),
                          temp: timeList[indexPath.row].temp)
         }

@@ -46,6 +46,7 @@
 		5BC2ABF326CA2D41005F8447 /* 4799-weather-night.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2ABF026CA2D41005F8447 /* 4799-weather-night.json */; };
 		5BC2ABFB26CA3605005F8447 /* 4806-weather-windy.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2ABFA26CA3605005F8447 /* 4806-weather-windy.json */; };
 		5BC2ABFE26CA362D005F8447 /* 4800-weather-partly-cloudy.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2ABFD26CA362D005F8447 /* 4800-weather-partly-cloudy.json */; };
+		5BC2AC0126CA4492005F8447 /* 4801-weather-partly-shower.json in Resources */ = {isa = PBXBuildFile; fileRef = 5BC2AC0026CA4492005F8447 /* 4801-weather-partly-shower.json */; };
 		F78DEE4A9C85B70005C470E0 /* Pods_AppleWeather_Clone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBC475665102F1DB6864322C /* Pods_AppleWeather_Clone.framework */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		5BC2ABF026CA2D41005F8447 /* 4799-weather-night.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "4799-weather-night.json"; path = "../../../../../../Downloads/4799-weather-night.json"; sourceTree = "<group>"; };
 		5BC2ABFA26CA3605005F8447 /* 4806-weather-windy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "4806-weather-windy.json"; path = "../../../../../../Downloads/4806-weather-windy.json"; sourceTree = "<group>"; };
 		5BC2ABFD26CA362D005F8447 /* 4800-weather-partly-cloudy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "4800-weather-partly-cloudy.json"; path = "../../../../../../Downloads/4800-weather-partly-cloudy.json"; sourceTree = "<group>"; };
+		5BC2AC0026CA4492005F8447 /* 4801-weather-partly-shower.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "4801-weather-partly-shower.json"; path = "../../../../../../Downloads/4801-weather-partly-shower.json"; sourceTree = "<group>"; };
 		63A15E026EC33FF5458AED69 /* Pods-AppleWeather_Clone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleWeather_Clone.release.xcconfig"; path = "Target Support Files/Pods-AppleWeather_Clone/Pods-AppleWeather_Clone.release.xcconfig"; sourceTree = "<group>"; };
 		DBC475665102F1DB6864322C /* Pods_AppleWeather_Clone.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppleWeather_Clone.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCCA9BBCAD44D1F20C90CC77 /* Pods-AppleWeather_Clone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppleWeather_Clone.debug.xcconfig"; path = "Target Support Files/Pods-AppleWeather_Clone/Pods-AppleWeather_Clone.debug.xcconfig"; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 			children = (
 				5BC2ABFA26CA3605005F8447 /* 4806-weather-windy.json */,
 				5BC2ABFD26CA362D005F8447 /* 4800-weather-partly-cloudy.json */,
+				5BC2AC0026CA4492005F8447 /* 4801-weather-partly-shower.json */,
 				5BC2ABF026CA2D41005F8447 /* 4799-weather-night.json */,
 				5BC2ABEF26CA2D41005F8447 /* 4803-weather-storm.json */,
 				5BC2ABEE26CA2D41005F8447 /* 4804-weather-sunny.json */,
@@ -382,6 +385,7 @@
 				5BC2ABFB26CA3605005F8447 /* 4806-weather-windy.json in Resources */,
 				5BC2ABF226CA2D41005F8447 /* 4803-weather-storm.json in Resources */,
 				5B72C15C26AB3422008A4B6A /* Assets.xcassets in Resources */,
+				5BC2AC0126CA4492005F8447 /* 4801-weather-partly-shower.json in Resources */,
 				5BC2ABF126CA2D41005F8447 /* 4804-weather-sunny.json in Resources */,
 				5BC2ABFE26CA362D005F8447 /* 4800-weather-partly-cloudy.json in Resources */,
 				5B72C15A26AB341F008A4B6A /* Main.storyboard in Resources */,

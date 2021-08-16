@@ -308,6 +308,7 @@ extension ViewController: UICollectionViewDataSource {
                          max: "최고: \(Int(max))º",
                          min: "최저: \(Int(min))º")
             setAnimationView(condition: condition)
+            backgroundColor(time: currentTime)
         }
         return cell
     }

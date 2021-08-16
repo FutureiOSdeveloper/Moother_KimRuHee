@@ -41,12 +41,12 @@ class MainCVC: UICollectionViewCell {
     var condition: String = ""
     
     let locationLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 30, weight: .regular)
+        $0.font = .systemFont(ofSize: 30, weight: .semibold)
         $0.textColor = .white
     }
     
     let conditionLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .regular)
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     
@@ -63,12 +63,12 @@ class MainCVC: UICollectionViewCell {
     }
     
     let highLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .regular)
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     
     let lowLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 15, weight: .regular)
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
         $0.textColor = .white
     }
     

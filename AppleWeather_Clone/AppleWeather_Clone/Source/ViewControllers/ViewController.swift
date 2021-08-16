@@ -18,10 +18,6 @@ class ViewController: UIViewController {
     // MARK: - Network
     private let weatherProvider = MoyaProvider<WeatherService>(plugins: [NetworkLoggerPlugin(verbose: true)])
     var weatherModel: WeatherModel?
-    var temperature: Double = 0
-    var condition: String = ""
-    var max: Double = 0
-    var min: Double = 0
     
     // MARK: - Properties
     private var weatherList: [String] = ["", "", "", "", ""]
@@ -29,6 +25,11 @@ class ViewController: UIViewController {
     var isAddNewCityView: Bool = false
     var location: String = ""
     var myCurrentLocation: String = ""
+    var temperature: Double = 0
+    var condition: String = ""
+    var max: Double = 0
+    var min: Double = 0
+    var currentTime: Int = 0
         
     /// locationManager 인스턴스 생성
     var locationManager: CLLocationManager! = CLLocationManager()
@@ -64,16 +65,9 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let backgroundView = UIImageView().then {
-        $0.image = UIImage(named: "backImage")
-    }
+    let backgroundView = UIImageView()
     
-    let animationView = AnimationView().then {
-        //        $0.animation = Animation.named("16477-rain-background-animation")
-        $0.contentMode = .scaleAspectFill
-        $0.loopMode = .loop
-        $0.play()
-    }
+    let animationView = AnimationView()
     
     let lineView = UIView().then {
         $0.backgroundColor = .white
@@ -109,6 +103,8 @@ class ViewController: UIViewController {
         configUI()
         setupAutoLayout()
         setupPageControl()
+        setAnimationView(condition: condition)
+        backgroundColor(time: currentTime)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
@@ -133,7 +129,8 @@ class ViewController: UIViewController {
         }
         
         animationView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalToSuperview().inset(100)
+            make.centerX.equalToSuperview()
         }
         
         mainCV.snp.makeConstraints { make in
@@ -193,6 +190,22 @@ class ViewController: UIViewController {
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
     
+    func backgroundColor(time: Int) {
+        let timeToString = String(time).stringToTime(formatter: "H")
+        if timeToString > "20" && timeToString < "5" {
+            backgroundView.backgroundColor = UIColor.init(red: 0/255, green: 51/255, blue: 102/255, alpha: 1)
+        } else {
+            backgroundView.backgroundColor = UIColor.init(red: 102/255, green: 178/255, blue: 255/255, alpha: 1)
+        }
+    }
+    
+    func setAnimationView(condition: String) {
+        animationView.animation = Animation.named(condition.convertLottie())
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.play()
+    }
+    
     func setupLocationManager() {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization() // 사용자에게 위치 추적 권한 요청
@@ -203,14 +216,14 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "")
+        fetchWeather(lat: latitude ?? 37.56061111, lon: longtitude ?? 127.039, exclude: "")
         
         if isAddNewCityView {
-            fetchWeather(lat: searchLatitude ?? 0, lon: searchLongtitude ?? 0, exclude: "")
+            fetchWeather(lat: searchLatitude ?? 37.56061111, lon: searchLongtitude ?? 127.039, exclude: "")
         }
         
         /// 위도, 경도 기반으로 주소 가져오기
-        let myLocation = CLLocation(latitude: latitude ?? 0, longitude: longtitude ?? 0 )
+        let myLocation = CLLocation(latitude: latitude ?? 37.56061111, longitude: longtitude ?? 127.039)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr") /// 한국어로 변환
         geocoder.reverseGeocodeLocation(myLocation, preferredLocale: locale, completionHandler: {(placemarks, error) in
@@ -219,7 +232,7 @@ class ViewController: UIViewController {
             } else {
                 print(error as Any)
             }
-            self.myCurrentLocation = (placemarks?.first?.locality ?? "북대서양")
+            self.myCurrentLocation = (placemarks?.first?.locality ?? "성동구")
             self.mainCV.reloadData()
         })
     }
@@ -281,7 +294,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MainCVC", for: indexPath) as? MainCVC
         else { return UICollectionViewCell() }
-        cell.fetchWeather(lat: latitude ?? 0, lon: longtitude ?? 0, exclude: "")
+        cell.fetchWeather(lat: latitude ?? 37.56061111, lon: longtitude ?? 127.039, exclude: "")
         cell.setData(location: myCurrentLocation,
                      temp: "\(Int(temperature))º",
                      condition: condition,
@@ -294,8 +307,8 @@ extension ViewController: UICollectionViewDataSource {
                          condition: condition,
                          max: "최고: \(Int(max))º",
                          min: "최저: \(Int(min))º")
+            setAnimationView(condition: condition)
         }
-        
         return cell
     }
 }
@@ -334,14 +347,17 @@ extension ViewController {
             case .success(let result):
                 do {
                     self.weatherModel = try result.map(WeatherModel.self)
+                    
                     if let temp = self.weatherModel?.current.temp,
                        let condition = self.weatherModel?.current.weather[0].weatherDescription,
                        let max = self.weatherModel?.daily[0].temp.max,
-                       let min = self.weatherModel?.daily[0].temp.min {
+                       let min = self.weatherModel?.daily[0].temp.min,
+                       let currentTime = self.weatherModel?.current.dt {
                         self.temperature = temp
                         self.condition = condition
                         self.max = max
                         self.min = min
+                        self.currentTime = currentTime
                     }
                     self.setupCollectionView()
                     self.mainCV.reloadData()

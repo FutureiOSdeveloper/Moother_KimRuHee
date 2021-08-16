@@ -58,4 +58,21 @@ extension String {
             return "sun.max.fill"
         }
     }
+    
+    func convertLottie() -> String {
+        switch self {
+        case "맑음":
+            return "4804-weather-sunny"
+        case "보통 비":
+            return "4803-weather-storm"
+        case "실 비":
+            return "4803-weather-storm"
+        case "온흐림":
+            return "4806-weather-windy"
+        case "튼구름":
+            return "4806-weather-windy"
+        default:
+            return "4800-weather-partly-cloudy"
+        }
+    }
 }

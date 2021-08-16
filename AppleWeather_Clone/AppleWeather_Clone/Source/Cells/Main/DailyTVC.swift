@@ -26,17 +26,17 @@ class DailyTVC: UITableViewCell {
     
     let rainPercentLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 14, weight: .medium)
-        $0.textColor = UIColor.init(red: 120/255, green: 219/255, blue: 249/255, alpha: 1.0)
+        $0.textColor = UIColor.init(red: 255/255, green: 255/255, blue: 102/255, alpha: 1.0)
     }
     
     let highTempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
         $0.textColor = .white
     }
     
     let lowTempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 16, weight: .regular)
-        $0.textColor = .lightGray
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.textColor = UIColor.init(white: 1.0, alpha: 0.8)
     }
     
     // MARK: - Lifecycle
@@ -75,18 +75,18 @@ class DailyTVC: UITableViewCell {
         }
         
         rainPercentLabel.snp.makeConstraints { make in
-            make.leading.equalTo(weatherImageView.snp.trailing).offset(10)
+            make.leading.equalTo(weatherImageView.snp.trailing).offset(15)
             make.centerY.equalToSuperview()
-        }
-        
-        lowTempLabel.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(4)
-            make.trailing.equalToSuperview().inset(20)
         }
         
         highTempLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(4)
-            make.trailing.equalTo(lowTempLabel.snp.leading).offset(-20)
+            make.leading.equalTo(weatherImageView.snp.trailing).offset(100)
+        }
+        
+        lowTempLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(4)
+            make.leading.equalTo(weatherImageView.snp.trailing).offset(140)
         }
     }
     

@@ -80,10 +80,10 @@ class MainCVC: UICollectionViewCell {
         super.init(frame: frame)
         configUI()
         setupAutoLayout()
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveFirstCell(_:)),
-                                               name: NSNotification.Name("clickFirstCell"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(receiveFirstCell(_:)),
+//                                               name: NSNotification.Name("clickFirstCell"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
-                                               name: NSNotification.Name("clickOtherCell"), object: nil)
+                                               name: NSNotification.Name("clickCell"), object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -281,7 +281,7 @@ extension MainCVC: UITableViewDataSource {
                                   rain: dailyList[indexPath.row + 1].rain,
                                   high: dailyList[indexPath.row + 1].temp.max,
                                   low: dailyList[indexPath.row + 1].temp.min)
-                print(self.timezoneOffset, "dpd")
+                print(self.timezoneOffset, "timezoneOffset")
                 return dailyCell
                 
             } else if indexPath.row < 8 {

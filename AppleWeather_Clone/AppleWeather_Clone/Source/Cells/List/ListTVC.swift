@@ -14,13 +14,13 @@ class ListTVC: UITableViewCell {
     static let identifier = "ListTVC"
     
     // MARK: - Properties
-    let localLabel = UILabel().then { ///  나의 위치 첫 번째 cell
+    let subTitleLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 12, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
     }
     
-    let myLocalLabel = UILabel().then { ///  나의 위치 첫 번째 cell
+    let titleLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 22, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
@@ -28,18 +28,6 @@ class ListTVC: UITableViewCell {
     
     let tempLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 60, weight: .regular)
-        $0.textColor = .white
-        $0.textAlignment = .left
-    }
-    
-    let timeLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 12, weight: .semibold)
-        $0.textColor = .white
-        $0.textAlignment = .left
-    }
-    
-    let countryLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 22, weight: .semibold)
         $0.textColor = .white
         $0.textAlignment = .left
     }
@@ -69,22 +57,21 @@ class ListTVC: UITableViewCell {
     
     // MARK: - Custom Method
     func configUI() {
-        localLabel.getShadow()
-        myLocalLabel.getShadow()
+        subTitleLabel.getShadow()
+        titleLabel.getShadow()
         tempLabel.getShadow()
-        timeLabel.getShadow()
-        countryLabel.getShadow()
+        backgroundColor = .brown
     }
     
     func setupFirstCellAutoLayout() { /// first cell
-        addSubviews([localLabel, myLocalLabel, tempLabel])
+        addSubviews([subTitleLabel, titleLabel, tempLabel])
         
-        localLabel.snp.makeConstraints { make in
+        subTitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
-            make.bottom.equalTo(myLocalLabel.snp.top).offset(-1)
+            make.bottom.equalTo(titleLabel.snp.top).offset(-1)
         }
         
-        myLocalLabel.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.centerY.equalTo(tempLabel.snp.centerY)
         }
@@ -96,14 +83,14 @@ class ListTVC: UITableViewCell {
     }
     
     func setupRemainCellAutoLayout() { /// 남은 cell들
-        addSubviews([timeLabel, countryLabel, tempLabel])
+        addSubviews([subTitleLabel, titleLabel, tempLabel])
         
-        timeLabel.snp.makeConstraints { make in
+        subTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.leading.equalTo(20)
         }
         
-        countryLabel.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.centerY.equalTo(tempLabel.snp.centerY)
 
@@ -117,28 +104,21 @@ class ListTVC: UITableViewCell {
     
     // MARK: - @objc
     @objc func changeToC(_ sender: Notification) {
-        let temp = Int(tempLabel.text!)!
-        tempLabel.text = "\(Int(5*(temp - 32)/9))" + "º"
+        let temp = Double(tempLabel.text!)!
+        tempLabel.text = "\(round((temp - 32)/1.8))"
         print("F -> C", temp)
     }
     
     @objc func changeToF(_ sender: Notification) {
-        let temp = Int(tempLabel.text!)!
-        tempLabel.text = "\(Int(9*temp/5) + 32)" + "º"
+        let temp = Double(tempLabel.text!)!
+        tempLabel.text = "\(temp*1.8 + 32)"
         print("C -> F", temp)
     }
     
-    // MARK: - setFirstCellData
-    func setFirstCellData(local: String, myLocal: String, temp: String) {
-        localLabel.text = local
-        myLocalLabel.text = myLocal
-        tempLabel.text = temp
-    }
-    
-    // MARK: - setFirstCellData
-    func setCellData(time: String, country: String, temp: String) {
-        timeLabel.text = time
-        countryLabel.text = country
+    // MARK: - setData
+    func setData(subtitle: String, title: String, temp: String) {
+        subTitleLabel.text = subtitle
+        titleLabel.text = title
         tempLabel.text = temp
     }
 }

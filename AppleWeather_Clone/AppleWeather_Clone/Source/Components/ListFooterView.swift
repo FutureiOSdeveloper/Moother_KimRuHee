@@ -47,6 +47,7 @@ class ListFooterView: UIView {
     
     // MARK: - Custom Method
     func configUI() {
+        
     }
     
     func setupAutoLayout() {

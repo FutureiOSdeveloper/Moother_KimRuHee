@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
-    private var weatherList: [String] = ["", "", "", "", ""]
+    private var myCityList: [String] = ["", "", "", "", ""]
     
     var isAddNewCityView: Bool = false
     var location: String = ""
@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     var max: Double = 0
     var min: Double = 0
     var currentTime: Int = 0
+    var timezoneOffset: Int = 0
         
     /// locationManager 인스턴스 생성
     var locationManager: CLLocationManager! = CLLocationManager()
@@ -65,7 +66,7 @@ class ViewController: UIViewController {
         return cv
     }()
     
-    let backgroundView = UIImageView()
+    let backgroundView = UIView()
     let animationView = AnimationView()
     
     let lineView = UIView().then {
@@ -102,8 +103,6 @@ class ViewController: UIViewController {
         configUI()
         setupAutoLayout()
         setupPageControl()
-        setAnimationView(condition: condition)
-        backgroundColor(time: currentTime)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
@@ -111,7 +110,7 @@ class ViewController: UIViewController {
     
     // MARK: - Custom Method
     func configUI() {
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         if isAddNewCityView {
             mainCV.isScrollEnabled = false
         }
@@ -175,6 +174,8 @@ class ViewController: UIViewController {
             mainCV.snp.makeConstraints { make in
                 make.top.leading.bottom.trailing.equalToSuperview()
             }
+            
+            lineView.isHidden = true
         }
     }
     
@@ -185,22 +186,20 @@ class ViewController: UIViewController {
     }
     
     func setupPageControl() {
-        pageControl.numberOfPages = weatherList.count
+        pageControl.numberOfPages = myCityList.count
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
     
-    func backgroundColor(time: Int) {
-        let timeToString = String(time).toTime("H", timezone)
-        if timeToString > "20" && timeToString < "5" {
-            backgroundView.backgroundColor = UIColor.init(red: 0/255, green: 51/255, blue: 102/255, alpha: 1)
-        } else {
-            backgroundView.backgroundColor = UIColor.init(red: 102/255, green: 178/255, blue: 255/255, alpha: 1)
-        }
+    func setBackgroundView(time: Int) {
+        let timeToString = String(time).toTime("H", timezoneOffset)
+        backgroundView.backgroundColor = (timeToString >= "20" && timeToString <= "5" ?
+                                            UIColor.init(red: 0/255, green: 51/255, blue: 102/255, alpha: 1) :
+                                            UIColor.init(red: 102/255, green: 178/255, blue: 255/255, alpha: 1))
     }
     
     func setAnimationView(condition: String) {
         animationView.animation = Animation.named(condition.convertLottie())
-        animationView.contentMode = .scaleAspectFit
+        animationView.alpha = 0.9
         animationView.loopMode = .loop
         animationView.backgroundBehavior = .pauseAndRestore
         animationView.play()
@@ -216,8 +215,8 @@ class ViewController: UIViewController {
         let coor = locationManager.location?.coordinate
         latitude = coor?.latitude
         longtitude = coor?.longitude
-        fetchWeather(lat: latitude ?? 37.56061111, lon: longtitude ?? 127.039, exclude: "")
         
+        fetchWeather(lat: latitude ?? 37.56061111, lon: longtitude ?? 127.039, exclude: "")
         if isAddNewCityView {
             fetchWeather(lat: searchLatitude ?? 37.56061111, lon: searchLongtitude ?? 127.039, exclude: "")
         }
@@ -262,7 +261,6 @@ class ViewController: UIViewController {
     @objc func touchupLeftBarButton(_ sender: UIButton) {
         let application = UIApplication.shared
         let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!
-        
         if application.canOpenURL(weatherURL) {
             application.open(weatherURL, options: [:], completionHandler: nil)
         }
@@ -270,8 +268,10 @@ class ViewController: UIViewController {
     
     @objc func touchupRightBarButton(_ sender: UIButton) {
         let nextVC = ListViewController()
-        nextVC.firstCellLocation = myCurrentLocation
         nextVC.modalPresentationStyle = .currentContext
+        nextVC.cityList[0].subTitle = self.myCurrentLocation
+        nextVC.cityList[0].title = "나의 위치"
+        nextVC.cityList[0].temp = String(Int(self.temperature)) + "º"
         present(nextVC, animated: true, completion: nil)
     }
 }
@@ -288,7 +288,7 @@ extension ViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return weatherList.count
+        return myCityList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -300,6 +300,8 @@ extension ViewController: UICollectionViewDataSource {
                      condition: condition,
                      max: "최고: \(Int(max))º",
                      min: "최저: \(Int(min))º")
+        setBackgroundView(time: currentTime)
+        setAnimationView(condition: condition)
         if isAddNewCityView {
             cell.fetchWeather(lat: searchLatitude!, lon: searchLongtitude!, exclude: "")
             cell.setData(location: location,
@@ -307,8 +309,8 @@ extension ViewController: UICollectionViewDataSource {
                          condition: condition,
                          max: "최고: \(Int(max))º",
                          min: "최저: \(Int(min))º")
-            setAnimationView(condition: condition)
-            backgroundColor(time: currentTime)
+//            setBackgroundView(time: currentTime)
+//            setAnimationView(condition: condition)
         }
         return cell
     }
@@ -352,16 +354,18 @@ extension ViewController {
                        let condition = self.weatherModel?.current.weather[0].weatherDescription,
                        let max = self.weatherModel?.daily[0].temp.max,
                        let min = self.weatherModel?.daily[0].temp.min,
-                       let currentTime = self.weatherModel?.current.dt {
+                       let currentTime = self.weatherModel?.current.dt,
+                       let timezoneOffset = self.weatherModel?.timezoneOffset {
                         self.temperature = temp
                         self.condition = condition
                         self.max = max
                         self.min = min
                         self.currentTime = currentTime
+                        self.timezoneOffset = timezoneOffset
                     }
                     self.setupCollectionView()
                     self.mainCV.reloadData()
-                   
+                    
                 } catch(let err) {
                     print(err.localizedDescription)
                 }

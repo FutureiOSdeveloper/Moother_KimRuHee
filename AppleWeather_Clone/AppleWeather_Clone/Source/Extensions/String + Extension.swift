@@ -14,7 +14,6 @@ extension String {
         dateFormatter.dateFormat = format
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(secondsFromGMT: timezone)
-
         return dateFormatter.string(from: date as Date)
     }
     
@@ -73,6 +72,8 @@ extension String {
             return "4806-weather-windy"
         case "튼구름":
             return "4806-weather-windy"
+        case "눈":
+            return "4793-weather-snow"
         default:
             return "4800-weather-partly-cloudy"
         }

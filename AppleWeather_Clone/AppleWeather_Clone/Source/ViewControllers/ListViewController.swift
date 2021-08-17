@@ -12,15 +12,12 @@ import SnapKit
 
 class ListViewController: UIViewController {
     // MARK: - Properties
-    var cityList: [ListModel] = [ListModel(time: "마포구", country: "나의 위치", temp: "33"),
-                                    ListModel(time: "오전 4:21", country: "하와이", temp: "33"),
-                                    ListModel(time: "오전 6:21", country: "도쿄", temp: "22"),
-                                    ListModel(time: "오전 7:21", country: "Chiyoda", temp: "18"),
-                                    ListModel(time: "오전 8:21", country: "로스엔젤레스", temp: "33")]
-    
-    let mainTV = UITableView()
+    var cityList: [ListModel] = [ListModel(subTitle: "마포구", title: "나의 위치", temp: "33"),
+                                    ListModel(subTitle: "오전 4:21", title: "하와이", temp: "33")]
     
     var firstCellLocation: String = ""
+
+    let mainTV = UITableView()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -57,7 +54,6 @@ class ListViewController: UIViewController {
     @objc func touchupWebButton(_ sender: UIButton) {
         let application = UIApplication.shared
         let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!
-        
         if application.canOpenURL(weatherURL) {
             application.open(weatherURL, options: [:], completionHandler: nil)
         }
@@ -121,33 +117,19 @@ extension ListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC
+        else { return UITableViewCell() }
+        listCell.selectionStyle = .none
         if indexPath.row == 0 {
-            guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC
-            else { return UITableViewCell() }
             listCell.setupFirstCellAutoLayout()
-            listCell.selectionStyle = .none
-            listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_rain"))
-            listCell.setFirstCellData(local: firstCellLocation,
-                                      myLocal: cityList[indexPath.row].country,
-                                      temp: cityList[indexPath.row].temp)
-            return listCell
         } else {
-            guard let listCell = tableView.dequeueReusableCell(withIdentifier: ListTVC.identifier, for: indexPath) as? ListTVC
-            else { return UITableViewCell() }
             listCell.setupRemainCellAutoLayout()
-            listCell.selectionStyle = .none
-            listCell.backgroundView = UIImageView.init(image: UIImage(named: "img_sun"))
-            listCell.setCellData(time: cityList[indexPath.row].time,
-                                 country: cityList[indexPath.row].country,
-                                 temp: cityList[indexPath.row].temp)
-            return listCell
         }
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let moveCell = cityList[sourceIndexPath.row]
-        cityList.remove(at: sourceIndexPath.row)
-        cityList.insert(moveCell, at: destinationIndexPath.row)
+        listCell.setData(subtitle: cityList[indexPath.row].subTitle,
+                         title: cityList[indexPath.row].title,
+                         temp: cityList[indexPath.row].temp)
+        
+        return listCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -155,11 +137,13 @@ extension ListViewController: UITableViewDataSource {
         dismiss(animated: true) {
             NotificationCenter.default.post(name: NSNotification.Name("pageControl"), object: indexPath.row)
             if indexPath.row == 0 {
-                NotificationCenter.default.post(name: NSNotification.Name("clickFirstCell"),
-                                                object: [self.firstCellLocation, self.cityList[0].temp])
+                NotificationCenter.default.post(name: NSNotification.Name("clickCell"),
+                                                object: [self.cityList[indexPath.row].subTitle,
+                                                         self.cityList[indexPath.row].temp])
             } else {
-                NotificationCenter.default.post(name: NSNotification.Name("clickOtherCell"),
-                                                object: [self.cityList[indexPath.row].country, self.cityList[indexPath.row].temp])
+                NotificationCenter.default.post(name: NSNotification.Name("clickCell"),
+                                                object: [self.cityList[indexPath.row].title,
+                                                         self.cityList[indexPath.row].temp])
             }
         }
     }

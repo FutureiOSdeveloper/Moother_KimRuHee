@@ -125,7 +125,6 @@ class SearchViewController: UIViewController {
         searchTV.delegate = self
         searchTV.dataSource = self
         searchTV.register(SearchTVC.self, forCellReuseIdentifier: "SearchTVC")
-        
         searchTV.separatorStyle = .none
     }
     

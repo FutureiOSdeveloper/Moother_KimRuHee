@@ -8,7 +8,7 @@
 import Foundation
 
 struct ListModel {
-    var time: String
-    var country: String
+    var subTitle: String
+    var title: String
     var temp: String
 }

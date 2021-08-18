@@ -43,7 +43,8 @@ class ListViewController: UIViewController {
         mainTV.dataSource = self
         mainTV.register(ListTVC.self, forCellReuseIdentifier: "ListTVC")
         
-        mainTV.sectionFooterHeight = 0
+        mainTV.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: CGFloat.leastNormalMagnitude))
+        mainTV.sectionHeaderHeight = 0
 
         mainTV.separatorStyle = .none
         mainTV.backgroundColor = .clear

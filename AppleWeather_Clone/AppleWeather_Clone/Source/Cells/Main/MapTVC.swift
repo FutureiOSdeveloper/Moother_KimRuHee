@@ -7,9 +7,9 @@
 
 import UIKit
 
-import Then
 import SafariServices
 import SnapKit
+import Then
 
 class MapTVC: UITableViewCell {
     static let identifier = "MapTVC"

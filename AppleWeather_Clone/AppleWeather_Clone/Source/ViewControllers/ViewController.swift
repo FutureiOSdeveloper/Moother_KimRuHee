@@ -10,9 +10,9 @@ import UIKit
 import CoreLocation
 import Lottie
 import Moya
-import Then
 import SafariServices
 import SnapKit
+import Then
 
 class ViewController: UIViewController {
     // MARK: - Network
@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
-    private var myCityList: [String] = ["", "", "", "", ""]
-    
+    private var cityList = [ListModel(subTitle: "", title: "나의 위치", temp: "")]
+        
     var isAddNewCityView: Bool = false
     var location: String = ""
     var myCurrentLocation: String = ""
@@ -103,9 +103,7 @@ class ViewController: UIViewController {
         configUI()
         setupAutoLayout()
         setupPageControl()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
-                                               name: NSNotification.Name("pageControl"), object: nil)
+        registerNotification()
     }
     
     // MARK: - Custom Method
@@ -186,7 +184,7 @@ class ViewController: UIViewController {
     }
     
     func setupPageControl() {
-        pageControl.numberOfPages = myCityList.count
+        pageControl.numberOfPages = cityList.count
         pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
     }
     
@@ -236,20 +234,27 @@ class ViewController: UIViewController {
         })
     }
     
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
+                                               name: NSNotification.Name("pageControl"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(addCity(_:)),
+                                               name: NSNotification.Name("appendCity"),
+                                               object: nil)
+    }
+    
     // MARK: - @objc
     @objc func touchupCancelButton(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @objc func touchupAddButton(_ sender: UIButton) {
-        guard let pvc = self.presentingViewController else { return }
-        self.dismiss(animated: true) {
-            pvc.dismiss(animated: true, completion: nil)
-            pvc.modalPresentationStyle = .overFullScreen
-            pvc.present(ListViewController(), animated: true) {
-                // 여기에 노티로 도시이름, 온도 추가해주는 거 쏴줘야 함. )
-            }
-        }
+        cityList.removeFirst()
+        cityList.append(ListModel(subTitle: String(self.currentTime).toTime("a h:mm", self.timezoneOffset),
+                                  title: self.location,
+                                  temp: String(Int(self.temperature)) + "º"))
+        NotificationCenter.default.post(name: NSNotification.Name("appendCity"), object: cityList, userInfo: nil)
+        presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     @objc func changePageControl(_ notification: Notification) {
@@ -272,7 +277,16 @@ class ViewController: UIViewController {
         nextVC.cityList[0].subTitle = self.myCurrentLocation
         nextVC.cityList[0].title = "나의 위치"
         nextVC.cityList[0].temp = String(Int(self.temperature)) + "º"
+        nextVC.setData(cityList: cityList)
         present(nextVC, animated: true, completion: nil)
+    }
+    
+    @objc func addCity(_ notification: Notification) {
+        print(cityList, "addCity", "vc")
+        if let list = notification.object as? [ListModel] {
+            cityList.append(contentsOf: list)
+        }
+        mainCV.reloadData()
     }
 }
 
@@ -288,7 +302,7 @@ extension ViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myCityList.count
+        return 1 + cityList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,6 +316,7 @@ extension ViewController: UICollectionViewDataSource {
                      min: "최저: \(Int(min))º")
         setBackgroundView(time: currentTime)
         setAnimationView(condition: condition)
+        print(currentTime)
         if isAddNewCityView {
             cell.fetchWeather(lat: searchLatitude!, lon: searchLongtitude!, exclude: "")
             cell.setData(location: location,
@@ -363,6 +378,7 @@ extension ViewController {
                         self.currentTime = currentTime
                         self.timezoneOffset = timezoneOffset
                     }
+                    self.cityList = [ListModel(subTitle: self.myCurrentLocation, title: "나의 위치", temp: "\(Int(self.temperature))º")]
                     self.setupCollectionView()
                     self.mainCV.reloadData()
                     

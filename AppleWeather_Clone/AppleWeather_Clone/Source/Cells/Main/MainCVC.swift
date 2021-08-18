@@ -8,8 +8,8 @@
 import UIKit
 
 import Moya
-import Then
 import SnapKit
+import Then
 
 class MainCVC: UICollectionViewCell {
     static let identifier = "MainCVC"
@@ -158,13 +158,13 @@ class MainCVC: UICollectionViewCell {
     }
     
     // MARK: - @objc
-    @objc func receiveFirstCell(_ notifiction: Notification) {
-        if let location = notifiction.object as? [String],
-           let temp = notifiction.object as? [String] {
-            locationLabel.text = location[0]
-            tempLabel.text = temp[1]
-        }
-    }
+//    @objc func receiveFirstCell(_ notifiction: Notification) {
+//        if let location = notifiction.object as? [String],
+//           let temp = notifiction.object as? [String] {
+//            locationLabel.text = location[0]
+//            tempLabel.text = temp[1]
+//        }
+//    }
     
     @objc func receiveOtherCell(_ notifiction: Notification) {
         if let location = notifiction.object as? [String],

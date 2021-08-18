@@ -7,17 +7,14 @@
 
 import UIKit
 
-import Then
 import SnapKit
+import Then
 
 class ListViewController: UIViewController {
     // MARK: - Properties
-    var cityList: [ListModel] = [ListModel(subTitle: "마포구", title: "나의 위치", temp: "33"),
-                                    ListModel(subTitle: "오전 4:21", title: "하와이", temp: "33")]
+    var cityList: [ListModel] = [ListModel(subTitle: "", title: "나의 위치", temp: "")]
     
-    var firstCellLocation: String = ""
-
-    let mainTV = UITableView()
+    let mainTV = UITableView(frame: .zero, style: .grouped)
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -25,6 +22,7 @@ class ListViewController: UIViewController {
         configUI()
         setupAutoLayout()
         setupTableView()
+        registerNotification()
     }
     
     // MARK: - Custom Method
@@ -44,10 +42,24 @@ class ListViewController: UIViewController {
         mainTV.delegate = self
         mainTV.dataSource = self
         mainTV.register(ListTVC.self, forCellReuseIdentifier: "ListTVC")
+        
+        mainTV.sectionFooterHeight = 0
 
         mainTV.separatorStyle = .none
         mainTV.backgroundColor = .clear
         mainTV.contentInsetAdjustmentBehavior = .never
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(addCity(_:)),
+                                               name: NSNotification.Name("appendCity"),
+                                               object: nil)
+    }
+    
+    // MARK: - setData
+    func setData(cityList: [ListModel]) {
+        self.cityList = cityList
     }
     
     // MARK: - @objc
@@ -62,6 +74,14 @@ class ListViewController: UIViewController {
     @objc func touchupSearchButton(_ sender: UIButton) {
         let nextVC = SearchViewController()
         self.present(nextVC, animated: true, completion: nil)
+    }
+    
+    @objc func addCity(_ notification: Notification) {
+        print(cityList, "addCity")
+        if let list = notification.object as? [ListModel] {
+            cityList.append(contentsOf: list)
+        }
+        mainTV.reloadData()
     }
 }
 
@@ -124,6 +144,7 @@ extension ListViewController: UITableViewDataSource {
             listCell.setupFirstCellAutoLayout()
         } else {
             listCell.setupRemainCellAutoLayout()
+            
         }
         listCell.setData(subtitle: cityList[indexPath.row].subTitle,
                          title: cityList[indexPath.row].title,

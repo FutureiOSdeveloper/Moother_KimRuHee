@@ -7,8 +7,8 @@
 
 import UIKit
 
-import Then
 import SnapKit
+import Then
 
 class SearchTVC: UITableViewCell {
     static let identifier = "SearchTVC"

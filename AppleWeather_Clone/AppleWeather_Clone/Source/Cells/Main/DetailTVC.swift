@@ -7,8 +7,8 @@
 
 import UIKit
 
-import Then
 import SnapKit
+import Then
 
 class DetailTVC: UITableViewCell {
     // 일출, 일몰 등등 부분 - 5개 반복

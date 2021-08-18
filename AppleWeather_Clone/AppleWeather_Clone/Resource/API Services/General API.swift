@@ -9,7 +9,7 @@ import Foundation
 
 struct GeneralAPI {
     static let baseURL = "https://api.openweathermap.org/data/2.5"
-    static let appid = "cea1d8866a0ca2c205c2b5e2a30f160c"
+    static let appid = "c01b53a14126d3873f86c0c8921524be"
     
-    /// https://api.openweathermap.org/data/2.5/onecall?appid=cea1d8866a0ca2c205c2b5e2a30f160c&units=metric&lang=kr
+    ///https://api.openweathermap.org/data/2.5/onecall?appid=c01b53a14126d3873f86c0c8921524be&units=metric&lat=36.756866455078125&lon=127.22335105296
 }

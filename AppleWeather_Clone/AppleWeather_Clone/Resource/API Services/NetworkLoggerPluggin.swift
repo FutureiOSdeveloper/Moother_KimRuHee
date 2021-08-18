@@ -115,3 +115,4 @@ fileprivate extension NetworkLoggerPlugin {
         }
     }
 }
+

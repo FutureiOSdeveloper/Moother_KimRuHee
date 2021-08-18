@@ -8,8 +8,8 @@
 import UIKit
 
 import MapKit
-import Then
 import SnapKit
+import Then
 
 class SearchViewController: UIViewController {
     // MARK: - Properties

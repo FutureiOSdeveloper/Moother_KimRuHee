@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var weatherModel: WeatherModel?
     
     // MARK: - Properties
+//    private var vcList = [ListModel(subTitle: "", title: "나의 위치", temp: "")]
     private var cityList = [ListModel(subTitle: "", title: "나의 위치", temp: "")]
         
     var isAddNewCityView: Bool = false
@@ -237,10 +238,15 @@ class ViewController: UIViewController {
     func registerNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(changePageControl(_:)),
                                                name: NSNotification.Name("pageControl"), object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(addCity(_:)),
-                                               name: NSNotification.Name("appendCity"),
+        NotificationCenter.default.addObserver(self, selector: #selector(selectCell(_:)),
+                                               name: NSNotification.Name("selectCell"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(addCity(_:)),
+                                               name: NSNotification.Name("addCity"),
                                                object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteCity(_:)),
+                                               name: NSNotification.Name("deleteCell"),
+                                               object: nil)
+
     }
     
     // MARK: - @objc
@@ -253,7 +259,8 @@ class ViewController: UIViewController {
         cityList.append(ListModel(subTitle: String(self.currentTime).toTime("a h:mm", self.timezoneOffset),
                                   title: self.location,
                                   temp: String(Int(self.temperature)) + "º"))
-        NotificationCenter.default.post(name: NSNotification.Name("appendCity"), object: cityList, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("appendListCell"), object: cityList, userInfo: nil)
+        NotificationCenter.default.post(name: NSNotification.Name("addCity"), object: cityList, userInfo: nil)
         presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -263,6 +270,12 @@ class ViewController: UIViewController {
         }
     }
     
+    @objc func selectCell(_ notification: Notification) {
+        if let  index = notification.object as? IndexPath {
+            mainCV.cellForItem(at: index)
+        }
+    }
+ 
     @objc func touchupLeftBarButton(_ sender: UIButton) {
         let application = UIApplication.shared
         let weatherURL = URL(string: "https://weather.com/ko-KR/weather/today/")!
@@ -282,10 +295,20 @@ class ViewController: UIViewController {
     }
     
     @objc func addCity(_ notification: Notification) {
-        print(cityList, "addCity", "vc")
         if let list = notification.object as? [ListModel] {
             cityList.append(contentsOf: list)
         }
+        pageControl.numberOfPages = cityList.count
+        pageControl.setIndicatorImage(UIImage(systemName: "location.fill"), forPage: 0)
+        mainCV.reloadData()
+    }
+    
+    @objc func deleteCity(_ notification: Notification) {
+        if let index = notification.object as? Int {
+            cityList.remove(at: index)
+            print(cityList.count, cityList, "deleteCity")
+        }
+        pageControl.numberOfPages = cityList.count
         mainCV.reloadData()
     }
 }
@@ -316,7 +339,6 @@ extension ViewController: UICollectionViewDataSource {
                      min: "최저: \(Int(min))º")
         setBackgroundView(time: currentTime)
         setAnimationView(condition: condition)
-        print(currentTime)
         if isAddNewCityView {
             cell.fetchWeather(lat: searchLatitude!, lon: searchLongtitude!, exclude: "")
             cell.setData(location: location,
@@ -324,8 +346,6 @@ extension ViewController: UICollectionViewDataSource {
                          condition: condition,
                          max: "최고: \(Int(max))º",
                          min: "최저: \(Int(min))º")
-//            setBackgroundView(time: currentTime)
-//            setAnimationView(condition: condition)
         }
         return cell
     }

@@ -80,10 +80,7 @@ class MainCVC: UICollectionViewCell {
         super.init(frame: frame)
         configUI()
         setupAutoLayout()
-//        NotificationCenter.default.addObserver(self, selector: #selector(receiveFirstCell(_:)),
-//                                               name: NSNotification.Name("clickFirstCell"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
-                                               name: NSNotification.Name("clickCell"), object: nil)
+        registerNotification()
     }
     
     required init?(coder: NSCoder) {
@@ -147,6 +144,11 @@ class MainCVC: UICollectionViewCell {
         mainTV.register(DetailTVC.self, forCellReuseIdentifier: "DetailTVC")
         mainTV.register(MapTVC.self, forCellReuseIdentifier: "MapTVC")
     }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveOtherCell(_:)),
+                                               name: NSNotification.Name("clickCell"), object: nil)
+    }
 
     // MARK: - setData
     func setData(location: String, temp: String, condition: String, max: String, min: String) {
@@ -158,14 +160,6 @@ class MainCVC: UICollectionViewCell {
     }
     
     // MARK: - @objc
-//    @objc func receiveFirstCell(_ notifiction: Notification) {
-//        if let location = notifiction.object as? [String],
-//           let temp = notifiction.object as? [String] {
-//            locationLabel.text = location[0]
-//            tempLabel.text = temp[1]
-//        }
-//    }
-    
     @objc func receiveOtherCell(_ notifiction: Notification) {
         if let location = notifiction.object as? [String],
            let temp = notifiction.object as? [String] {

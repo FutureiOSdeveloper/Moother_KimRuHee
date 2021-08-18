@@ -14,6 +14,12 @@ class ListTVC: UITableViewCell {
     static let identifier = "ListTVC"
     
     // MARK: - Properties
+    let backImageView = UIImageView().then {
+        $0.image = UIImage(named: "backImage")
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+    }
+    
     let subTitleLabel = UILabel().then {
         $0.font = .systemFont(ofSize: 12, weight: .semibold)
         $0.textColor = .white
@@ -21,13 +27,13 @@ class ListTVC: UITableViewCell {
     }
     
     let titleLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 22, weight: .semibold)
+        $0.font = .systemFont(ofSize: 22, weight: .regular)
         $0.textColor = .white
         $0.textAlignment = .left
     }
     
     let tempLabel = UILabel().then {
-        $0.font = .systemFont(ofSize: 60, weight: .regular)
+        $0.font = .systemFont(ofSize: 60, weight: .thin)
         $0.textColor = .white
         $0.textAlignment = .left
     }
@@ -36,15 +42,7 @@ class ListTVC: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configUI()
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(changeToC),
-                                               name: NSNotification.Name("changeUnitToC"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(changeToF),
-                                               name: NSNotification.Name("changeUnitToF"),
-                                               object: nil)
+        registerNotification()
     }
     
     required init?(coder: NSCoder) {
@@ -60,12 +58,14 @@ class ListTVC: UITableViewCell {
         subTitleLabel.getShadow()
         titleLabel.getShadow()
         tempLabel.getShadow()
-        backgroundColor = .brown
+        
+        addSubviews([backImageView, subTitleLabel, titleLabel, tempLabel])
+        backImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     func setupFirstCellAutoLayout() { /// first cell
-        addSubviews([subTitleLabel, titleLabel, tempLabel])
-        
         subTitleLabel.snp.makeConstraints { make in
             make.leading.equalTo(20)
             make.bottom.equalTo(titleLabel.snp.top).offset(-1)
@@ -82,9 +82,7 @@ class ListTVC: UITableViewCell {
         }
     }
     
-    func setupRemainCellAutoLayout() { /// 남은 cell들
-        addSubviews([subTitleLabel, titleLabel, tempLabel])
-        
+    func setupRemainCellAutoLayout() { /// 남은 cell들        
         subTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.leading.equalTo(20)
@@ -100,6 +98,18 @@ class ListTVC: UITableViewCell {
             make.trailing.equalToSuperview().inset(20)
             make.centerY.equalToSuperview()
         }
+    }
+    
+    func registerNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(changeToC),
+                                               name: NSNotification.Name("changeUnitToC"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(changeToF),
+                                               name: NSNotification.Name("changeUnitToF"),
+                                               object: nil)
     }
     
     // MARK: - @objc

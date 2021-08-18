@@ -12,7 +12,7 @@ import Then
 
 class ListViewController: UIViewController {
     // MARK: - Properties
-    var cityList: [ListModel] = [ListModel(subTitle: "", title: "나의 위치", temp: "")]
+    var cityList: [ListModel] = [ListModel(subTitle: "", title: "나의 위치", temp: "33")]
     
     let mainTV = UITableView(frame: .zero, style: .grouped)
     
@@ -54,7 +54,7 @@ class ListViewController: UIViewController {
     func registerNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(addCity(_:)),
-                                               name: NSNotification.Name("appendCity"),
+                                               name: NSNotification.Name("appendListCell"),
                                                object: nil)
     }
     
@@ -78,7 +78,6 @@ class ListViewController: UIViewController {
     }
     
     @objc func addCity(_ notification: Notification) {
-        print(cityList, "addCity")
         if let list = notification.object as? [ListModel] {
             cityList.append(contentsOf: list)
         }
@@ -100,6 +99,7 @@ extension ListViewController: UITableViewDelegate {
         if editingStyle == .delete {
             cityList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .none)
+            NotificationCenter.default.post(name: NSNotification.Name("deleteCell"), object: indexPath.row, userInfo: nil)
         }
     }
     
@@ -158,7 +158,9 @@ extension ListViewController: UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         dismiss(animated: true) {
             NotificationCenter.default.post(name: NSNotification.Name("pageControl"), object: indexPath.row)
+//            NotificationCenter.default.post(name: NSNotification.Name("selectCell"), object: indexPath, userInfo: nil)
             if indexPath.row == 0 {
+
                 NotificationCenter.default.post(name: NSNotification.Name("clickCell"),
                                                 object: [self.cityList[indexPath.row].subTitle,
                                                          self.cityList[indexPath.row].temp])
